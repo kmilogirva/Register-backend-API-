@@ -1,0 +1,12 @@
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\bin\Debug\net8.0\PatronRepositorio.Repository.deps.json
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\bin\Debug\net8.0\PatronRepositorio.Repository.dll
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\bin\Debug\net8.0\PatronRepositorio.Repository.pdb
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.csproj.AssemblyReference.cache
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.AssemblyInfoInputs.cache
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.AssemblyInfo.cs
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.csproj.CoreCompileInputs.cache
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.dll
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\refint\PatronRepositorio.Repository.dll
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\PatronRepositorio.Repository.pdb
+C:\Users\Giraldo Laverde\Desktop\Register(backend-API)\PatronRepositorio.Repository\obj\Debug\net8.0\ref\PatronRepositorio.Repository.dll

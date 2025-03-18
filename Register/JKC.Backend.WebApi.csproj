@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JKC.Backend.Aplicacion\JKC.Backend.Aplicacion.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Dominio.Entidades\JKC.Backend.Dominio.Entidades.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Dominio\JKC.Backend.Dominio.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Infraestructura.Data\JKC.Backend.Infraestructura.Data.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Infraestructura.Framework\JKC.Backend.Infraestructura.Framework.csproj" />
+  </ItemGroup>
+
+</Project>

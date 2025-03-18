@@ -1,0 +1,197 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\jkc.backend.aplicacion\\services\\productosservices\\servicioproductos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\productosservices\\servicioproductos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\register\\controllers\\productoscontroller\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|solutionrelative:register\\controllers\\productoscontroller\\productoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\register\\controllers\\usuarioscontroller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|solutionrelative:register\\controllers\\usuarioscontroller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11AF8AAA-593D-4BF5-9C2B-56A76CF1889B}|JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\jkc.backend.dominio.entidades\\productos\\productos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11AF8AAA-593D-4BF5-9C2B-56A76CF1889B}|JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj|solutionrelative:jkc.backend.dominio.entidades\\productos\\productos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\register\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|solutionrelative:register\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\jkc.backend.aplicacion\\services\\usuarioservices\\serviciousuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\usuarioservices\\serviciousuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11AF8AAA-593D-4BF5-9C2B-56A76CF1889B}|JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\jkc.backend.dominio.entidades\\seguridad\\usuarios\\usuarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11AF8AAA-593D-4BF5-9C2B-56A76CF1889B}|JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj|solutionrelative:jkc.backend.dominio.entidades\\seguridad\\usuarios\\usuarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|c:\\users\\giraldo laverde\\desktop\\register(backend-api)\\register\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|solutionrelative:register\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Program.cs",
+              "RelativeDocumentMoniker": "Register\\Program.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Program.cs",
+              "RelativeToolTip": "Register\\Program.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABYAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T03:47:11.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Controllers\\UsuariosController\\UserController.cs",
+              "RelativeDocumentMoniker": "Register\\Controllers\\UsuariosController\\UserController.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Controllers\\UsuariosController\\UserController.cs",
+              "RelativeToolTip": "Register\\Controllers\\UsuariosController\\UserController.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAjwFsAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T02:49:49.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Productos.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Dominio.Entidades\\Productos\\Productos.cs",
+              "RelativeDocumentMoniker": "JKC.Backend.Dominio.Entidades\\Productos\\Productos.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Dominio.Entidades\\Productos\\Productos.cs",
+              "RelativeToolTip": "JKC.Backend.Dominio.Entidades\\Productos\\Productos.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAAAsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T02:20:19.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServicioProductos.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\ProductosServices\\ServicioProductos.cs",
+              "RelativeDocumentMoniker": "JKC.Backend.Aplicacion\\Services\\ProductosServices\\ServicioProductos.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\ProductosServices\\ServicioProductos.cs",
+              "RelativeToolTip": "JKC.Backend.Aplicacion\\Services\\ProductosServices\\ServicioProductos.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T00:39:00.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProductosController.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Controllers\\ProductosController\\ProductosController.cs",
+              "RelativeDocumentMoniker": "Register\\Controllers\\ProductosController\\ProductosController.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\Controllers\\ProductosController\\ProductosController.cs",
+              "RelativeToolTip": "Register\\Controllers\\ProductosController\\ProductosController.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAuwCEAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T00:35:04.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Usuarios.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Dominio.Entidades\\Seguridad\\Usuarios\\Usuarios.cs",
+              "RelativeDocumentMoniker": "JKC.Backend.Dominio.Entidades\\Seguridad\\Usuarios\\Usuarios.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Dominio.Entidades\\Seguridad\\Usuarios\\Usuarios.cs",
+              "RelativeToolTip": "JKC.Backend.Dominio.Entidades\\Seguridad\\Usuarios\\Usuarios.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAwAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T00:55:56.077Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\appsettings.json",
+              "RelativeDocumentMoniker": "Register\\appsettings.json",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\Register\\appsettings.json",
+              "RelativeToolTip": "Register\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-04T00:52:33.436Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "89307f16-d1c2-4683-8848-b4c46e88dbb9",
+        "Display": 1,
+        "X": 446,
+        "Y": 281,
+        "Width": 1052,
+        "Height": 480,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ServicioUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\UsuarioServices\\ServicioUsuario.cs",
+              "RelativeDocumentMoniker": "JKC.Backend.Aplicacion\\Services\\UsuarioServices\\ServicioUsuario.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\UsuarioServices\\ServicioUsuario.cs",
+              "RelativeToolTip": "JKC.Backend.Aplicacion\\Services\\UsuarioServices\\ServicioUsuario.cs",
+              "ViewState": "AQIAAGsAAAAAAAAAAAAuwDEAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T04:00:46.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ResponseMessages.cs",
+              "DocumentMoniker": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",
+              "RelativeDocumentMoniker": "JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",
+              "ToolTip": "C:\\Users\\Giraldo Laverde\\Desktop\\Register(backend-API)\\JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",
+              "RelativeToolTip": "JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T02:06:29.009Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JKC.Backend.Dominio.Entidades\JKC.Backend.Dominio.Entidades.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Dominio\JKC.Backend.Dominio.csproj" />
+    <ProjectReference Include="..\JKC.Backend.Infraestructura.Framework\JKC.Backend.Infraestructura.Framework.csproj" />
+  </ItemGroup>
+
+</Project>

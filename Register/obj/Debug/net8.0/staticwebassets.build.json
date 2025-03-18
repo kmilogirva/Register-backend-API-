@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Ep+obP/FXeO8aaLLINRKumrEqJFpYeOAapShM+xe1+8=",
+  "Source": "JKC.Backend.WebApi",
+  "BasePath": "_content/JKC.Backend.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

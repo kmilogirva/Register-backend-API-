@@ -9,7 +9,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     Task<List<Usuarios>> ObtenerTodosUsuarios();
     Task<ResponseMessages> RegistrarUsuarioAsync(Usuarios nuevoUsuario);
     Task<bool> ActualizarUsuarioAsync(Usuarios usuarioActualizado);
-    Task<bool> EliminarUsuarioAsync(int id);
+    Task<bool> EliminarUsuarioPorId(int id);
     Task<ResponseMessages> LoginAsync(string email, string password);
 
     Task<List<RolesUsuario>> ObtenerRolesPorUsuarioId(int idUsuario);

@@ -1,31 +1,27 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using JKC.Backend.Infraestructura.Data.Repositorios;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using JKC.Backend.Infraestructura.Data.EntityFramework;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.UsuarioServices;
 using JKC.Backend.Aplicacion.Services.ProductosServices;
-using JKC.Backend.Dominio.Entidades.Productos;
-//using Register.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registro Servicios
+// Configurar DbContext con la conexión a SQL Server
+builder.Services.AddDbContext<CommonDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .EnableSensitiveDataLogging() // Muestra los valores en los logs
+           .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information));
+
+// Registro de servicios y repositorios
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 builder.Services.AddScoped<IServicioProductos, ServicioProductos>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-//Registro Respositorios
-builder.Services.AddScoped<IRepository<Usuarios>, Repository<Usuarios>>();
-builder.Services.AddScoped<IRepository<Productos>, Repository<Productos>>();
 builder.Services.AddControllers();
 
-// Configura DbContext con la cadena de conexión de la configuración
-builder.Services.AddDbContext<CommonDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-// Configura CORS
+// Configuración de CORS
 builder.Services.AddCors(options =>
 {
   options.AddPolicy("AllowAllOrigins", policy =>
@@ -36,12 +32,57 @@ builder.Services.AddCors(options =>
   });
 });
 
+// Configuración de Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+  c.SwaggerDoc("v1", new OpenApiInfo
+  {
+    Title = "API JkcInventory",
+    Version = "v1",
+    Description = "Documentación de la API con Swagger"
+  });
+
+  //Dejarcomenatdo por ahora, útil para JWT
+  // (Opcional) Agregar autenticación JWT a Swagger
+  //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+  //{
+  //  Name = "Authorization",
+  //  Type = SecuritySchemeType.Http,
+  //  Scheme = "Bearer",
+  //  BearerFormat = "JWT",
+  //  In = ParameterLocation.Header,
+  //  Description = "Ingrese 'Bearer [token]' en el campo para autenticar."
+  //});
+
+  //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+  //  {
+  //      {
+  //          new OpenApiSecurityScheme
+  //          {
+  //              Reference = new OpenApiReference
+  //              {
+  //                  Type = ReferenceType.SecurityScheme,
+  //                  Id = "Bearer"
+  //              }
+  //          },
+  //          new string[] {}
+  //      }
+  //  });
+});
+
 var app = builder.Build();
 
-// Configura el middleware HTTP.
-if (app.Environment.IsDevelopment())
+// Middleware HTTP y configuraciones
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
   app.UseDeveloperExceptionPage();
+  app.UseSwagger();
+  app.UseSwaggerUI(c =>
+  {
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API JkcInventory v1");
+    c.RoutePrefix = string.Empty; // Swagger estará en la raíz
+  });
 }
 else
 {
@@ -51,14 +92,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-// Usa la política de CORS
 app.UseCors("AllowAllOrigins");
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

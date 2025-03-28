@@ -75,14 +75,14 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     }
 
     // Eliminar un usuario por Id
-    public async Task<bool> EliminarUsuarioAsync(int id)
+    public async Task<bool> EliminarUsuarioPorId(int id)
     {
       var usuario = await _usuarioRepository.ObtenerPorId(id);
 
       if (usuario == null)
         return false;
 
-      await _usuarioRepository.Eliminar(usuario);
+      await _usuarioRepository.EliminarPorId(id);
       return true;
     }
 

@@ -1,5 +1,6 @@
 using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace JKC.Backend.Aplicacion.Services.ProductosServices
@@ -20,6 +21,20 @@ namespace JKC.Backend.Aplicacion.Services.ProductosServices
       return registroProductos;
     }
 
+    public async Task<List<Productos>> ObtenerListadoProductos()
+    {
+      return await _productosRepository.ObtenerTodos().ToListAsync();
+    }
+
+    public async Task<Productos> ObtenerProductoPorId(int id)
+    {
+      return await _productosRepository.ObtenerPorId(id);
+    }
+
+    public async Task EliminarProductoPorId(int id)
+    {
+      await _productosRepository.EliminarPorId(id);
+    }
 
   }
 }

@@ -110,6 +110,23 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
         return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
       }
     }
+
+
+    [HttpPost("eliminarusuarioporid")]
+    public async Task<IActionResult> EliminarProductoAsync(int idUsuario)
+    {
+      var usuario = await _usuarioServicio.ObtenerUsuarioPorId(idUsuario);
+
+      if (usuario == null)
+      {
+        return NotFound(new { mensaje = "El usuario no existe o ya ha sido eliminado." });
+      }
+
+      await _usuarioServicio.EliminarUsuarioPorId(idUsuario);
+      return Ok(new { mensaje = "El usuario ha sido eliminado con éxito.", idUsuario });
+    }
+
+
   }
 }
 

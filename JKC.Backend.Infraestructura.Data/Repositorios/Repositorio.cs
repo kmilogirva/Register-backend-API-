@@ -1,14 +1,8 @@
 using JKC.Backend.Infraestructura.Data.EntityFramework;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace JKC.Backend.Infraestructura.Data.Repositorios
@@ -51,9 +45,23 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
 
     public async Task Crear(T entidad)
     {
-      await _context.Set<T>().AddAsync(entidad);
-      await _context.SaveChangesAsync();
+      try
+      {
+        await _context.Set<T>().AddAsync(entidad);
+        await _context.SaveChangesAsync();
+      }
+      catch (DbUpdateException dbEx)
+      {
+        // Error específico de base de datos
+        throw new Exception("Error al guardar los cambios en la base de datos.", dbEx);
+      }
+      catch (Exception ex)
+      {
+        // Cualquier otro error general
+        throw new Exception("Ocurrió un error al crear la entidad.", ex);
+      }
     }
+
 
     public async Task Actualizar(T entidad)
     {
@@ -66,6 +74,14 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       _context.Set<T>().Remove(entidad);
       await _context.SaveChangesAsync();
     }
+
+    public async Task EliminarPorId(int id)
+    {
+      var entidad = await _context.Set<T>().FindAsync(id);
+      _context.Set<T>().Remove(entidad);
+      await _context.SaveChangesAsync();
+    }
+
 
     //Para usar procedimientos almacenado y devolver listas.
     //Para ejecutar este tipo de Stored procedure es necesario que la entidad coincida y exista en mi Base de Datos.
@@ -84,7 +100,7 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
     }
 
 
-    //Es más flexible epro no posee el enfoque de EntityFramework
+    //Es más flexible pero no posee el enfoque de EntityFramework
     public DataSet ExecuteStoreProcedure(string sqlQuery, List<DbParameter> parameters)
     {
       DataSet data = new DataSet();

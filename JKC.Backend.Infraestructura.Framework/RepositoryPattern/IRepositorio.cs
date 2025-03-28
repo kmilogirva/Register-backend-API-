@@ -17,6 +17,8 @@ namespace JKC.Backend.Infraestructura.Framework.RepositoryPattern
     Task Actualizar(T entidad);
     Task Eliminar(T entidad);
 
+    Task EliminarPorId(int id);
+
     //void ExecuteSqlCommand(string procedureName, object parameteres);
     DataSet ExecuteStoreProcedure(string sqlQuery, List<DbParameter> parameters);
     //IEnumerable<TEntityVO> ExecuteStoreProcedure<TEntityVO>(string procedureName, object parameters);

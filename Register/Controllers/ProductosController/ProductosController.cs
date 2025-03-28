@@ -40,6 +40,49 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
       }
     }
 
+    [HttpPost("listarproductos")]
+    public async Task<IActionResult> ObtenerListadoProductos()
+    {
+      try
+      {
+        var resultado = await _servicioProductos.ObtenerListadoProductos();
+        return Ok(new { mensaje = "Listado de productos obtenido con éxito.", productos = resultado });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
+      }
+    }
+
+    [HttpGet("obtenerproductoporid")]
+    public async Task<IActionResult> ObtenerRolesPorUsuarioId(int idProducto)
+    {
+      try
+      {
+        var producto = await _servicioProductos.ObtenerProductoPorId(idProducto);
+        return Ok(producto);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
+      }
+    }
+
+    [HttpPost("eliminarproductoporid")]
+    public async Task<IActionResult> EliminarProductoAsync(int idProducto)
+    {
+      var producto = await _servicioProductos.ObtenerProductoPorId(idProducto);
+
+      if (producto == null)
+      {
+        return NotFound(new { mensaje = "El producto no existe o ya ha sido eliminado." });
+      }
+
+      await _servicioProductos.EliminarProductoPorId(idProducto);
+      return Ok(new { mensaje = "Producto eliminado con éxito.", idProducto });
+    }
+
+
 
   }
 }

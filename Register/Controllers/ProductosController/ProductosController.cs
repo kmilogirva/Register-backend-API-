@@ -1,12 +1,16 @@
 using JKC.Backend.Aplicacion.Services.ProductosServices;
 using JKC.Backend.Dominio.Entidades.Productos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JKC.Backend.WebApi.Controllers.ProductosController
 {
-  [Route("api/[controller]")]
+  [Authorize]
   [ApiController]
+  [Route("api/[controller]")]
+ 
+
   public class ProductosController : Controller
   {
     private readonly IServicioProductos _servicioProductos;

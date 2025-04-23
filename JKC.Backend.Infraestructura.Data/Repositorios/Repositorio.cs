@@ -33,15 +33,26 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
     {
       try
       {
+        // Verifica si el contexto está siendo correctamente configurado
+        if (_context == null)
+        {
+          throw new InvalidOperationException("El contexto de base de datos no está configurado correctamente.");
+        }
+
         return _context.Set<T>().AsQueryable();
+      }
+      catch (InvalidOperationException invOpEx)
+      {
+        // Excepción si el contexto está mal configurado
+        throw new Exception("Error en la configuración del contexto de la base de datos", invOpEx);
       }
       catch (Exception ex)
       {
-        // Manejo de excepciones (puedes registrar el error o lanzar una excepción personalizada)
-        // Logger.LogError(ex, "Error al obtener todos los registros");
-        throw new Exception("Error al obtener los registros", ex);
+        // Captura cualquier otro tipo de excepción
+        throw new Exception("Error al obtener los registros desde la base de datos", ex);
       }
     }
+
 
     public async Task Crear(T entidad)
     {

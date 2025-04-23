@@ -10,5 +10,10 @@ namespace JKC.Backend.Aplicacion.Services.DTOS
   {
     public bool Exitoso { get; set; }
     public string Mensaje { get; set; }
+
+  }
+  public class ResponseMessagesData<T> : ResponseMessages
+  {
+    public T Data { get; set; }
   }
 }

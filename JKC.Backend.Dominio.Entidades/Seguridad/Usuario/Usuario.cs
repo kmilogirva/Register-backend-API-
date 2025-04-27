@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JKC.Backend.Dominio.Entidades.Seguridad.Usuarios
 {
-  public class Usuarios
+  public class Usuario
   {
     [Key]
     public int IdUsuario { get; set; }

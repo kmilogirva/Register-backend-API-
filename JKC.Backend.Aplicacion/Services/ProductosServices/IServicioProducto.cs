@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JKC.Backend.Aplicacion.Services.ProductosServices
+namespace JKC.Backend.Aplicacion.Services.ProductoServices
 {
-  public interface IServicioProductos
+  public interface IServicioProducto
   {
     //Task<Usuarios> ObtenerUsuarioPorId(int id);
     //Task<List<Usuarios>> ObtenerTodosUsuarios();
 
-    Task<Productos> RegistrarProducto(Productos registroProductos);
-    Task<List<Productos>> ObtenerListadoProductos();
-    Task<Productos> ObtenerProductoPorId(int id);
+    Task<Producto> RegistrarProducto(Producto registroProducto);
+    Task<List<Producto>> ObtenerListadoProductos();
+    Task<Producto> ObtenerProductoPorId(int id);
     Task EliminarProductoPorId(int id);
     //Task<ResultadoRegistro> RegistrarUsuarioAsync(Usuarios nuevoUsuario);
     //Task<bool> ActualizarUsuarioAsync(Usuarios usuarioActualizado);

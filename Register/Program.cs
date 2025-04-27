@@ -2,13 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
 using JKC.Backend.Infraestructura.Data.Repositorios;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using JKC.Backend.Infraestructura.Data.EntityFramework;
 using JKC.Backend.Aplicacion.Services.UsuarioServices;
-using JKC.Backend.Aplicacion.Services.ProductosServices;
 using JKC.Backend.Aplicacion.Services.SeguridadService;
+using JKC.Backend.Aplicacion.Services.ProductoServices;
+using JKC.Backend.Aplicacion.Services.CategoriasServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,8 @@ builder.Services.AddDbContext<CommonDBContext>(options =>
 // Servicios y repositorios
 builder.Services.AddScoped<IServicioSeguridad, ServicioSeguridad>();
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
-builder.Services.AddScoped<IServicioProductos, ServicioProductos>();
+builder.Services.AddScoped<IServicioProducto, ServicioProducto>();
+builder.Services.AddScoped<IServicioCategoria, ServicioCategoria>();
 
 
 //Registro de Repositorios

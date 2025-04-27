@@ -9,26 +9,26 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
   public class ServicioUsuario : IServicioUsuario
   {
 
-    private readonly IRepository<Usuarios> _usuarioRepository;
+    private readonly IRepository<Usuario> _usuarioRepository;
 
-    public ServicioUsuario(IRepository<Usuarios> usuarioRepository)
+    public ServicioUsuario(IRepository<Usuario> usuarioRepository)
     {
       _usuarioRepository = usuarioRepository;
     }
 
     // Obtener usuario por Id
-    public async Task<Usuarios> ObtenerUsuarioPorId(int id)
+    public async Task<Usuario> ObtenerUsuarioPorId(int id)
     {
       return await _usuarioRepository.ObtenerPorId(id);
     }
 
-    public async Task<List<Usuarios>> ObtenerListadoUsuarios()
+    public async Task<List<Usuario>> ObtenerListadoUsuarios()
     {
       return await _usuarioRepository.ObtenerTodos().ToListAsync();
     }
 
     // Registrar un nuevo usuario
-    public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuarios nuevoUsuario)
+    public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario)
     {
 
       var usuarioExistente = await _usuarioRepository
@@ -55,7 +55,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     }
 
     // Actualizar un usuario existente
-    public async Task<bool> ActualizarUsuario(Usuarios usuarioActualizado)
+    public async Task<bool> ActualizarUsuario(Usuario usuarioActualizado)
     {
       var usuarioExistente = await _usuarioRepository.ObtenerPorId(usuarioActualizado.IdUsuario);
 

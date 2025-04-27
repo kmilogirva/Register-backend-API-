@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace JKC.Backend.Dominio.Entidades.Seguridad.Usuarios
 {
-  public class RolesPermisos
+  public class RolesPermiso
   {
     [Key]
     public int Id { get; set; }

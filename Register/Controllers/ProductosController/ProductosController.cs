@@ -1,7 +1,6 @@
-using JKC.Backend.Aplicacion.Services.ProductosServices;
+using JKC.Backend.Aplicacion.Services.ProductoServices;
 using JKC.Backend.Dominio.Entidades.Productos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JKC.Backend.WebApi.Controllers.ProductosController
@@ -13,15 +12,15 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
 
   public class ProductosController : Controller
   {
-    private readonly IServicioProductos _servicioProductos;
+    private readonly IServicioProducto _servicioProducto;
 
-    public ProductosController(IServicioProductos servicioProductos)
+    public ProductosController(IServicioProducto servicioProducto)
     {
-      _servicioProductos = servicioProductos;
+      _servicioProducto = servicioProducto;
     }
 
     [HttpPost("registrarproducto")]
-    public async Task<IActionResult> RegistrarProducto([FromBody] Productos registroProductos)
+    public async Task<IActionResult> RegistrarProducto([FromBody] Producto registroProductos)
     {
       if (registroProductos == null)
       {
@@ -35,7 +34,7 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
 
       try
       {
-        var resultado = await _servicioProductos.RegistrarProducto(registroProductos);
+        var resultado = await _servicioProducto.RegistrarProducto(registroProductos);
         return Ok(new { mensaje = "Producto registrado con éxito.", producto = resultado });
       }
       catch (Exception ex)
@@ -49,7 +48,7 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     {
       try
       {
-        var resultado = await _servicioProductos.ObtenerListadoProductos();
+        var resultado = await _servicioProducto.ObtenerListadoProductos();
         return Ok(new { mensaje = "Listado de productos obtenido con éxito.", productos = resultado });
       }
       catch (Exception ex)
@@ -63,7 +62,7 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     {
       try
       {
-        var producto = await _servicioProductos.ObtenerProductoPorId(idProducto);
+        var producto = await _servicioProducto.ObtenerProductoPorId(idProducto);
         return Ok(producto);
       }
       catch (Exception ex)
@@ -72,21 +71,62 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
       }
     }
 
-    [HttpPost("eliminarproductoporid")]
-    public async Task<IActionResult> EliminarProductoAsync(int idProducto)
-    {
-      var producto = await _servicioProductos.ObtenerProductoPorId(idProducto);
+    //[HttpPost("eliminarproductosporids")]
+    //public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
+    //{
 
-      if (producto == null)
+    //  foreach (int Producto in idProductos)
+    //  {
+    //    var producto = await _servicioProducto.ObtenerProductoPorId(Producto);
+
+    //    if (producto == null)
+    //    {
+    //      return NotFound(new { mensaje = "El producto no existe o ya ha sido eliminado." });
+    //    }
+    //    await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
+    //  }
+
+    //  return Ok(new { mensaje = "Producto eliminado con éxito.", idProducto });
+    //}
+
+    [HttpPost("eliminarproductosporids")]
+    public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
+    {
+      if (idProductos == null || !idProductos.Any())
+        return BadRequest(new { mensaje = "No se enviaron productos para eliminar." });
+
+      var productosEncontrados = new List<int>();
+      var productosNoEncontrados = new List<int>();
+
+      foreach (int id in idProductos)
       {
-        return NotFound(new { mensaje = "El producto no existe o ya ha sido eliminado." });
+        var producto = await _servicioProducto.ObtenerProductoPorId(id);
+
+        if (producto != null)
+        {
+          await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
+          productosEncontrados.Add(id);
+        }
+        else
+        {
+          productosNoEncontrados.Add(id);
+        }
       }
 
-      await _servicioProductos.EliminarProductoPorId(idProducto);
-      return Ok(new { mensaje = "Producto eliminado con éxito.", idProducto });
+      if (productosEncontrados.Any())
+      {
+        return Ok(new
+        {
+          mensaje = "Productos procesados.",
+          productosEliminados = productosEncontrados,
+          productosNoEncontrados = productosNoEncontrados
+        });
+      }
+      else
+      {
+        return NotFound(new { mensaje = "Ningún producto encontrado para eliminar.", productosNoEncontrados });
+      }
     }
-
-
 
   }
 }

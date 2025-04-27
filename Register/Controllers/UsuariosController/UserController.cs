@@ -22,7 +22,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
 
     // POST: api/User/Create
     [HttpPost("CrearUsuario")]
-    public async Task<IActionResult> CreateUsers([FromBody] Usuarios nuevoUsuario)
+    public async Task<IActionResult> CreateUsers([FromBody] Usuario nuevoUsuario)
     {
       if (!ModelState.IsValid)
       {
@@ -69,7 +69,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     }
 
     [HttpPost("actualizarusuarioporid")]
-    public async Task<IActionResult> ActualizarProductoAsync(Usuarios nuevousuario)
+    public async Task<IActionResult> ActualizarProductoAsync(Usuario nuevousuario)
     {
       var usuarioexistente = await _usuarioServicio.ObtenerUsuarioPorId(nuevousuario.IdUsuario);
 

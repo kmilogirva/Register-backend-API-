@@ -10,9 +10,9 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
   public class ServicioSeguridad: IServicioSeguridad
   {
-    private readonly IRepository<Usuarios> _usuarioRepository;
+    private readonly IRepository<Usuario> _usuarioRepository;
 
-    public ServicioSeguridad(IRepository<Usuarios> usuarioRepository)
+    public ServicioSeguridad(IRepository<Usuario> usuarioRepository)
     {
       _usuarioRepository = usuarioRepository;
     }

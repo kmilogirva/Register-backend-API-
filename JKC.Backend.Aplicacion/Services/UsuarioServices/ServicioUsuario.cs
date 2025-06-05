@@ -24,16 +24,20 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 
     public async Task<List<Usuario>> ObtenerListadoUsuarios()
     {
-      return await _usuarioRepository.ObtenerTodos().ToListAsync();
+      return await _usuarioRepository.ObtenerTodos();
     }
 
     // Registrar un nuevo usuario
     public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario)
     {
 
-      var usuarioExistente = await _usuarioRepository
-            .ObtenerTodos()
-            .AnyAsync(u => u.Correo == nuevoUsuario.Correo);
+      //var usuarioExistente = await _usuarioRepository
+      //      .ObtenerTodos()
+      //      .AnyAsync(u => u.Correo == nuevoUsuario.Correo);
+
+      var usuarios = await  _usuarioRepository.ObtenerTodos();
+
+      var usuarioExistente = usuarios.Any(u => u.Correo == nuevoUsuario.Correo);
 
       if (usuarioExistente)
       {

@@ -29,7 +29,7 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       }
     }
 
-    public IQueryable<T> ObtenerTodos()
+    public async Task<List<T>> ObtenerTodos()
     {
       try
       {
@@ -39,7 +39,7 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
           throw new InvalidOperationException("El contexto de base de datos no está configurado correctamente.");
         }
 
-        return _context.Set<T>().AsQueryable();
+          return await _context.Set<T>().ToListAsync();
       }
       catch (InvalidOperationException invOpEx)
       {

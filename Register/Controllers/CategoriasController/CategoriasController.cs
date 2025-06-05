@@ -80,9 +80,9 @@ namespace JKC.Backend.WebApi.Controllers.CategoriasController
 
       foreach (int id in idCategoria)
       {
-        var producto = await _servicioCategoria.ObtenerCategoriaPorId(id);
+        var categoria = await _servicioCategoria.ObtenerCategoriaPorId(id);
 
-        if (producto != null)
+        if (categoria != null)
         {
           await _servicioCategoria.EliminarCategoriasPorIds(id);
           categoriasEncontradas.Add(id);

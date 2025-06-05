@@ -27,13 +27,13 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
     }
 
     [HttpPost("InicioSesion")]
-    public async Task<IActionResult> Login([FromBody] Login model)
+    public async Task<IActionResult> Login([FromBody] Login credenciales)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       // Llamamos al servicio de login
-      var resultado = await _seguridadServicio.LoginAsync(model.Correo, model.Contrasena);
+      var resultado = await _seguridadServicio.LoginAsync(credenciales.Correo, credenciales.Contrasena);
 
       // Si el resultado no fue exitoso, regresamos Unauthorized
       if (!resultado.Exitoso)

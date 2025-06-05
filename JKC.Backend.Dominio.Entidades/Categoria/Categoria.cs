@@ -1,3 +1,4 @@
+using JKC.Backend.Dominio.Entidades.Productos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,13 +11,14 @@ namespace JKC.Backend.Dominio.Entidades.Categorias
   public class Categoria
   {
     [Key]
-    public int IdCategoria { get; set; }
+    public int Id { get; set; }
     public string NomCategoria { get; set; }
     public string Descripcion { get; set; }
-    public bool Estado { get; set; }
+    public bool SwActivo { get; set; }
     public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
     public DateTime? FechaModificacion { get; set; }
     public int? IdUsuarioCreacion { get; set; }
-    public int? IdUsuarioModificacion { get; set; }
+    public int? IdUsuarioModifica { get; set; }
+    public Producto Producto { get; set; }
   }
 }

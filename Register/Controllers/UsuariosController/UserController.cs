@@ -29,7 +29,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
         return BadRequest("Datos inválidos");
       }
 
-      nuevoUsuario.FechaCrea = DateTime.Now;
+      nuevoUsuario.FechaCreacion = DateTime.Now;
 
       var resultado = await _usuarioServicio.RegistrarUsuarioAsync(nuevoUsuario);
 
@@ -69,7 +69,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     }
 
     [HttpPost("actualizarusuarioporid")]
-    public async Task<IActionResult> ActualizarProductoAsync(Usuario nuevousuario)
+    public async Task<IActionResult> ActualizarUsuarioAsync(Usuario nuevousuario)
     {
       var usuarioexistente = await _usuarioServicio.ObtenerUsuarioPorId(nuevousuario.IdUsuario);
 

@@ -30,8 +30,10 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       }
 
       // Busca al usuario con las credenciales proporcionadas
-      var usuario = await _usuarioRepository.ObtenerTodos()
-          .FirstOrDefaultAsync(u => u.Correo == email && u.Contrasena == password);
+      var usuario = await _usuarioRepository.ObtenerTodos();
+
+      var usuarioExistente = usuario.FirstOrDefault(u => u.Correo == email && u.Contrasena == password);
+          //.FirstOrDefaultAsync(u => u.Correo == email && u.Contrasena == password);
 
       // Si no se encuentra el usuario, devuelve un resultado fallido
       if (usuario == null)
@@ -47,9 +49,9 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       // Si el usuario se encuentra, crea un objeto UsuarioDto con los datos necesarios
       var usuarioDto = new UsuarioDto
       {
-        IdUsuario = usuario.IdUsuario,
-        Nombre = usuario.Nombres,
-        Correo = usuario.Correo
+        IdUsuario = usuarioExistente.IdUsuario,
+        Nombre = usuarioExistente.Nombres,
+        Correo = usuarioExistente.Correo
       };
 
       // Retorna el resultado exitoso con los datos del usuario

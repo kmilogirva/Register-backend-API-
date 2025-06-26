@@ -12,7 +12,7 @@ namespace JKC.Backend.Infraestructura.Framework.RepositoryPattern
   public interface IRepository<T> where T : class
   {
     Task<T> ObtenerPorId(int id);
-    IQueryable<T> ObtenerTodos();
+    Task<List<T>> ObtenerTodos();
     Task Crear(T entidad);
     Task Actualizar(T entidad);
     Task Eliminar(T entidad);

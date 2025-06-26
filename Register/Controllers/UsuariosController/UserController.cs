@@ -10,7 +10,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
 {
   [ApiController]
   [Route("api/[controller]")]
-  [Authorize]
+  //[Authorize]
   public class UserController : ControllerBase
   {
     private readonly IServicioUsuario _usuarioServicio;

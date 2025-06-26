@@ -29,7 +29,7 @@ namespace JKC.Backend.Aplicacion.Services.CategoriasServices
 
       public async Task<List<Categoria>> ObtenerListadoCategorias()
       {
-        return await _CategoriaRepository.ObtenerTodos().ToListAsync();
+        return await _CategoriaRepository.ObtenerTodos();
       }
 
       public async Task<Categoria> ObtenerCategoriaPorId(int id)

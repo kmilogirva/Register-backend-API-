@@ -23,7 +23,7 @@ namespace JKC.Backend.Aplicacion.Services.ProductoServices
 
     public async Task<List<Producto>> ObtenerListadoProductos()
     {
-      return await _ProductoRepository.ObtenerTodos().ToListAsync();
+      return await _ProductoRepository.ObtenerTodos();
     }
 
     public async Task<Producto> ObtenerProductoPorId(int id)

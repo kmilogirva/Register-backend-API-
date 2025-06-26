@@ -86,7 +86,7 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       await _context.SaveChangesAsync();
     }
 
-    public async Task EliminarPorId(int id)
+    public async Task EliminarPorId(int? id)
     {
       var entidad = await _context.Set<T>().FindAsync(id);
       _context.Set<T>().Remove(entidad);

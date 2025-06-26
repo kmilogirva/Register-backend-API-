@@ -55,7 +55,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 
       var claims = new[]
       {
-        new Claim(ClaimTypes.NameIdentifier, resultado.Data.IdUsuario.ToString()), // Usamos resultado.Data para obtener el UsuarioDto
+       new Claim("IdUsuario", resultado.Data.IdUsuario.ToString()), // Usamos resultado.Data para obtener el UsuarioDto
         new Claim(ClaimTypes.Name, resultado.Data.Nombre),
         new Claim(ClaimTypes.Email, resultado.Data.Correo)
         // Aquí puedes agregar más claims si es necesario, por ejemplo, para roles

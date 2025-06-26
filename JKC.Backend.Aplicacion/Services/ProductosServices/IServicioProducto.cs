@@ -15,7 +15,7 @@ namespace JKC.Backend.Aplicacion.Services.ProductoServices
     Task<Producto> RegistrarProducto(Producto registroProducto);
     Task<List<Producto>> ObtenerListadoProductos();
     Task<Producto> ObtenerProductoPorId(int id);
-    Task EliminarProductoPorId(int id);
+    Task EliminarProductoPorId(int? id);
     //Task<ResultadoRegistro> RegistrarUsuarioAsync(Usuarios nuevoUsuario);
     //Task<bool> ActualizarUsuarioAsync(Usuarios usuarioActualizado);
     //Task<bool> EliminarUsuarioAsync(int id);

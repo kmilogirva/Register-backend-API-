@@ -11,12 +11,17 @@ namespace JKC.Backend.Dominio.Entidades.Productos
   public class Producto
   {
     [Key]
-    public int IdProducto { get; set; }
-    public string CodCategoria { get; set; }
-    public string NomProducto { get; set;}
-    public Categoria IdCategoria { get; set; }
+    public int? IdProducto { get; set; }
+    public string CodEan { get; set; }
+    public string NomProducto { get; set; }
+    //public Categoria IdCategoria { get; set; }
+    public int IdCategoria { get; set; }
     public string UbicacionProducto { get; set; }
     public int Cantidad { get; set; }
-    public decimal Precio { get; set;}
+    public string Observacion { get; set; }
+    public DateTime? FechaCreacion { get; set; } = DateTime.Now; // Asignar la fecha actual por defecto
+    public DateTime? FechaModificacion { get; set; }
+    public int? IdUsuarioCreacion { get; set; } =1; // Asignar un valor por defecto
+    public int? IdUsuarioModificacion { get; set; }
   }
 }

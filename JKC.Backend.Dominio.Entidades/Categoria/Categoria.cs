@@ -14,7 +14,7 @@ namespace JKC.Backend.Dominio.Entidades.Categorias
     public string NomCategoria { get; set; }
     public string Descripcion { get; set; }
     public bool Estado { get; set; }
-    public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
+    public DateTime FechaCreacion { get; set; }
     public DateTime? FechaModificacion { get; set; }
     public int? IdUsuarioCreacion { get; set; }
     public int? IdUsuarioModificacion { get; set; }

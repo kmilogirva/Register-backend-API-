@@ -24,7 +24,10 @@ namespace JKC.Backend.Dominio.Entidades.Seguridad.Usuarios
 
     public string Contrasena { get; set; }
 
-    public DateTime FechaCrea { get; set; }
+    public DateTime FechaCreacion { get; set; }
+    public DateTime? FechaModificacion { get; set; }
+    public int IdUsuarioCreacion { get; set; }
+    public int? IdUsuarioModificacion { get; set; }
 
 
   }

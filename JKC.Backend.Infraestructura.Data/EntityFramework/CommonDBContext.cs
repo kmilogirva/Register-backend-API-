@@ -1,5 +1,6 @@
 using JKC.Backend.Dominio.Entidades.Categorias;
 using JKC.Backend.Dominio.Entidades.Productos;
+using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
     {
       // Esquema Seguridad
       modelBuilder.Entity<Usuario>().ToTable("usuarios", "seguridad");
+      modelBuilder.Entity<Roles>().ToTable("roles", "seguridad");
       modelBuilder.Entity<RolesUsuario>().ToTable("roles_usuarios", "seguridad");
 
       // Esquema Productos

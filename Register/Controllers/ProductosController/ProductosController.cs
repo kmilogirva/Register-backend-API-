@@ -1,4 +1,5 @@
 using JKC.Backend.Aplicacion.Services.ProductoServices;
+using JKC.Backend.Dominio.Entidades.Producto.DTO;
 using JKC.Backend.Dominio.Entidades.Productos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
       }
     }
 
-    [HttpPost("listarproductos")]
+    [HttpGet("listarproductos")]
     public async Task<IActionResult> ObtenerListadoProductos()
     {
       try
@@ -58,7 +59,7 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     }
 
     [HttpGet("obtenerproductoporid")]
-    public async Task<IActionResult> ObtenerRolesPorUsuarioId(int idProducto)
+    public async Task<IActionResult> ObtenerProductoPorId(int idProducto)
     {
       try
       {
@@ -70,6 +71,27 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
         return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
       }
     }
+
+    [HttpPut("actualizarproducto/{idProducto:int}")]
+    public async Task<IActionResult> ActualizarProducto(int idProducto, [FromBody] Producto dto)
+    {
+      if (dto is null || idProducto != dto.IdProducto)
+        return BadRequest(new { mensaje = "Datos inválidos." });
+
+      try
+      {
+        var actualizado = await _servicioProducto.ActualizarProducto(dto);
+
+        return actualizado
+            ? Ok(new { mensaje = "Producto actualizado con éxito." })
+            : NotFound(new { mensaje = "Producto no encontrado." });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al actualizar el producto.", detalle = ex.Message });
+      }
+    }
+
 
     //[HttpPost("eliminarproductosporids")]
     //public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
@@ -89,44 +111,44 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     //  return Ok(new { mensaje = "Producto eliminado con éxito.", idProducto });
     //}
 
-    [HttpPost("eliminarproductosporids")]
-    public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
-    {
-      if (idProductos == null || !idProductos.Any())
-        return BadRequest(new { mensaje = "No se enviaron productos para eliminar." });
+    //[HttpPost("eliminarproductosporids")]
+    //public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
+    //{
+    //  if (idProductos == null || !idProductos.Any())
+    //    return BadRequest(new { mensaje = "No se enviaron productos para eliminar." });
 
-      var productosEncontrados = new List<int>();
-      var productosNoEncontrados = new List<int>();
+    //  var productosEncontrados = new List<int>();
+    //  var productosNoEncontrados = new List<int>();
 
-      foreach (int id in idProductos)
-      {
-        var producto = await _servicioProducto.ObtenerProductoPorId(id);
+    //  foreach (int id in idProductos)
+    //  {
+    //    var producto = await _servicioProducto.ObtenerProductoPorId(id);
 
-        if (producto != null)
-        {
-          await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
-          productosEncontrados.Add(id);
-        }
-        else
-        {
-          productosNoEncontrados.Add(id);
-        }
-      }
+    //    if (producto != null)
+    //    {
+    //      await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
+    //      productosEncontrados.Add(id);
+    //    }
+    //    else
+    //    {
+    //      productosNoEncontrados.Add(id);
+    //    }
+    //  }
 
-      if (productosEncontrados.Any())
-      {
-        return Ok(new
-        {
-          mensaje = "Productos procesados.",
-          productosEliminados = productosEncontrados,
-          productosNoEncontrados = productosNoEncontrados
-        });
-      }
-      else
-      {
-        return NotFound(new { mensaje = "Ningún producto encontrado para eliminar.", productosNoEncontrados });
-      }
-    }
+    //  if (productosEncontrados.Any())
+    //  {
+    //    return Ok(new
+    //    {
+    //      mensaje = "Productos procesados.",
+    //      productosEliminados = productosEncontrados,
+    //      productosNoEncontrados = productosNoEncontrados
+    //    });
+    //  }
+    //  else
+    //  {
+    //    return NotFound(new { mensaje = "Ningún producto encontrado para eliminar.", productosNoEncontrados });
+    //  }
+    //}
 
   }
 }

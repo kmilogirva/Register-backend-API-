@@ -4,19 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 
 namespace JKC.Backend.Infraestructura.Data.Repositorios
 {
   public class Repository<T> : IRepository<T> where T : class
   {
     private readonly DbContext _context;
-
     public Repository(CommonDBContext context)
     {
       _context = context;
     }
 
-    public async Task<T> ObtenerPorId(int id)
+    private DbSet<T> Entities => _context.Set<T>();
+
+    public async Task<T> ObtenerPorId(int? id)
     {
       try { 
       return await _context.Set<T>().FindAsync(id);
@@ -28,7 +30,6 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
         throw new Exception("Error al obtener los registros", ex);
       }
     }
-
     public async Task<List<T>> ObtenerTodos()
     {
       try
@@ -52,8 +53,6 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
         throw new Exception("Error al obtener los registros desde la base de datos", ex);
       }
     }
-
-
     public async Task Crear(T entidad)
     {
       try
@@ -72,8 +71,6 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
         throw new Exception("Ocurrió un error al crear la entidad.", ex);
       }
     }
-
-
     public async Task Actualizar(T entidad)
     {
       _context.Set<T>().Update(entidad);
@@ -110,8 +107,6 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       }
     }
 
-
-    //Es más flexible pero no posee el enfoque de EntityFramework
     public DataSet ExecuteStoreProcedure(string sqlQuery, List<DbParameter> parameters)
     {
       DataSet data = new DataSet();
@@ -151,6 +146,13 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       return data;
     }
 
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicado)
+    {
+      if (predicado is null)
+        throw new ArgumentNullException(nameof(predicado));
+
+      return await Entities.AnyAsync(predicado).ConfigureAwait(false);
+    }
   }
 }
 

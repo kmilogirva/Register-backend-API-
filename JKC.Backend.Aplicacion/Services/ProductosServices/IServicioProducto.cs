@@ -1,3 +1,4 @@
+using JKC.Backend.Dominio.Entidades.Producto.DTO;
 using JKC.Backend.Dominio.Entidades.Productos;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,13 @@ namespace JKC.Backend.Aplicacion.Services.ProductoServices
 {
   public interface IServicioProducto
   {
-    //Task<Usuarios> ObtenerUsuarioPorId(int id);
-    //Task<List<Usuarios>> ObtenerTodosUsuarios();
 
     Task<Producto> RegistrarProducto(Producto registroProducto);
     Task<List<Producto>> ObtenerListadoProductos();
-    Task<Producto> ObtenerProductoPorId(int id);
+    Task<Producto> ObtenerProductoPorId(int? id);
     Task EliminarProductoPorId(int? id);
-    //Task<ResultadoRegistro> RegistrarUsuarioAsync(Usuarios nuevoUsuario);
-    //Task<bool> ActualizarUsuarioAsync(Usuarios usuarioActualizado);
+
+    Task<bool> ActualizarProducto(Producto productoActualizado);
     //Task<bool> EliminarUsuarioAsync(int id);
     //Task<ResultadoRegistro> LoginAsync(string email, string password);
 

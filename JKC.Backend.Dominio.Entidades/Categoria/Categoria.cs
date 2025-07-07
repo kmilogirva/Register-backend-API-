@@ -11,14 +11,14 @@ namespace JKC.Backend.Dominio.Entidades.Categorias
   public class Categoria
   {
     [Key]
-    public int Id { get; set; }
+    public int IdCategoria { get; set; }
     public string NomCategoria { get; set; }
     public string Descripcion { get; set; }
     public bool Estado { get; set; }
     public DateTime FechaCreacion { get; set; }
     public DateTime? FechaModificacion { get; set; }
     public int? IdUsuarioCreacion { get; set; }
-    public int? IdUsuarioModifica { get; set; }
-    public Producto Producto { get; set; }
+    public int? IdUsuarioModificacion { get; set; }
+    //public Producto Producto { get; set; }
   }
 }

@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Identity;
+using JKC.Backend.Dominio.Entidades.Seguridad;
 
 namespace JKC.Backend.WebApi.Controllers.SeguridadController
 {
@@ -121,6 +123,39 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return StatusCode(500, new
         {
           mensaje = "Ocurrió un error al consultar los permisos del usuario.",
+          detalle = ex.Message
+        });
+      }
+    }
+
+    [Authorize]
+    [HttpPost("crearrol")]
+    public async Task<IActionResult> CrearRol([FromBody]Roles rol)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      try
+      {
+        Roles nuevorol= await _seguridadServicio.CrearRol(rol);
+
+
+        if (nuevorol is null)
+        { return BadRequest(new { mensaje = "No se pudo crear el rol." });
+        }
+          
+        return Ok(new
+        {
+          mensaje = "Rol creado exitosamente.",
+          rol = nuevorol
+        });
+
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new
+        {
+          mensaje = "Ocurrió un error al crear el rol.",
           detalle = ex.Message
         });
       }

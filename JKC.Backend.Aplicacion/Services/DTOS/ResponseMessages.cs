@@ -14,6 +14,6 @@ namespace JKC.Backend.Aplicacion.Services.DTOS
   }
   public class ResponseMessagesData<T> : ResponseMessages
   {
-    public T Data { get; set; }
+    public T? Data { get; set; }
   }
 }

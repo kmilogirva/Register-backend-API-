@@ -1,6 +1,7 @@
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Dominio.Entidades.Productos;
+using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
@@ -11,11 +12,44 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
   public class ServicioSeguridad: IServicioSeguridad
   {
     private readonly IRepository<Usuario> _usuarioRepository;
+    private readonly IRepository<Roles> _rolesRepository;
 
-    public ServicioSeguridad(IRepository<Usuario> usuarioRepository)
+    public ServicioSeguridad(IRepository<Usuario> usuarioRepository, IRepository<Roles> rolesRepository)
     {
       _usuarioRepository = usuarioRepository;
+      _rolesRepository = rolesRepository;
     }
+
+    // Firma simple: Task<Roles>
+    public async Task<Roles> CrearRol(Roles nuevoRol)
+    {
+      try
+      {
+        if (nuevoRol == null)
+          return null;
+
+        nuevoRol.NombreRol = nuevoRol.NombreRol.Trim();
+        if (string.IsNullOrEmpty(nuevoRol.NombreRol))
+          throw new ArgumentException("El nombre del rol no puede estar vacío.");
+
+        bool existeRol = await _rolesRepository.AnyAsync(
+          r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
+
+
+        if (existeRol)
+          return null;
+
+        nuevoRol.FechaCreacion = DateTime.UtcNow;
+
+        await _rolesRepository.Crear(nuevoRol);
+        return nuevoRol;
+      }
+      catch (Exception ex)
+      {
+        throw new Exception("Error al crear el rol", ex);
+      }
+    }
+
 
     public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
     {

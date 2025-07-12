@@ -9,6 +9,7 @@ using JKC.Backend.Aplicacion.Services.UsuarioServices;
 using JKC.Backend.Aplicacion.Services.SeguridadService;
 using JKC.Backend.Aplicacion.Services.ProductoServices;
 using JKC.Backend.Aplicacion.Services.CategoriasServices;
+using JKC.Backend.Aplicacion.Services.BodegaServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,7 @@ builder.Services.AddScoped<IServicioSeguridad, ServicioSeguridad>();
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 builder.Services.AddScoped<IServicioProducto, ServicioProducto>();
 builder.Services.AddScoped<IServicioCategoria, ServicioCategoria>();
-
+builder.Services.AddScoped<IServicioBodega, ServicioBodega>();
 
 //Registro de Repositorios
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

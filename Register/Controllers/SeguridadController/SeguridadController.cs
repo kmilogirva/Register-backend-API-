@@ -141,8 +141,11 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 
 
         if (nuevorol is null)
-        { return BadRequest(new { mensaje = "No se pudo crear el rol." });
-        }
+          return Conflict(new { mensaje = "El rol ya existe." });
+
+        //if (nuevorol is null)
+        //{ return BadRequest(new { mensaje = "No se pudo crear el rol." });
+        //}
           
         return Ok(new
         {

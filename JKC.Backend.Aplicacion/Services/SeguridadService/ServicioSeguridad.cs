@@ -4,6 +4,7 @@ using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
 
@@ -84,7 +85,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       var usuarioDto = new UsuarioDto
       {
         IdUsuario = usuarioExistente.IdUsuario,
-        Nombre = usuarioExistente.Nombres,
+        Nombre = usuarioExistente.Nombre1,
         Correo = usuarioExistente.Correo
       };
 

@@ -2,6 +2,7 @@ using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Aplicacion.Services.UsuarioServices;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
+using JKC.Backend.Dominio.Entidades.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -74,6 +74,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       usuarioExistente.Apellido2 = usuarioActualizado.Apellido2;
       usuarioExistente.Correo = usuarioActualizado.Correo;
       usuarioExistente.Telefono = usuarioActualizado.Telefono;
+      usuarioExistente.IdEstado = usuarioActualizado.IdEstado;
       //usuarioExistente.Sexo = usuarioActualizado.Sexo;
       usuarioExistente.Contrasena = usuarioActualizado.Contrasena;
 

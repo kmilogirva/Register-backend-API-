@@ -12,9 +12,21 @@ namespace JKC.Backend.Dominio.Entidades.Usuario
     [Key]
     public int IdUsuario { get; set; }
     public string Nombre1 { get; set; }
-    public string Nombre2 { get; set; }
+    public string? Nombre2 { get; set; }
     public string Apellido1 { get; set; }
-    public string Apellido2 { get; set; }
+    public string? Apellido2 { get; set; }
+    public string NombreCompleto
+    {
+      get
+      {
+        return string.Join(" ", new[] {
+            Nombre1,
+            Nombre2,
+            Apellido1,
+            Apellido2
+        }.Where(n => !string.IsNullOrWhiteSpace(n)));
+      }
+    }
     public string Correo { get; set; }
     public string Telefono { get; set; }
     public int IdRol { get; set; }

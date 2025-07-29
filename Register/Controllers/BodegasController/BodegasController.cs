@@ -6,6 +6,7 @@ using JKC.Backend.Dominio.Entidades.Bodegas;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace JKC.Backend.Aplicacion.Controllers
 {
@@ -27,19 +28,13 @@ namespace JKC.Backend.Aplicacion.Controllers
       try
       {
         var resultado = await _servicioBodega.ObtenerListadoBodegas();
-        return Ok(new { mensaje = "Listado de categorias obtenido con éxito.", productos = resultado });
+        return Ok(new { mensaje = "Listado de categorías obtenido con éxito.", productos = resultado });
       }
       catch (Exception ex)
       {
         return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
       }
     }
-    ////[HttpGet("ObtenerTodaslasBodegas")]
-    //public async Task<ActionResult<IEnumerable<Bodega>>> GetBodegas()
-    //{
-    //  var bodegas = await _servicioBodega.ObtenerListadoBodegas();
-    //  return Ok(bodegas);
-    //}
 
     [HttpGet("BuscarBodegaporId")]
     public async Task<ActionResult<Bodega>> GetBodega(int id)
@@ -69,8 +64,7 @@ namespace JKC.Backend.Aplicacion.Controllers
         return BadRequest();
       }
 
-      // Opcional: en servicios avanzados se puede implementar una lógica Update específica
-      // Aquí simulamos una actualización eliminando y volviendo a crear
+      // Se simula actualización eliminando y volviendo a registrar
       await _servicioBodega.EliminarBodegaPorId(id);
       await _servicioBodega.RegistrarBodega(bodega);
 

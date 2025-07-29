@@ -1,5 +1,6 @@
 using JKC.Backend.Dominio.Entidades;
 using JKC.Backend.Dominio.Entidades.Categorias;
+using JKC.Backend.Dominio.Entidades.Generales;
 using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
@@ -30,7 +31,9 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
       modelBuilder.Entity<Producto>().ToTable("productos", "productos");
 
       modelBuilder.Entity<Categoria>().ToTable("categorias", "categorias");
-     
+
+      modelBuilder.Entity<TiposDocumento>().ToTable("tiposdocumento", "generales");
+
       base.OnModelCreating(modelBuilder);
     }
   }

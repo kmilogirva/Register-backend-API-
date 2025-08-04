@@ -17,5 +17,9 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password);
     Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario);
     Task<Roles> CrearRol(Roles nuevoRol);
+    Task<List<Roles>> ObtenerTodosRoles();
+    Task<Roles> ActualizarRol(int id, Roles rolActualizado);
+    Task<bool> EliminarRol(int id);
+
   }
 }

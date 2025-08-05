@@ -9,7 +9,6 @@ using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using Microsoft.AspNetCore.Identity;
 using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Generales;
 
@@ -17,7 +16,6 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 {
   [ApiController]
   [Route("api/[controller]")]
-
   public class SeguridadController : ControllerBase
   {
     private readonly IServicioSeguridad _seguridadServicio;
@@ -35,10 +33,8 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      // Llamamos al servicio de login
       var resultado = await _seguridadServicio.LoginAsync(credenciales.Correo, credenciales.Contrasena);
 
-      // Si el resultado no fue exitoso, regresamos Unauthorized
       if (!resultado.Exitoso)
       {
         return Unauthorized(new
@@ -48,20 +44,17 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         });
       }
 
-      // Si el resultado fue exitoso, generamos el JWT
       var claveSecreta = _configuration["Jwt:Key"];
       if (string.IsNullOrEmpty(claveSecreta))
-      {
-        throw new InvalidOperationException("La clave JWT no está configurada. Verifica el appsettings.json.");
-      }
+        throw new InvalidOperationException("La clave JWT no está configurada.");
+
       var key = Encoding.UTF8.GetBytes(claveSecreta);
 
       var claims = new[]
       {
-       new Claim("IdUsuario", resultado.Data.IdUsuario.ToString()), // Usamos resultado.Data para obtener el UsuarioDto
+        new Claim("IdUsuario", resultado.Data.IdUsuario.ToString()),
         new Claim(ClaimTypes.Name, resultado.Data.Nombre),
         new Claim(ClaimTypes.Email, resultado.Data.Correo)
-        // Aquí puedes agregar más claims si es necesario, por ejemplo, para roles
       };
 
       var tokenDescriptor = new SecurityTokenDescriptor
@@ -77,7 +70,6 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       var token = tokenHandler.CreateToken(tokenDescriptor);
       var tokenString = tokenHandler.WriteToken(token);
 
-      // Retornamos el token y la información del usuario
       return Ok(new
       {
         Token = tokenString,
@@ -142,6 +134,11 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 
 
         if (nuevorol is null)
+          return BadRequest(new { mensaje = "No se pudo crear el rol." });
+
+
+
+        if (nuevorol is null)
           return Conflict(new { mensaje = "El rol ya existe." });
 
         //if (nuevorol is null)
@@ -154,17 +151,75 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
           rol = nuevorol
         });
 
+
+        return Ok(new { mensaje = "Rol creado exitosamente.", rol = nuevorol });
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new
-        {
-          mensaje = "Ocurrió un error al crear el rol.",
-          detalle = ex.Message
-        });
+        return StatusCode(500, new { mensaje = "Ocurrió un error al crear el rol.", detalle = ex.Message });
       }
     }
 
+    // 🔴 IMPORTANTE: CAMBIAMOS LA RUTA A "roles/{id}"
+    [Authorize]
+    [HttpPut("Actualizarrolesporid/{id}")]
+    public async Task<IActionResult> ActualizarRol(int id, [FromBody] Roles rolActualizado)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      try
+      {
+        var rol = await _seguridadServicio.ActualizarRol(id, rolActualizado);
+
+        if (rol == null)
+          return NotFound(new { mensaje = "Rol no encontrado." });
+
+        return Ok(new { mensaje = "Rol actualizado exitosamente.", rol = rol });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al actualizar el rol.", detalle = ex.Message });
+      }
+    }
+
+
+    [Authorize]
+    [HttpDelete("Eliminarrolesporid/{id}")]
+    public async Task<IActionResult> EliminarRol(int id)
+    {
+      try
+      {
+        var eliminado = await _seguridadServicio.EliminarRol(id);
+
+        if (!eliminado)
+          return NotFound(new { mensaje = "Rol no encontrado." });
+
+        return Ok(new { mensaje = "Rol eliminado exitosamente." });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al eliminar el rol.", detalle = ex.Message });
+      }
+    }
+
+    [Authorize]
+    [HttpGet("listaroles")]
+    public async Task<IActionResult> ListarRoles()
+    {
+      try
+      {
+        var roles = await _seguridadServicio.ObtenerTodosRoles();
+        return Ok(roles);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Error al listar roles", detalle = ex.Message });
+      }
+    }
+
+    
+  }
 
       [HttpGet("combo-roles")]
       public async Task<IActionResult> ObtenerComboRoles()

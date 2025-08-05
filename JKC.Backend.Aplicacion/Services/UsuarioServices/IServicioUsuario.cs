@@ -1,6 +1,7 @@
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Usuario;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 {

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using JKC.Backend.Dominio.Entidades.Seguridad;
+using JKC.Backend.Dominio.Entidades.Generales;
 
 namespace JKC.Backend.WebApi.Controllers.SeguridadController
 {
@@ -82,38 +83,43 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       });
     }
 
-    [Authorize]
-    [HttpGet("consultarpermisosusuario/{idUsuario}")]
-    public async Task<IActionResult> ObtenerPermisosUsuario(int idUsuario)
-    {
-      try
-      {
-        var permisos = await _seguridadServicio.ObtenerPermisosPorIdUsuario(idUsuario);
+    // El propósito de este endpoint es para consultar los permisos que tiene cada usuario en el sistema según el rol asignado y mostrarlos en el frontend.
+    //[Authorize]
+    //[HttpGet("consultarpermisosusuario/{idUsuario}")]
+    //public async Task<IActionResult> ObtenerPermisosUsuario(int idUsuario)
+    //{
+    //  try
+    //  {
+    //    var permisos = await _seguridadServicio.ObtenerPermisosPorIdUsuario(idUsuario);
 
-        if (permisos == null || !permisos.Any())
-          return NotFound(new { mensaje = "No se encontraron permisos para este usuario." });
+    //    if (permisos == null || !permisos.Any())
+    //      return NotFound(new { mensaje = "No se encontraron permisos para este usuario." });
 
-        var modulosAgrupados = permisos
-          .GroupBy(p => p.IdModuloPadre)
-          .Select(g => new
-          {
-            ModuloPadre = g.FirstOrDefault().NomModuloPadre,
-            ModulosHijos = g.Select(m => new
-            {
-              m.IdModulo,
-              m.NomModulo,
-              m.IdPermiso,
-              m.NomPermiso
-            }).ToList()
-          }).ToList();
+    //    var modulosAgrupados = permisos
+    //      .GroupBy(p => p.IdModuloPadre)
+    //      .Select(g => new
+    //      {
+    //        ModuloPadre = g.FirstOrDefault().NomModuloPadre,
+    //        ModulosHijos = g.Select(m => new
+    //        {
+    //          m.IdModulo,
+    //          m.NomModulo,
+    //          m.IdPermiso,
+    //          m.NomPermiso
+    //        }).ToList()
+    //      }).ToList();
 
-        return Ok(modulosAgrupados);
-      }
-      catch (Exception ex)
-      {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al consultar los permisos del usuario.", detalle = ex.Message });
-      }
-    }
+    //    return Ok(modulosAgrupados);
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    return StatusCode(500, new
+    //    {
+    //      mensaje = "Ocurrió un error al consultar los permisos del usuario.",
+    //      detalle = ex.Message
+    //    });
+    //  }
+    //}
 
     [Authorize]
     [HttpPost("crearrol")]
@@ -126,8 +132,25 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       {
         Roles nuevorol = await _seguridadServicio.CrearRol(rol);
 
+
         if (nuevorol is null)
           return BadRequest(new { mensaje = "No se pudo crear el rol." });
+
+
+
+        if (nuevorol is null)
+          return Conflict(new { mensaje = "El rol ya existe." });
+
+        //if (nuevorol is null)
+        //{ return BadRequest(new { mensaje = "No se pudo crear el rol." });
+        //}
+
+        return Ok(new
+        {
+          mensaje = "Rol creado exitosamente.",
+          rol = nuevorol
+        });
+
 
         return Ok(new { mensaje = "Rol creado exitosamente.", rol = nuevorol });
       }
@@ -159,6 +182,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return StatusCode(500, new { mensaje = "Ocurrió un error al actualizar el rol.", detalle = ex.Message });
       }
     }
+
 
     [Authorize]
     [HttpDelete("Eliminarrolesporid/{id}")]
@@ -196,4 +220,28 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 
     
   }
+
+      [HttpGet("combo-roles")]
+      public async Task<IActionResult> ObtenerComboRoles()
+      {
+        try
+        {
+          var roles = await _seguridadServicio.ObtenerListadoRoles();
+
+          // Mapear a ComboResponse
+          var combo = roles.Select(r => new ComboResponse
+          {
+            Codigo = r.Id,
+            Valor = r.NombreRol
+          });
+
+          return Ok(combo);
+        }
+        catch (Exception ex)
+        {
+          return StatusCode(500, new { mensaje = "Error al obtener los roles.", error = ex.Message });
+        }
+      }
+
+    }
 }

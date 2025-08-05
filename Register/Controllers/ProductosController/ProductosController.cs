@@ -25,18 +25,18 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     {
       if (registroProductos == null)
       {
-        return BadRequest(new { mensaje = "Los datos del producto no pueden estar vacíos." });
+        return BadRequest("Los datos del producto no pueden estar vacíos.");
       }
 
       if (!ModelState.IsValid)
       {
-        return BadRequest(new { mensaje = "Datos del producto no son válidos.", errores = ModelState.Values.SelectMany(v => v.Errors) });
+        return BadRequest("Datos del producto no son válidos.");
       }
 
       try
       {
         var resultado = await _servicioProducto.RegistrarProducto(registroProductos);
-        return Ok(new { mensaje = "Producto registrado con éxito.", producto = resultado });
+        return Ok(new { mensaje = "Producto registrado con éxito." });
       }
       catch (Exception ex)
       {
@@ -50,11 +50,11 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
       try
       {
         var resultado = await _servicioProducto.ObtenerListadoProductos();
-        return Ok(new { mensaje = "Listado de productos obtenido con éxito.", productos = resultado });
+        return Ok(resultado);
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
+        return StatusCode(500, "Ocurrió un error al obtener el listado de productos.");
       }
     }
 
@@ -68,27 +68,27 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
+        return StatusCode(500, "Ocurrió un error al obtener los roles del usuario.");
       }
     }
-
-    [HttpPut("actualizarproducto/{idProducto:int}")]
-    public async Task<IActionResult> ActualizarProducto(int idProducto, [FromBody] Producto dto)
+       
+    [HttpPut("actualizarproducto")]
+    public async Task<IActionResult> ActualizarProducto(Producto dto)
     {
-      if (dto is null || idProducto != dto.IdProducto)
-        return BadRequest(new { mensaje = "Datos inválidos." });
+      //if (dto is null || idProducto != dto.IdProducto)
+      //  return BadRequest(new { mensaje = "Datos inválidos." });
 
       try
       {
         var actualizado = await _servicioProducto.ActualizarProducto(dto);
 
         return actualizado
-            ? Ok(new { mensaje = "Producto actualizado con éxito." })
-            : NotFound(new { mensaje = "Producto no encontrado." });
+           ? Ok(new { mensaje = "Producto actualizado con éxito." })
+           : NotFound(new { mensaje = "Producto no encontrado." });
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al actualizar el producto.", detalle = ex.Message });
+        return StatusCode(500,"Ocurrió un error al actualizar el producto.");
       }
     }
 

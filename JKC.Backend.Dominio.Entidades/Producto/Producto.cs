@@ -20,9 +20,9 @@ namespace JKC.Backend.Dominio.Entidades.Productos
     public string UbicacionProducto { get; set; }
     public int Cantidad { get; set; }
     public string Observacion { get; set; }
-    public DateTime? FechaCreacion { get; set; } = DateTime.Now; // Asignar la fecha actual por defecto
+    public DateTime? FechaCreacion { get; set; }
     public DateTime? FechaModificacion { get; set; }
-    public int? IdUsuarioCreacion { get; set; } =1; // Asignar un valor por defecto
+    public int? IdUsuarioCreacion { get; set; }
     public int? IdUsuarioModificacion { get; set; }
   }
 }

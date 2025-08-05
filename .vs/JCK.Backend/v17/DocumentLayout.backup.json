@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{FAB4F6C0-42E0-4D80-9BF7-415A27978FD7}|JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj|solutionrelative:jkc.backend.infraestructura.data\\repositorios\\repositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\user\\desktop\\backend proyecto\\jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\user\\desktop\\backend proyecto\\jkc.backend.aplicacion\\services\\categoriasservices\\serviciocategoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\categoriasservices\\serviciocategoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|c:\\users\\user\\desktop\\backend proyecto\\register\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{36D9CC5B-F89E-4E30-A512-AE8978C073C7}|Register\\JKC.Backend.WebApi.csproj|solutionrelative:register\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\user\\desktop\\backend proyecto\\jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|solutionrelative:jkc.backend.aplicacion\\services\\dtos\\responsemessages.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF81B26A-3814-49DE-B736-B5ED3CF4F460}|JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj|c:\\users\\user\\desktop\\backend proyecto\\jkc.backend.aplicacion\\services\\usuarioservices\\serviciousuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -44,14 +44,14 @@
               "RelativeDocumentMoniker": "JKC.Backend.Infraestructura.Data\\Repositorios\\Repositorio.cs",
               "ToolTip": "C:\\Users\\user\\Desktop\\Backend Proyecto\\JKC.Backend.Infraestructura.Data\\Repositorios\\Repositorio.cs",
               "RelativeToolTip": "JKC.Backend.Infraestructura.Data\\Repositorios\\Repositorio.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAArwCAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T22:46:20.013Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "CategoriasController.cs",
               "DocumentMoniker": "C:\\Users\\user\\Desktop\\Backend Proyecto\\Register\\Controllers\\CategoriasController\\CategoriasController.cs",
               "RelativeDocumentMoniker": "Register\\Controllers\\CategoriasController\\CategoriasController.cs",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ServicioCategoria.cs",
               "DocumentMoniker": "C:\\Users\\user\\Desktop\\Backend Proyecto\\JKC.Backend.Aplicacion\\Services\\CategoriasServices\\ServicioCategoria.cs",
               "RelativeDocumentMoniker": "JKC.Backend.Aplicacion\\Services\\CategoriasServices\\ServicioCategoria.cs",
@@ -76,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\Desktop\\Backend Proyecto\\Register\\Program.cs",
               "RelativeDocumentMoniker": "Register\\Program.cs",
@@ -122,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ResponseMessages.cs",
               "DocumentMoniker": "C:\\Users\\user\\Desktop\\Backend Proyecto\\JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",
               "RelativeDocumentMoniker": "JKC.Backend.Aplicacion\\Services\\DTOS\\ResponseMessages.cs",

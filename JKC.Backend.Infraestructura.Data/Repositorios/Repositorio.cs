@@ -1,8 +1,10 @@
+using JKC.Backend.Dominio.Entidades.Seguridad;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Infraestructura.Data.EntityFramework;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 
@@ -153,6 +155,24 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
 
       return await Entities.AnyAsync(predicado).ConfigureAwait(false);
     }
+
+    public async Task<List<T>> ObtenerTodosInclude(params Expression<Func<T, object>>[] includes)
+    {
+      IQueryable<T> query = Entities;
+      if (includes != null)
+      {
+        foreach (var include in includes)
+        {
+          query = query.Include(include);
+        }
+      }
+      return await query.ToListAsync().ConfigureAwait(false);
+    }
+
+    //public async Task<List<RolPermiso>> ObtenerPermisosRol(int idRol)
+    //{
+   
+    //}
   }
 }
 

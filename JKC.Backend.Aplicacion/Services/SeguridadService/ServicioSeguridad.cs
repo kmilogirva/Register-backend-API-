@@ -2,27 +2,33 @@ using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
+using JKC.Backend.Dominio.Entidades.Seguridad.DTO;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
   public class ServicioSeguridad: IServicioSeguridad
   {
     private readonly IRepository<Usuario> _usuarioRepository;
-    private readonly IRepository<Roles> _rolesRepository;
+    private readonly IRepository<Rol> _rolesRepository;
+    private readonly IRepository<AsignarPermisos> _asignarPermisos;
 
-    public ServicioSeguridad(IRepository<Usuario> usuarioRepository, IRepository<Roles> rolesRepository)
+    public ServicioSeguridad(IRepository<Usuario> usuarioRepository, IRepository<Rol> rolesRepository, IRepository<AsignarPermisos> asignarPermisos)
     {
       _usuarioRepository = usuarioRepository;
       _rolesRepository = rolesRepository;
+      _asignarPermisos = asignarPermisos;
     }
 
     // Firma simple: Task<Roles>
-    public async Task<Roles> CrearRol(Roles nuevoRol)
+    public async Task<Rol> CrearRol(Rol nuevoRol)
     {
       try
       {
@@ -107,10 +113,106 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       };
     }
 
-    public async Task<List<Roles>> ObtenerListadoRoles()
+    public async Task<List<Rol>> ObtenerListadoRoles()
     {
       return await _rolesRepository.ObtenerTodos();
     }
+
+    public async Task<List<RolPermisosAccionDTO>> ObtenerPermisosPorRol(int idRol)
+    {
+      try
+      {
+        var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<RolPermisosAccionDTO>(
+            "seguridad.ObtenerPermisosPorRol",  idRol
+        );
+        return resultado.ToList();
+      }
+      catch (Exception ex)
+      {
+        throw; // o lanza un mensaje más útil si lo necesitas
+      }
+    }
+
+    public async Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista)
+    {
+      if (asignarPermisosLista == null || !asignarPermisosLista.Any())
+        throw new ArgumentException("La lista de permisos está vacía.");
+
+      //var permisosexistentes = _rolesRepository.ObtenerTodos().Result
+      //  .Where(p => p.Id == asignarPermisosLista.FirstOrDefault().IdRol)
+      //  .ToList();
+
+      var idRol = asignarPermisosLista.FirstOrDefault()?.IdRol ?? 0;
+
+      var permisosexistentes = (await _asignarPermisos.ObtenerTodos())
+          .Where(p => p.IdRol == idRol)
+          .ToList();
+
+      foreach (var permiso in permisosexistentes)
+      {
+        EliminarPermisosPorRol(permiso.Id);
+      }
+
+      // 2️⃣ Insertar los nuevos permisos
+     
+      foreach (var permiso in asignarPermisosLista)
+      {
+        permiso.FechaCreacion = DateTime.UtcNow;
+        await _asignarPermisos.Crear(permiso);
+      }
+
+      // 3️⃣ Retornar lista actualizada
+      return await ObtenerPermisosPorRol(idRol);
+    }
+
+    public async Task<bool> EliminarPermisosPorRol(int Id)
+    {
+      try
+      {
+        //var permisosExistentes = await ObtenerPermisosPorRol(Id);
+
+        //foreach (var permiso in permisosExistentes)
+        //{
+          await _asignarPermisos.EliminarPorId(Id);
+        //}
+
+        return true; // Si llega aquí, todo salió bien
+      }
+      catch (Exception ex)
+      {
+        throw new Exception("Error al eliminar los permisos del rol", ex);
+      }
+    }
+
+    //Task<AsignarPermisos> EliminarPermisosPorRol(int idRol)
+    //{
+    //  throw new NotImplementedException();
+    //}
+
+
+    //public async Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista)
+    //{
+    //  try
+    //  {
+    //    foreach (var permiso in asignarPermisosLista)
+    //    {
+    //      permiso.FechaCreacion = DateTime.UtcNow;
+    //      await _asignarPermisos.Crear(permiso);
+    //    }
+
+    //    int idRol = asignarPermisosLista.First().IdRol;
+    //    var permisosActualizados = await ObtenerPermisosPorRol(idRol);
+    //    return permisosActualizados;
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    throw new Exception("Error al crear los permisos del rol", ex);
+    //  }
+    //}
+
+
+
+
 
 
 

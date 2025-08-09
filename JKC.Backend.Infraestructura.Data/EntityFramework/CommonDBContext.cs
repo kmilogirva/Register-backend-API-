@@ -24,8 +24,11 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
     {
       // Esquema Seguridad
       modelBuilder.Entity<Usuario>().ToTable("usuarios1", "seguridad");
-      modelBuilder.Entity<Roles>().ToTable("roles", "seguridad");
+      modelBuilder.Entity<Rol>().ToTable("roles", "seguridad");
+      //modelBuilder.Entity<RolPermiso>().ToTable("rolpermiso", "seguridad");
       modelBuilder.Entity<RolesUsuario>().ToTable("roles_usuarios", "seguridad");
+      modelBuilder.Entity<AsignarPermisos>().ToTable("rolpermiso", "seguridad");
+      
 
       // Esquema Productos
       modelBuilder.Entity<Producto>().ToTable("productos", "productos");
@@ -33,6 +36,21 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
       modelBuilder.Entity<Categoria>().ToTable("categorias", "categorias");
 
       modelBuilder.Entity<TiposDocumento>().ToTable("tiposdocumento", "generales");
+
+      modelBuilder.Entity<Modulo>()
+     .ToTable("modulos", "seguridad") // Tabla modulos en esquema seguridad
+     .HasKey(m => m.Id); // Asegúrate de definir la clave primaria
+
+      modelBuilder.Entity<SubModulo>()
+          .ToTable("submodulo", "seguridad") // Tabla submodulo en esquema seguridad
+          .HasKey(s => s.IdSubModulo); // Asegúrate de definir la clave primaria
+
+      modelBuilder.Entity<Modulo>()
+          .HasMany(m => m.Submodulos)           // Un módulo tiene muchos submódulos
+          .WithOne(s => s.Modulo)               // Cada submódulo tiene un módulo
+          .HasForeignKey(s => s.IdModulo)       // Clave foránea en Submodulo
+          .OnDelete(DeleteBehavior.Restrict);   // Opcional: evita borrado en cascada
+
 
       base.OnModelCreating(modelBuilder);
     }

@@ -17,15 +17,15 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
   public interface IServicioSeguridad
   {
     Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password);
-
+    //Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario);
     Task<Roles> CrearRol(Roles nuevoRol);
     Task<List<Roles>> ObtenerTodosRoles();
-    Task<List<Roles>> ObtenerListadoRoles();
-    Task<List<RolPermisosAccionDTO>> ObtenerPermisosPorRol(int idRol);
     Task<Roles> ActualizarRol(int id, Roles rolActualizado);
     Task<bool> EliminarRol(int id);
+    Task<List<Roles>> ObtenerListadoRoles();
+    Task<List<RolPermisosAccionDTO>> ObtenerPermisosPorRol(int idRol);
+    //Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(AsignarPermisos asignarPermisos);
     Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista);
-    Task<bool> EliminarPermisosPorRol(int idRol);
-
+    Task<bool> EliminarPermisosPorId(int id);
   }
 }

@@ -6,6 +6,7 @@ using JKC.Backend.Dominio.Entidades.Bodegas;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace JKC.Backend.Aplicacion.Controllers
 {
@@ -35,12 +36,6 @@ namespace JKC.Backend.Aplicacion.Controllers
         return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de bodegas.", error = ex.Message });
       }
     }
-    ////[HttpGet("ObtenerTodaslasBodegas")]
-    //public async Task<ActionResult<IEnumerable<Bodega>>> GetBodegas()
-    //{
-    //  var bodegas = await _servicioBodega.ObtenerListadoBodegas();
-    //  return Ok(bodegas);
-    //}
 
     [HttpGet("BuscarBodegaporId")]
     public async Task<ActionResult<Bodega>> GetBodega(int id)
@@ -71,10 +66,12 @@ namespace JKC.Backend.Aplicacion.Controllers
         return BadRequest("El ID en la URL no coincide con el ID de la bodega proporcionada.");
       }
 
+
       try
       {
 
         await _servicioBodega.ActualizarBodega(bodega);
+
 
 
         return NoContent();
@@ -85,6 +82,7 @@ namespace JKC.Backend.Aplicacion.Controllers
         return StatusCode(500, new { mensaje = "Ocurrió un error interno al actualizar la bodega.", error = ex.Message });
       }
     }
+    
     [HttpDelete("EliminarbodegaporId")]
     public async Task<IActionResult> DeleteBodega(int id)
     {

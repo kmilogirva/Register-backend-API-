@@ -1,7 +1,9 @@
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Aplicacion.Services.UsuarioServices;
+using JKC.Backend.Dominio.Entidades.Generales;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
+using JKC.Backend.Dominio.Entidades.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     }
 
     // POST: api/User/Create
-    [HttpPost("CrearUsuario")]
+    [HttpPost("crearusuario")]
     public async Task<IActionResult> CreateUsers([FromBody] Usuario nuevoUsuario)
     {
       if (!ModelState.IsValid)
@@ -44,7 +46,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
 
       if (resultado.Mensaje == "Usuario ya existe en la Base de Datos.")
       {
-        return Conflict(resultado); // 409 Conflict
+        return Conflict(resultado); 
       }
 
       return StatusCode(500, new ResponseMessages
@@ -54,21 +56,21 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
       });
     }
 
-    [HttpPost("listarusuarios")]
-    public async Task<IActionResult> ObtenerListadoProductos()
+    [HttpGet("obtenerusuarioporid")]
+    public async Task<IActionResult> ObtenerUsuarioPorId(int idUsuario)
     {
       try
       {
-        var resultado = await _usuarioServicio.ObtenerListadoUsuarios();
-        return Ok(new { mensaje = "Listado de usuarios obtenido con éxito.", usuarios= resultado });
+        var usuario = await _usuarioServicio.ObtenerUsuarioPorId(idUsuario);
+        return Ok(usuario);
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
+        return StatusCode(500, "Ocurrió un error al obtener los roles del usuario.");
       }
     }
 
-    [HttpPost("actualizarusuarioporid")]
+    [HttpPut("actualizarusuario")]
     public async Task<IActionResult> ActualizarUsuarioAsync(Usuario nuevousuario)
     {
       var usuarioexistente = await _usuarioServicio.ObtenerUsuarioPorId(nuevousuario.IdUsuario);
@@ -82,10 +84,21 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
       return Ok(new { mensaje = "El usuario ha sido actualizado con éxito.", nuevousuario.IdUsuario });
     }
 
+    [HttpGet("listarusuarios")]
+    public async Task<IActionResult> ObtenerListadoProductos()
+    {
+      try
+      {
+        var resultado = await _usuarioServicio.ObtenerListadoUsuarios();
+        return Ok(resultado);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, "Ocurrió un error al obtener el listado de productos.");
+      }
+    }
 
-
-
-    [HttpPost("eliminarusuarioporid")]
+    [HttpDelete("eliminarusuarioporid")]
     public async Task<IActionResult> EliminarUsuariooAsync(int idUsuario)
     {
       var usuario = await _usuarioServicio.ObtenerUsuarioPorId(idUsuario);
@@ -100,25 +113,27 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     }
 
 
-    [HttpGet("consultarrolesporusuario/{idUsuario}")]
-    public async Task<IActionResult> ObtenerRolesPorIdUsuario(int idUsuario)
-    {
-      try
-      {
-        var roles = await _usuarioServicio.ObtenerRolesPorIdUsuario(idUsuario);
+    //[HttpGet("consultarrolesporusuario/{idUsuario}")]
+    //public async Task<IActionResult> ObtenerRolesPorIdUsuario(int idUsuario)
+    //{
+    //  try
+    //  {
+    //    var roles = await _usuarioServicio.ObtenerRolesPorIdUsuario(idUsuario);
 
-        if (roles == null || roles.Count == 0)
-        {
-          return NotFound(new { mensaje = "No se encontraron roles para el usuario especificado." });
-        }
+    //    if (roles == null || roles.Count == 0)
+    //    {
+    //      return NotFound(new { mensaje = "No se encontraron roles para el usuario especificado." });
+    //    }
 
-        return Ok(roles);
-      }
-      catch (Exception ex)
-      {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
-      }
-    }
+    //    return Ok(roles);
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
+    //  }
+    //}
+
+    
 
   }
 }

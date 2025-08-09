@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Usuario;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 {
@@ -67,11 +68,14 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
         return false;
 
       // Actualiza los campos del usuario existente con los del actualizado
-      usuarioExistente.Nombres = usuarioActualizado.Nombres;
-      usuarioExistente.Apellidos = usuarioActualizado.Apellidos;
+      usuarioExistente.Nombre1 = usuarioActualizado.Nombre1;
+      usuarioExistente.Nombre2 = usuarioActualizado.Nombre2;
+      usuarioExistente.Apellido1 = usuarioActualizado.Apellido1;
+      usuarioExistente.Apellido2 = usuarioActualizado.Apellido2;
       usuarioExistente.Correo = usuarioActualizado.Correo;
       usuarioExistente.Telefono = usuarioActualizado.Telefono;
-      usuarioExistente.Sexo = usuarioActualizado.Sexo;
+      usuarioExistente.IdEstado = usuarioActualizado.IdEstado;
+      //usuarioExistente.Sexo = usuarioActualizado.Sexo;
       usuarioExistente.Contrasena = usuarioActualizado.Contrasena;
 
 

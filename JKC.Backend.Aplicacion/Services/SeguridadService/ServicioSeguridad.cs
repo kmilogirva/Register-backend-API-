@@ -4,12 +4,15 @@ using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
+//using System.Data.Entity;
+using System.Linq;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
-  public class ServicioSeguridad: IServicioSeguridad
+  public class ServicioSeguridad : IServicioSeguridad
   {
     private readonly IRepository<Usuario> _usuarioRepository;
     private readonly IRepository<Roles> _rolesRepository;
@@ -20,7 +23,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       _rolesRepository = rolesRepository;
     }
 
-    // Firma simple: Task<Roles>
     public async Task<Roles> CrearRol(Roles nuevoRol)
     {
       try
@@ -34,7 +36,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
         bool existeRol = await _rolesRepository.AnyAsync(
           r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
-
 
         if (existeRol)
           return null;
@@ -50,6 +51,30 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       }
     }
 
+    public async Task<List<Roles>> ObtenerTodosRoles()
+    {
+      var roles = await _rolesRepository.ObtenerTodos();
+      return roles.ToList();
+    }
+
+    // Este método se llama cuando Angular hace PUT /api/seguridad/roles/{id}
+    public async Task<Roles> ActualizarRol(int id, Roles rolActualizado)
+    {
+      var rolExistente = await _rolesRepository.ObtenerPorId(id);
+
+      if (rolExistente == null)
+        return null;
+
+      // Actualizamos los datos
+      rolExistente.NombreRol = rolActualizado.NombreRol;
+      rolExistente.IdEstado = rolActualizado.IdEstado;
+      rolExistente.FechaModificacion = DateTime.UtcNow;
+      rolExistente.IdUsuarioModificacion = rolActualizado.IdUsuarioModificacion;
+
+      await _rolesRepository.Actualizar(rolExistente);
+
+      return rolExistente;
+    }
 
     public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
     {
@@ -63,14 +88,18 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      // Busca al usuario con las credenciales proporcionadas
+
+      // Busca al usuario con las credenciales proporcionadas y valida si se encuantra activo
       var usuario = await _usuarioRepository.ObtenerTodos();
 
-      var usuarioExistente = usuario.FirstOrDefault(u => u.Correo == email && u.Contrasena == password);
-          //.FirstOrDefaultAsync(u => u.Correo == email && u.Contrasena == password);
+      var usuarioAutorizado = usuario.FirstOrDefault(u =>
+        u.Correo == email &&
+        u.Contrasena == password &&
+        u.IdEstado == 1);
 
       // Si no se encuentra el usuario, devuelve un resultado fallido
-      if (usuario == null)
+      if (usuarioAutorizado == null)
+
       {
         return new ResponseMessagesData<UsuarioDto>
         {
@@ -80,21 +109,31 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      // Si el usuario se encuentra, crea un objeto UsuarioDto con los datos necesarios
       var usuarioDto = new UsuarioDto
       {
-        IdUsuario = usuarioExistente.IdUsuario,
-        Nombre = usuarioExistente.Nombres,
-        Correo = usuarioExistente.Correo
+        IdUsuario = usuarioAutorizado.IdUsuario,
+        Nombre = usuarioAutorizado.NombreCompleto,
+        //Nombre = string.Join(" ", new[] {
+        //    usuarioAutorizado.Nombre1,
+        //    usuarioAutorizado.Nombre2,
+        //    usuarioAutorizado.Apellido1,
+        //    usuarioAutorizado.Apellido2
+        //}.Where(s => !string.IsNullOrWhiteSpace(s))),
+        Correo = usuarioAutorizado.Correo,
+        IdRol = usuarioAutorizado.IdRol
       };
 
-      // Retorna el resultado exitoso con los datos del usuario
       return new ResponseMessagesData<UsuarioDto>
       {
         Exitoso = true,
         Mensaje = "Inicio de sesión exitoso",
         Data = usuarioDto
       };
+    }
+
+    public async Task<List<Roles>> ObtenerListadoRoles()
+    {
+      return await _rolesRepository.ObtenerTodos();
     }
 
 
@@ -104,19 +143,19 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     //  return await _usuarioRepository.ObtenerTodos().ToListAsync();
     //}
 
-    public async Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario)
-    {
-      try
-      {
+    //public async Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario)
+    //{
+    //  try
+    //  {
 
-        var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloDto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
-        return permisos.ToList();
-      }
-      catch (Exception ex)
-      {
-        // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
-        throw new Exception("Error al obtener roles por usuario", ex);
-      }
-    }
+    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloDto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
+    //    return permisos.ToList();
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
+    //    throw new Exception("Error al obtener roles por usuario", ex);
+    //  }
+    //}
   }
 }

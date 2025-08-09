@@ -83,43 +83,6 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       });
     }
 
-    // El propósito de este endpoint es para consultar los permisos que tiene cada usuario en el sistema según el rol asignado y mostrarlos en el frontend.
-    //[Authorize]
-    //[HttpGet("consultarpermisosusuario/{idUsuario}")]
-    //public async Task<IActionResult> ObtenerPermisosUsuario(int idUsuario)
-    //{
-    //  try
-    //  {
-    //    var permisos = await _seguridadServicio.ObtenerPermisosPorIdUsuario(idUsuario);
-
-    //    if (permisos == null || !permisos.Any())
-    //      return NotFound(new { mensaje = "No se encontraron permisos para este usuario." });
-
-    //    var modulosAgrupados = permisos
-    //      .GroupBy(p => p.IdModuloPadre)
-    //      .Select(g => new
-    //      {
-    //        ModuloPadre = g.FirstOrDefault().NomModuloPadre,
-    //        ModulosHijos = g.Select(m => new
-    //        {
-    //          m.IdModulo,
-    //          m.NomModulo,
-    //          m.IdPermiso,
-    //          m.NomPermiso
-    //        }).ToList()
-    //      }).ToList();
-
-    //    return Ok(modulosAgrupados);
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    return StatusCode(500, new
-    //    {
-    //      mensaje = "Ocurrió un error al consultar los permisos del usuario.",
-    //      detalle = ex.Message
-    //    });
-    //  }
-    //}
 
     [Authorize]
     [HttpPost("crearrol")]
@@ -217,31 +180,55 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return StatusCode(500, new { mensaje = "Error al listar roles", detalle = ex.Message });
       }
     }
+  
 
-    
-  }
-
-      [HttpGet("combo-roles")]
-      public async Task<IActionResult> ObtenerComboRoles()
+    [HttpGet("combo-roles")]
+    public async Task<IActionResult> ObtenerComboRoles()
+    {
+      try
       {
-        try
-        {
-          var roles = await _seguridadServicio.ObtenerListadoRoles();
+        var roles = await _seguridadServicio.ObtenerListadoRoles();
 
-          // Mapear a ComboResponse
-          var combo = roles.Select(r => new ComboResponse
-          {
-            Codigo = r.Id,
-            Valor = r.NombreRol
-          });
-
-          return Ok(combo);
-        }
-        catch (Exception ex)
+        // Mapear a ComboResponse
+        var combo = roles.Select(r => new ComboResponse
         {
-          return StatusCode(500, new { mensaje = "Error al obtener los roles.", error = ex.Message });
-        }
+          Codigo = r.Id,
+          Valor = r.NombreRol
+        });
+
+        return Ok(combo);
       }
-
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Error al obtener los roles.", error = ex.Message });
+      }
     }
+
+    [HttpGet("consultar-permisos-accion-por-rol/{idRol}")]
+    public async Task<IActionResult> ObtenerPermisosPorRol(int idRol)
+    {
+      var resultado = await _seguridadServicio.ObtenerPermisosPorRol(idRol);
+      return Ok(resultado);
+    }
+
+
+
+
+    [HttpPost("asignar-permisos-a-rol")]
+    public async Task<IActionResult> AsignarPermisosARol([FromBody] List<AsignarPermisos> request)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      try
+      {
+        var resultado = await _seguridadServicio.CrearPermisosRolesAcciones(request);
+        return Ok(new { mensaje = "Permisos asignados exitosamente.", resultado });
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Error al asignar permisos al rol.", error = ex.Message });
+      }
+    }
+  }
 }

@@ -8,13 +8,10 @@ using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
-using System.Data.Entity;
-using System.Data.SqlClient;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
-  public class ServicioSeguridad: IServicioSeguridad
+  public class ServicioSeguridad : IServicioSeguridad
   {
     private readonly IRepository<Usuario> _usuarioRepository;
     private readonly IRepository<Rol> _rolesRepository;
@@ -28,7 +25,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     }
 
     // Firma simple: Task<Roles>
-    public async Task<Rol> CrearRol(Rol nuevoRol)
+    public async Task<Roles> CrearRol(Roles nuevoRol)
     {
       try
       {
@@ -41,7 +38,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
         bool existeRol = await _rolesRepository.AnyAsync(
           r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
-
 
         if (existeRol)
           return null;
@@ -57,6 +53,30 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       }
     }
 
+    public async Task<List<Roles>> ObtenerTodosRoles()
+    {
+      var roles = await _rolesRepository.ObtenerTodos();
+      return roles.ToList();
+    }
+
+    // Este método se llama cuando Angular hace PUT /api/seguridad/roles/{id}
+    public async Task<Roles> ActualizarRol(int id, Roles rolActualizado)
+    {
+      var rolExistente = await _rolesRepository.ObtenerPorId(id);
+
+      if (rolExistente == null)
+        return null;
+
+      // Actualizamos los datos
+      rolExistente.NombreRol = rolActualizado.NombreRol;
+      rolExistente.IdEstado = rolActualizado.IdEstado;
+      rolExistente.FechaModificacion = DateTime.UtcNow;
+      rolExistente.IdUsuarioModificacion = rolActualizado.IdUsuarioModificacion;
+
+      await _rolesRepository.Actualizar(rolExistente);
+
+      return rolExistente;
+    }
 
     public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
     {
@@ -70,6 +90,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
+
       // Busca al usuario con las credenciales proporcionadas y valida si se encuantra activo
       var usuario = await _usuarioRepository.ObtenerTodos();
 
@@ -80,6 +101,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
       // Si no se encuentra el usuario, devuelve un resultado fallido
       if (usuarioAutorizado == null)
+
       {
         return new ResponseMessagesData<UsuarioDto>
         {
@@ -89,7 +111,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      // Si el usuario se encuentra, crea un objeto UsuarioDto con los datos necesarios
       var usuarioDto = new UsuarioDto
       {
         IdUsuario = usuarioAutorizado.IdUsuario,
@@ -104,7 +125,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         IdRol = usuarioAutorizado.IdRol
       };
 
-      // Retorna el resultado exitoso con los datos del usuario
       return new ResponseMessagesData<UsuarioDto>
       {
         Exitoso = true,
@@ -165,75 +185,23 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return await ObtenerPermisosPorRol(idRol);
     }
 
-    public async Task<bool> EliminarPermisosPorRol(int Id)
-    {
-      try
-      {
-        //var permisosExistentes = await ObtenerPermisosPorRol(Id);
+        public async Task<bool> EliminarPermisosPorId(int Id)
+        {
+            try
+            {
+                //var permisosExistentes = await ObtenerPermisosPorRol(Id);
 
-        //foreach (var permiso in permisosExistentes)
-        //{
-          await _asignarPermisos.EliminarPorId(Id);
-        //}
+                //foreach (var permiso in permisosExistentes)
+                //{
+                await _asignarPermisos.EliminarPorId(Id);
+                //}
 
-        return true; // Si llega aquí, todo salió bien
-      }
-      catch (Exception ex)
-      {
-        throw new Exception("Error al eliminar los permisos del rol", ex);
-      }
-    }
+                return true; // Si llega aquí, todo salió bien
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar los permisos del rol", ex);
+            }
 
-    //Task<AsignarPermisos> EliminarPermisosPorRol(int idRol)
-    //{
-    //  throw new NotImplementedException();
-    //}
-
-
-    //public async Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista)
-    //{
-    //  try
-    //  {
-    //    foreach (var permiso in asignarPermisosLista)
-    //    {
-    //      permiso.FechaCreacion = DateTime.UtcNow;
-    //      await _asignarPermisos.Crear(permiso);
-    //    }
-
-    //    int idRol = asignarPermisosLista.First().IdRol;
-    //    var permisosActualizados = await ObtenerPermisosPorRol(idRol);
-    //    return permisosActualizados;
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    throw new Exception("Error al crear los permisos del rol", ex);
-    //  }
-    //}
-
-
-
-
-
-
-
-    //public async Task<List<Usuarios>> ObtenerListadoUsuario()
-    //{
-    //  return await _usuarioRepository.ObtenerTodos().ToListAsync();
-    //}
-
-    //public async Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario)
-    //{
-    //  try
-    //  {
-
-    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloDto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
-    //    return permisos.ToList();
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
-    //    throw new Exception("Error al obtener roles por usuario", ex);
-    //  }
-    //}
   }
 }

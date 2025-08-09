@@ -25,5 +25,7 @@ namespace JKC.Backend.Infraestructura.Framework.RepositoryPattern
     DataSet ExecuteStoreProcedure(string sqlQuery, List<DbParameter> parameters);
     //IEnumerable<TEntityVO> ExecuteStoreProcedure<TEntityVO>(string procedureName, object parameters);
     Task<IEnumerable<T>> EjecutarProcedimientoAlmacenado<T>(string storedProcedure, params object[] parametros);
+
+    Task<List<T>> ObtenerTodosInclude(params Expression<Func<T, object>>[] includes);
   }
 }

@@ -1,3 +1,4 @@
+// ServicioBodega.cs
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JKC.Backend.Aplicacion.Services.BodegaServices;
@@ -18,6 +19,7 @@ namespace JKC.Backend.Aplicacion.Services.BodegaServices
 
     public async Task<Bodega> RegistrarBodega(Bodega bodega)
     {
+      bodega.FechaCreacion = DateTime.Now;
       await _bodegaRepository.Crear(bodega);
       return bodega;
     }
@@ -35,6 +37,12 @@ namespace JKC.Backend.Aplicacion.Services.BodegaServices
     public async Task EliminarBodegaPorId(int? id)
     {
       await _bodegaRepository.EliminarPorId(id);
+    }
+
+    public async Task ActualizarBodega(Bodega bodega)
+    {
+      bodega.FechaModificacion = DateTime.Now;
+      await _bodegaRepository.Actualizar(bodega);
     }
   }
 }

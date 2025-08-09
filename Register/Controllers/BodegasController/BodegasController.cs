@@ -22,17 +22,18 @@ namespace JKC.Backend.Aplicacion.Controllers
       _servicioBodega = servicioBodega;
     }
 
-    [HttpPost("listarbodegas")]
-    public async Task<IActionResult> ObtenerListadoCategorias()
+    [HttpGet("listarbodegas")]
+    public async Task<IActionResult> ObtenerListadoBodegas()
     {
       try
       {
         var resultado = await _servicioBodega.ObtenerListadoBodegas();
-        return Ok(new { mensaje = "Listado de categorías obtenido con éxito.", productos = resultado });
+
+        return Ok(resultado);
       }
       catch (Exception ex)
       {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
+        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de bodegas.", error = ex.Message });
       }
     }
 
@@ -53,24 +54,35 @@ namespace JKC.Backend.Aplicacion.Controllers
     public async Task<ActionResult<Bodega>> PostBodega([FromBody] Bodega bodega)
     {
       var nuevaBodega = await _servicioBodega.RegistrarBodega(bodega);
-      return CreatedAtAction(nameof(GetBodega), new { id = nuevaBodega.IdBodega }, nuevaBodega);
+      return Ok(nuevaBodega);
     }
 
     [HttpPut("ActualizaunaBodegaporid")]
     public async Task<IActionResult> PutBodega(int id, [FromBody] Bodega bodega)
     {
+      
       if (id != bodega.IdBodega)
       {
-        return BadRequest();
+        return BadRequest("El ID en la URL no coincide con el ID de la bodega proporcionada.");
       }
 
-      // Se simula actualización eliminando y volviendo a registrar
-      await _servicioBodega.EliminarBodegaPorId(id);
-      await _servicioBodega.RegistrarBodega(bodega);
 
-      return NoContent();
+      try
+      {
+
+        await _servicioBodega.ActualizarBodega(bodega);
+
+
+
+        return NoContent();
+      }
+      catch (Exception ex)
+      {
+
+        return StatusCode(500, new { mensaje = "Ocurrió un error interno al actualizar la bodega.", error = ex.Message });
+      }
     }
-
+    
     [HttpDelete("EliminarbodegaporId")]
     public async Task<IActionResult> DeleteBodega(int id)
     {

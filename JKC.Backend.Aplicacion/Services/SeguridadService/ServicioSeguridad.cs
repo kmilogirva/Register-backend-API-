@@ -14,17 +14,15 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
   public class ServicioSeguridad : IServicioSeguridad
   {
     private readonly IRepository<Usuario> _usuarioRepository;
-    private readonly IRepository<Rol> _rolesRepository;
+    private readonly IRepository<Roles> _rolesRepository;
     private readonly IRepository<AsignarPermisos> _asignarPermisos;
 
-    public ServicioSeguridad(IRepository<Usuario> usuarioRepository, IRepository<Rol> rolesRepository, IRepository<AsignarPermisos> asignarPermisos)
+    public ServicioSeguridad(IRepository<Usuario> usuarioRepository, IRepository<Roles> rolesRepository, IRepository<AsignarPermisos> asignarPermisos)
     {
       _usuarioRepository = usuarioRepository;
       _rolesRepository = rolesRepository;
       _asignarPermisos = asignarPermisos;
     }
-
-    // Firma simple: Task<Roles>
     public async Task<Roles> CrearRol(Roles nuevoRol)
     {
       try
@@ -133,7 +131,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       };
     }
 
-    public async Task<List<Rol>> ObtenerListadoRoles()
+    public async Task<List<Roles>> ObtenerListadoRoles()
     {
       return await _rolesRepository.ObtenerTodos();
     }
@@ -143,7 +141,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       try
       {
         var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<RolPermisosAccionDTO>(
-            "seguridad.ObtenerPermisosPorRol",  idRol
+            "seguridad.ObtenerPermisosPorRol", idRol
         );
         return resultado.ToList();
       }
@@ -170,11 +168,11 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
       foreach (var permiso in permisosexistentes)
       {
-        EliminarPermisosPorRol(permiso.Id);
+        await EliminarPermisosPorId(permiso.Id);
       }
 
       // 2️⃣ Insertar los nuevos permisos
-     
+
       foreach (var permiso in asignarPermisosLista)
       {
         permiso.FechaCreacion = DateTime.UtcNow;
@@ -185,23 +183,46 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return await ObtenerPermisosPorRol(idRol);
     }
 
-        public async Task<bool> EliminarPermisosPorId(int Id)
-        {
-            try
-            {
-                //var permisosExistentes = await ObtenerPermisosPorRol(Id);
+    public async Task<bool> EliminarPermisosPorId(int Id)
+    {
+      try
+      {
+        //var permisosExistentes = await ObtenerPermisosPorRol(Id);
 
-                //foreach (var permiso in permisosExistentes)
-                //{
-                await _asignarPermisos.EliminarPorId(Id);
-                //}
+        //foreach (var permiso in permisosExistentes)
+        //{
+        await _asignarPermisos.EliminarPorId(Id);
+        //}
 
-                return true; // Si llega aquí, todo salió bien
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar los permisos del rol", ex);
-            }
+        return true; // Si llega aquí, todo salió bien
+      }
+      catch (Exception ex)
+      {
+        throw new Exception("Error al eliminar los permisos del rol", ex);
+      }
 
+    }
+
+    public Task<bool> EliminarRol(int id)
+    {
+      throw new NotImplementedException();
+    }
+
+    //public Task<Roles> CrearRol(Roles nuevoRol)
+    //{
+    //  try
+    //  {
+    //    bool existeRol = await _rolesRepository.AnyAsync(
+    //      r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
+    //  }
+    //  catch (Exception ex)
+    //  {
+    //    throw new Exception("Error al crear el rol", ex);
+    //  }
+
+    //Task<List<Roles>> IServicioSeguridad.ObtenerListadoRoles()
+    //{
+    //  throw new NotImplementedException();
+    //}
   }
 }

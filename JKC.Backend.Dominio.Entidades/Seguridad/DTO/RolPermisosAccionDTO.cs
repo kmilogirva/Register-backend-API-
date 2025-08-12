@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JKC.Backend.Dominio.Entidades.Seguridad.DTO
+namespace JKC.Backend.Dominio.Entidades.Seguridad.producto
 {
-  public class RolPermisosAccionDTO
+  public class RolPermisosAccionproducto
   {
     public int? Id { get; set; }
     public int? IdRol { get; set; }

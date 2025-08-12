@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JKC.Backend.Dominio.Entidades.Producto.DTO
 {
-  public class ProductoDto
+  public class Productoproducto
   {
     public int IdProducto { get; set; }
     public string CodEan { get; set; }

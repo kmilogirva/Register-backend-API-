@@ -1,13 +1,9 @@
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
-using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
-using JKC.Backend.Dominio.Entidades.Seguridad.DTO;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-using Microsoft.EntityFrameworkCore;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
@@ -57,7 +53,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return roles.ToList();
     }
 
-    // Este método se llama cuando Angular hace PUT /api/seguridad/roles/{id}
     public async Task<Roles> ActualizarRol(int id, Roles rolActualizado)
     {
       var rolExistente = await _rolesRepository.ObtenerPorId(id);
@@ -88,8 +83,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-
-      // Busca al usuario con las credenciales proporcionadas y valida si se encuantra activo
       var usuario = await _usuarioRepository.ObtenerTodos();
 
       var usuarioAutorizado = usuario.FirstOrDefault(u =>
@@ -97,7 +90,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         u.Contrasena == password &&
         u.IdEstado == 1);
 
-      // Si no se encuentra el usuario, devuelve un resultado fallido
       if (usuarioAutorizado == null)
 
       {
@@ -109,16 +101,10 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      var usuarioDto = new UsuarioDto
+      var usuarioproducto = new UsuarioDto
       {
         IdUsuario = usuarioAutorizado.IdUsuario,
         Nombre = usuarioAutorizado.NombreCompleto,
-        //Nombre = string.Join(" ", new[] {
-        //    usuarioAutorizado.Nombre1,
-        //    usuarioAutorizado.Nombre2,
-        //    usuarioAutorizado.Apellido1,
-        //    usuarioAutorizado.Apellido2
-        //}.Where(s => !string.IsNullOrWhiteSpace(s))),
         Correo = usuarioAutorizado.Correo,
         IdRol = usuarioAutorizado.IdRol
       };
@@ -127,7 +113,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       {
         Exitoso = true,
         Mensaje = "Inicio de sesión exitoso",
-        Data = usuarioDto
+        Data = usuarioproducto
       };
     }
 
@@ -136,11 +122,11 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return await _rolesRepository.ObtenerTodos();
     }
 
-    public async Task<List<RolPermisosAccionDTO>> ObtenerPermisosPorRol(int idRol)
+    public async Task<List<RolPermisosAccionproducto>> ObtenerPermisosPorRol(int idRol)
     {
       try
       {
-        var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<RolPermisosAccionDTO>(
+        var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<RolPermisosAccionproducto>(
             "seguridad.ObtenerPermisosPorRol", idRol
         );
         return resultado.ToList();
@@ -151,14 +137,11 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       }
     }
 
-    public async Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista)
+    public async Task<List<RolPermisosAccionproducto>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista)
     {
       if (asignarPermisosLista == null || !asignarPermisosLista.Any())
         throw new ArgumentException("La lista de permisos está vacía.");
 
-      //var permisosexistentes = _rolesRepository.ObtenerTodos().Result
-      //  .Where(p => p.Id == asignarPermisosLista.FirstOrDefault().IdRol)
-      //  .ToList();
 
       var idRol = asignarPermisosLista.FirstOrDefault()?.IdRol ?? 0;
 
@@ -171,7 +154,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         await EliminarPermisosPorId(permiso.Id);
       }
 
-      // 2️⃣ Insertar los nuevos permisos
 
       foreach (var permiso in asignarPermisosLista)
       {
@@ -179,7 +161,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         await _asignarPermisos.Crear(permiso);
       }
 
-      // 3️⃣ Retornar lista actualizada
       return await ObtenerPermisosPorRol(idRol);
     }
 
@@ -187,12 +168,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     {
       try
       {
-        //var permisosExistentes = await ObtenerPermisosPorRol(Id);
-
-        //foreach (var permiso in permisosExistentes)
-        //{
         await _asignarPermisos.EliminarPorId(Id);
-        //}
 
         return true; // Si llega aquí, todo salió bien
       }
@@ -207,22 +183,19 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     {
       throw new NotImplementedException();
     }
-
-    //public Task<Roles> CrearRol(Roles nuevoRol)
-    //{
-    //  try
-    //  {
-    //    bool existeRol = await _rolesRepository.AnyAsync(
-    //      r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    throw new Exception("Error al crear el rol", ex);
-    //  }
-
-    //Task<List<Roles>> IServicioSeguridad.ObtenerListadoRoles()
-    //{
-    //  throw new NotImplementedException();
-    //}
+    public async Task<string> ObtenerMenuJsonDesdeBaseDeDatos(int idRol)
+    {
+      try
+      {
+        var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<string>(
+           "seguridad.ObtenerJsonPermisosAsignadosPorRol", idRol
+       );
+        return resultado.FirstOrDefault();
+      }
+      catch (Exception ex)
+      {
+        throw new Exception("Error al obtener el menú desde la base de datos", ex);
+      }
+    }
   }
 }

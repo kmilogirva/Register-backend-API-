@@ -18,9 +18,12 @@ namespace JKC.Backend.Dominio.Entidades.Seguridad
 
       public int IdModulo { get; set; }
 
+      public string? IconSubModulo { get; set; }
+      public string? RutaAngular { get; set; }
+
       public int IdEstado { get; set; }
 
-      public DateTime FechaCreacion { get; set; }
+      public DateTime? FechaCreacion { get; set; }
 
       public int IdUsuarioCreacion { get; set; }
 

@@ -1,9 +1,7 @@
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Aplicacion.Services.SeguridadService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
 using System.Linq;
@@ -11,6 +9,8 @@ using System.Threading.Tasks;
 using System;
 using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Generales;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace JKC.Backend.WebApi.Controllers.SeguridadController
 {
@@ -54,7 +54,8 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       {
         new Claim("IdUsuario", resultado.Data.IdUsuario.ToString()),
         new Claim(ClaimTypes.Name, resultado.Data.Nombre),
-        new Claim(ClaimTypes.Email, resultado.Data.Correo)
+        new Claim(ClaimTypes.Email, resultado.Data.Correo),
+        new Claim("IdRol", resultado.Data.IdRol.ToString())
       };
 
       var tokenDescriptor = new SecurityTokenDescriptor
@@ -78,7 +79,8 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         {
           resultado.Data.IdUsuario,
           resultado.Data.Nombre,
-          resultado.Data.Correo
+          resultado.Data.Correo,
+          resultado.Data.IdRol
         }
       });
     }
@@ -211,9 +213,6 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       return Ok(resultado);
     }
 
-
-
-
     [HttpPost("asignar-permisos-a-rol")]
     public async Task<IActionResult> AsignarPermisosARol([FromBody] List<AsignarPermisos> request)
     {
@@ -230,5 +229,28 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return StatusCode(500, new { mensaje = "Error al asignar permisos al rol.", error = ex.Message });
       }
     }
+
+
+
+  [HttpPost("consultar-menu-por-rol/{idRol}")]
+  public async Task<IActionResult> ConsultarMenuRol(int idRol)
+      {
+        try
+        {
+          var resultado = await _seguridadServicio.ObtenerMenuJsonDesdeBaseDeDatos(idRol);
+
+          if (string.IsNullOrEmpty(resultado))
+          {
+            return NotFound("No se encontró un menú para el rol especificado.");
+          }
+
+          return Ok(resultado);
+        }
+        catch (Exception ex)
+        {
+          // Return a 500 status code with a descriptive error message.
+          return StatusCode(500, new { mensaje = "Error al consultar el menú por rol.", error = ex.Message });
+        }
+      }
   }
 }

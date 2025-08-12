@@ -1,6 +1,6 @@
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
@@ -16,7 +16,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 
     Task<List<RolesUsuario>> ObtenerRolesPorIdUsuario(int idUsuario);
 
-    //Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario);
+    //Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario);
 
     // Yo obtendré permisos por Roles.
     //Task<List<RolesPermisos>> ObtenerPermisosPorUsuarioId(int idUsuario);

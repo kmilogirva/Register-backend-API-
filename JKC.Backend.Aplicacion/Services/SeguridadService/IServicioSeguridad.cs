@@ -2,9 +2,9 @@ using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Aplicacion.Services.DTOS.Usuarios;
 using JKC.Backend.Dominio.Entidades.Productos;
 using JKC.Backend.Dominio.Entidades.Seguridad;
-using JKC.Backend.Dominio.Entidades.Seguridad.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +23,10 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     Task<Roles> ActualizarRol(int id, Roles rolActualizado);
     Task<bool> EliminarRol(int id);
     Task<List<Roles>> ObtenerListadoRoles();
-    Task<List<RolPermisosAccionDTO>> ObtenerPermisosPorRol(int idRol);
+    Task<List<RolPermisosAccionproducto>> ObtenerPermisosPorRol(int idRol);
     //Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(AsignarPermisos asignarPermisos);
-    Task<List<RolPermisosAccionDTO>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista);
+    Task<List<RolPermisosAccionproducto>> CrearPermisosRolesAcciones(List<AsignarPermisos> asignarPermisosLista);
     Task<bool> EliminarPermisosPorId(int id);
+    Task<string> ObtenerMenuJsonDesdeBaseDeDatos(int idRol);
   }
 }

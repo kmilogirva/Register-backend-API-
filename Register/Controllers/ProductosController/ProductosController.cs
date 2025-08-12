@@ -73,14 +73,14 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     }
        
     [HttpPut("actualizarproducto")]
-    public async Task<IActionResult> ActualizarProducto(Producto dto)
+    public async Task<IActionResult> ActualizarProducto(Producto producto)
     {
-      //if (dto is null || idProducto != dto.IdProducto)
+      //if (producto is null || idProducto != producto.IdProducto)
       //  return BadRequest(new { mensaje = "Datos inválidos." });
 
       try
       {
-        var actualizado = await _servicioProducto.ActualizarProducto(dto);
+        var actualizado = await _servicioProducto.ActualizarProducto(producto);
 
         return actualizado
            ? Ok(new { mensaje = "Producto actualizado con éxito." })

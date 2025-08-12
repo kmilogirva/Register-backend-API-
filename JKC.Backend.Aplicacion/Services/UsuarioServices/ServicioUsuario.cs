@@ -2,7 +2,7 @@ using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using Microsoft.EntityFrameworkCore;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
@@ -137,12 +137,12 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       }
     }
 
-    //public async Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario)
+    //public async Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario)
     //{
     //  try
     //  {
 
-    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloDto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
+    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloproducto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
 
 
        

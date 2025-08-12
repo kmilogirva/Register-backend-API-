@@ -32,21 +32,21 @@ namespace JKC.Backend.Aplicacion.Services.ProductoServices
       return await _ProductoRepository.ObtenerPorId(id);
     }
 
-    public async Task<bool> ActualizarProducto(Producto dto)
+    public async Task<bool> ActualizarProducto(Producto producto)
     {
-      var productoExistente = await _ProductoRepository.ObtenerPorId(dto.IdProducto);
+      var productoExistente = await _ProductoRepository.ObtenerPorId(producto.IdProducto);
       if (productoExistente is null)
         return false;
 
 
       productoExistente.FechaModificacion = DateTime.UtcNow;
-      productoExistente.IdUsuarioModificacion = dto.IdUsuarioModificacion;
-      productoExistente.CodEan = dto.CodEan.Trim();
-      productoExistente.NomProducto = dto.NomProducto.Trim();
-      productoExistente.IdCategoria = dto.IdCategoria;
-      productoExistente.UbicacionProducto = dto.UbicacionProducto.Trim();
-      productoExistente.Cantidad = dto.Cantidad;
-      productoExistente.Observacion = dto.Observacion?.Trim();
+      productoExistente.IdUsuarioModificacion = producto.IdUsuarioModificacion;
+      productoExistente.CodEan = producto.CodEan.Trim();
+      productoExistente.NomProducto = producto.NomProducto.Trim();
+      productoExistente.IdCategoria = producto.IdCategoria;
+      productoExistente.UbicacionProducto = producto.UbicacionProducto.Trim();
+      productoExistente.Cantidad = producto.Cantidad;
+      productoExistente.Observacion = producto.Observacion?.Trim();
 
       await _ProductoRepository.Actualizar(productoExistente);
       return true;

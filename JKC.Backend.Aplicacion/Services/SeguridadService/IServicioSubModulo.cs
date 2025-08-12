@@ -1,5 +1,5 @@
 using JKC.Backend.Dominio.Entidades.Seguridad;
-using JKC.Backend.Dominio.Entidades.Seguridad.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
     Task<List<SubModulo>> ObtenerTodos();
 
-    Task<List<SubmoduloDto>> ObtenerTodosInclude();
+    Task<List<Submoduloproducto>> ObtenerTodosInclude();
 
     Task<SubModulo> ActualizarSubmodulo(SubModulo submodulo);
 

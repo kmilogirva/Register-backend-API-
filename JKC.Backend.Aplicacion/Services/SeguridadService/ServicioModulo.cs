@@ -33,8 +33,21 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
     public async Task<Modulo> ActualizarModuloAsync(Modulo modulo)
     {
-      modulo.FechaModificacion = DateTime.UtcNow;
-      await _repositorio.Actualizar(modulo);
+
+      var moduloExistente = await _repositorio.ObtenerPorId(modulo.Id);
+
+      if (moduloExistente != null)
+      {
+        moduloExistente.Nombre = modulo.Nombre;
+        moduloExistente.Descripcion = modulo.Descripcion;
+        moduloExistente.Id = modulo.Id;
+        moduloExistente.IdEstado = modulo.IdEstado;
+        moduloExistente.FechaModificacion = DateTime.UtcNow;
+        moduloExistente.IdUsuarioModificacion = modulo.IdUsuarioModificacion;
+        moduloExistente.IconModulo = modulo.IconModulo;
+      }
+
+      await _repositorio.Actualizar(moduloExistente);
       return modulo;
     }
 

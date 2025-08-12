@@ -1,5 +1,5 @@
 using JKC.Backend.Dominio.Entidades.Seguridad;
-using JKC.Backend.Dominio.Entidades.Seguridad.DTO;
+using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
 using System;
 using System.Collections.Generic;
@@ -35,17 +35,20 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return await _repositorio.ObtenerTodos();
     }
 
-    public async Task<List<SubmoduloDto>> ObtenerTodosInclude()
+    public async Task<List<Submoduloproducto>> ObtenerTodosInclude()
     {
       var submodulos = await _repositorio.ObtenerTodosInclude(s => s.Modulo);
 
-      var resultado = submodulos.Select(s => new SubmoduloDto
+      var resultado = submodulos.Select(s => new Submoduloproducto
       {
         IdSubModulo = s.IdSubModulo,
         IdModulo = s.IdModulo,
         Nombre = s.Nombre,
         NombreModulo = s.Modulo.Nombre,
-        IdEstado = s.IdEstado
+        IdEstado = s.IdEstado,
+        Descripcion = s.Descripcion,
+        RutaAngular = s.RutaAngular
+        //IconSubModulo = s.IconSubModulo
       }).ToList();
 
       return resultado;
@@ -64,9 +67,11 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         submoduloexistente.IdEstado = submodulo.IdEstado;
         submoduloexistente.FechaModificacion = DateTime.UtcNow;
         submoduloexistente.IdUsuarioModificacion = submodulo.IdUsuarioModificacion;
+        submoduloexistente.IconSubModulo = submodulo.IconSubModulo;
+        submoduloexistente.RutaAngular = submodulo.RutaAngular;
       }
 
-      submodulo.FechaModificacion = DateTime.UtcNow;
+      //submodulo.FechaModificacion = DateTime.UtcNow;
       await _repositorio.Actualizar(submoduloexistente);
       return submodulo;
     }

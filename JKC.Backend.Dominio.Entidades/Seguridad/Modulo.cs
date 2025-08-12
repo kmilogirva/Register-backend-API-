@@ -16,6 +16,8 @@ namespace JKC.Backend.Dominio.Entidades.Seguridad
 
     public string? Descripcion { get; set; }
 
+    public string? IconModulo { get; set; }
+
     public int IdEstado { get; set; }
 
     public DateTime? FechaCreacion { get; set; } = DateTime.UtcNow;

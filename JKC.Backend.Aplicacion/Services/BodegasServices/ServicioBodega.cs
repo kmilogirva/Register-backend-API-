@@ -34,7 +34,7 @@ namespace JKC.Backend.Aplicacion.Services.BodegaServices
       return await _bodegaRepository.ObtenerPorId(id);
     }
 
-    public async Task EliminarBodegaPorId(int? id)
+    public async Task EliminarBodegaPorId(int id)
     {
       await _bodegaRepository.EliminarPorId(id);
     }

@@ -11,7 +11,7 @@ namespace JKC.Backend.Aplicacion.Services.BodegaServices
     Task<Bodega> RegistrarBodega(Bodega bodega);
     Task<List<Bodega>> ObtenerListadoBodegas();
     Task<Bodega> ObtenerBodegaPorId(int id);
-    Task EliminarBodegaPorId(int? id);
+    Task EliminarBodegaPorId(int id);
     Task ActualizarBodega(Bodega bodega);
   }
 }

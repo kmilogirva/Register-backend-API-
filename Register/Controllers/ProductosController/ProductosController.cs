@@ -93,62 +93,13 @@ namespace JKC.Backend.WebApi.Controllers.ProductosController
     }
 
 
-    //[HttpPost("eliminarproductosporids")]
-    //public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
-    //{
-
-    //  foreach (int Producto in idProductos)
-    //  {
-    //    var producto = await _servicioProducto.ObtenerProductoPorId(Producto);
-
-    //    if (producto == null)
-    //    {
-    //      return NotFound(new { mensaje = "El producto no existe o ya ha sido eliminado." });
-    //    }
-    //    await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
-    //  }
-
-    //  return Ok(new { mensaje = "Producto eliminado con éxito.", idProducto });
-    //}
-
-    //[HttpPost("eliminarproductosporids")]
-    //public async Task<IActionResult> EliminarProductoAsync(List<int> idProductos)
-    //{
-    //  if (idProductos == null || !idProductos.Any())
-    //    return BadRequest(new { mensaje = "No se enviaron productos para eliminar." });
-
-    //  var productosEncontrados = new List<int>();
-    //  var productosNoEncontrados = new List<int>();
-
-    //  foreach (int id in idProductos)
-    //  {
-    //    var producto = await _servicioProducto.ObtenerProductoPorId(id);
-
-    //    if (producto != null)
-    //    {
-    //      await _servicioProducto.EliminarProductoPorId(producto.IdProducto);
-    //      productosEncontrados.Add(id);
-    //    }
-    //    else
-    //    {
-    //      productosNoEncontrados.Add(id);
-    //    }
-    //  }
-
-    //  if (productosEncontrados.Any())
-    //  {
-    //    return Ok(new
-    //    {
-    //      mensaje = "Productos procesados.",
-    //      productosEliminados = productosEncontrados,
-    //      productosNoEncontrados = productosNoEncontrados
-    //    });
-    //  }
-    //  else
-    //  {
-    //    return NotFound(new { mensaje = "Ningún producto encontrado para eliminar.", productosNoEncontrados });
-    //  }
-    //}
+    [HttpDelete("eliminarproductosporid/{id}")]
+    public async Task<IActionResult> EliminarProducto(int id)
+    {
+      var eliminar = await _servicioProducto.EliminarProductoPorId(id);
+      return Ok(eliminar);
+    }
+  
 
   }
 }

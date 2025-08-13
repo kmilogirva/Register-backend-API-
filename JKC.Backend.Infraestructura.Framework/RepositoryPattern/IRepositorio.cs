@@ -18,7 +18,7 @@ namespace JKC.Backend.Infraestructura.Framework.RepositoryPattern
     Task Crear(T entidad);
     Task Actualizar(T entidad);
     Task Eliminar(T entidad);
-    Task EliminarPorId(int? id);
+    Task EliminarPorId(int id);
     Task<bool> AnyAsync(Expression<Func<T, bool>> predicado);
 
     //void ExecuteSqlCommand(string procedureName, object parameteres);

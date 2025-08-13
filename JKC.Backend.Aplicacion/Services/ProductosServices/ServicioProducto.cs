@@ -52,9 +52,10 @@ namespace JKC.Backend.Aplicacion.Services.ProductoServices
       return true;
     }
 
-    public async Task EliminarProductoPorId(int? id)
+    public async Task<bool> EliminarProductoPorId(int id)
     {
       await _ProductoRepository.EliminarPorId(id);
+      return true;
     }
 
   }

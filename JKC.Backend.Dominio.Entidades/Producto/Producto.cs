@@ -12,7 +12,7 @@ namespace JKC.Backend.Dominio.Entidades.Productos
   public class Producto
   {
     [Key]
-    public int? IdProducto { get; set; }
+    public int IdProducto { get; set; }
     public string CodEan { get; set; }
     public string NomProducto { get; set; }
     //public Categoria IdCategoria { get; set; }

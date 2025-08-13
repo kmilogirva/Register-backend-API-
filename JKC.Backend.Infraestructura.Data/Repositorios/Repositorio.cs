@@ -85,9 +85,16 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       await _context.SaveChangesAsync();
     }
 
-    public async Task EliminarPorId(int? id)
+    public async Task EliminarPorId(int id)
     {
+      if (id == null)
+        throw new ArgumentNullException(nameof(id), "El ID no puede ser nulo.");
+
       var entidad = await _context.Set<T>().FindAsync(id);
+
+      if (entidad == null)
+        throw new KeyNotFoundException($"No se encontró la entidad con ID {id}.");
+
       _context.Set<T>().Remove(entidad);
       await _context.SaveChangesAsync();
     }

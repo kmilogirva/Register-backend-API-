@@ -179,10 +179,18 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
     }
 
-    public Task<bool> EliminarRol(int id)
+    public async Task<bool> EliminarRol(int id)
     {
-      throw new NotImplementedException();
+      var rol = await _rolesRepository.ObtenerPorId(id);
+      if (rol == null)
+        return false;
+
+      await _rolesRepository.Eliminar(rol);
+      return true;
     }
+
+    
+
     public async Task<string> ObtenerMenuJsonDesdeBaseDeDatos(int idRol)
     {
       try

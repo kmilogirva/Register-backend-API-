@@ -12,5 +12,10 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
   public interface IServicioGeneral
   {
     Task <List<ComboResponse>> ObtenerComboTiposDocumento();
+    Task<List<ComboResponse>> ObtenerComboTiposTercero();
+    Task<List<ComboResponse>> ObtenerComboTiposPersona();
+    Task<List<ComboResponse>> ObtenerComboPaises();
+    Task<List<ComboResponse>> ObtenerComboDepartamentos(int idPais);
+    Task<List<ComboResponse>> ObtenerComboCiudades(int idPais);
   }
 }

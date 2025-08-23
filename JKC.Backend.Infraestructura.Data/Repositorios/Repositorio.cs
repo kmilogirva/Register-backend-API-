@@ -20,6 +20,7 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
 
     private DbSet<T> Entities => _context.Set<T>();
 
+
     public async Task<T> ObtenerPorId(int? id)
     {
       try { 
@@ -32,6 +33,33 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
         throw new Exception("Error al obtener los registros", ex);
       }
     }
+
+    public async Task<T> ObtenerPorIdInclude(int id, params Expression<Func<T, object>>[] includes)
+    {
+      IQueryable<T> query = _context.Set<T>();
+
+      foreach (var include in includes)
+      {
+        query = query.Include(include);
+      }
+
+      var entityType = _context.Model.FindEntityType(typeof(T));
+      if (entityType == null)
+        throw new InvalidOperationException($"La entidad {typeof(T).Name} no está configurada en el DbContext.");
+
+      var primaryKey = entityType.FindPrimaryKey();
+      if (primaryKey == null)
+        throw new InvalidOperationException($"La entidad {typeof(T).Name} no tiene clave primaria configurada.");
+
+      var keyName = primaryKey.Properties.Select(x => x.Name).Single();
+
+      return await query.FirstOrDefaultAsync(
+          e => EF.Property<int>(e, keyName) == id
+      );
+    }
+
+
+
     public async Task<List<T>> ObtenerTodos()
     {
       try
@@ -55,6 +83,52 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
         throw new Exception("Error al obtener los registros desde la base de datos", ex);
       }
     }
+
+    public async Task<List<T>> ObtenerAsync(
+    Expression<Func<T, bool>> filtro = null,
+    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+    Func<IQueryable<T>, IQueryable<T>> incluir = null,
+    bool asNoTracking = true)
+    {
+      try
+      {
+        IQueryable<T> query = _context.Set<T>();
+
+        // Filtro WHERE
+        if (filtro != null)
+        {
+          query = query.Where(filtro);
+        }
+
+        // Include dinámico
+        if (incluir != null)
+        {
+          query = incluir(query);
+        }
+
+        // AsNoTracking para mejorar rendimiento si no necesitas cambiar entidades
+        if (asNoTracking)
+        {
+          query = query.AsNoTracking();
+        }
+
+        // Order By si aplica
+        if (orderBy != null)
+        {
+          return await orderBy(query).ToListAsync();
+        }
+        else
+        {
+          return await query.ToListAsync();
+        }
+      }
+      catch (Exception ex)
+      {
+        // Manejo de excepciones: registrar log o lanzar excepción personalizada
+        throw new Exception("Error al obtener los registros", ex);
+      }
+    }
+
     public async Task Crear(T entidad)
     {
       try

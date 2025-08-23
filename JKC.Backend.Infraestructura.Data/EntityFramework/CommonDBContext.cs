@@ -41,6 +41,12 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
 
 
       modelBuilder.Entity<TiposDocumento>().ToTable("tiposdocumento", "generales");
+      modelBuilder.Entity<TiposTercero>().ToTable("tipostercero", "generales");
+      modelBuilder.Entity<TiposPersona>().ToTable("tipospersona", "generales");
+      modelBuilder.Entity<Pais>().ToTable("pais", "generales");
+      modelBuilder.Entity<Departamento>().ToTable("departamento", "generales");
+      modelBuilder.Entity<Ciudad>().ToTable("ciudad", "generales");
+      modelBuilder.Entity<Tercero>().ToTable("tercero", "generales");
 
       modelBuilder.Entity<Modulo>()
      .ToTable("modulos", "seguridad") // Tabla modulos en esquema seguridad

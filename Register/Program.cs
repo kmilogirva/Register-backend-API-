@@ -31,6 +31,7 @@ builder.Services.AddScoped<IServicioGeneral, ServicioGeneral>();
 builder.Services.AddScoped<IServicioBodega, ServicioBodega>();
 builder.Services.AddScoped<IServicioModulo, ServicioModulo>();
 builder.Services.AddScoped<IServicioSubModulo, ServicioSubModulo>();
+builder.Services.AddScoped<IServicioTercero, ServicioTercero>();
 
 // Registro de Repositorios
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

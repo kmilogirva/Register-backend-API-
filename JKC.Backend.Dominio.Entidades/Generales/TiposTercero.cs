@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace JKC.Backend.Dominio.Entidades.Generales
 {
-  public class TiposDocumento
+  public class TiposTercero
   {
     [Key]
-    public int IdTipoDocumento { get; set; }
-    public string NombreDocumento { get; set; }
+    public int IdTipoTercero { get; set; }
+    public string NombreTipoTercero { get; set; }
     public DateTime FechaCreacion { get; set; }
     public DateTime? FechaModificacion { get; set; }
     public int IdUsuarioCreacion { get; set; }

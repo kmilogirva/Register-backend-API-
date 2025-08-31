@@ -9,6 +9,7 @@ namespace JKC.Backend.Aplicacion.Services.DTOS.Usuarios
   public class Login
   {
     public string Correo { get; set; }
+    public string? CodUsuario { get; set; }
     public string Contrasena { get; set; }
   }
 }

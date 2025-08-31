@@ -1,9 +1,12 @@
-using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-using Microsoft.EntityFrameworkCore;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
+using JKC.Backend.Dominio.Entidades.Response.Seguridad;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
+using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 {
@@ -15,6 +18,43 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     public ServicioUsuario(IRepository<Usuario> usuarioRepository)
     {
       _usuarioRepository = usuarioRepository;
+    }
+
+    public static class PasswordHasher
+    {
+      public static string HashPassword(string password)
+      {
+        byte[] salt = RandomNumberGenerator.GetBytes(16);
+
+        byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
+            Encoding.UTF8.GetBytes(password),
+            salt,
+            100000,
+            HashAlgorithmName.SHA256,
+            32);
+
+        return $"{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
+      }
+
+      // Verificar la contraseña ingresada contra el hash almacenado
+      public static bool VerifyPassword(string password, string hashedPassword)
+      {
+        var parts = hashedPassword.Split(':');
+        if (parts.Length != 2)
+          return false;
+
+        var salt = Convert.FromBase64String(parts[0]);
+        var storedHash = Convert.FromBase64String(parts[1]);
+
+        var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(
+            Encoding.UTF8.GetBytes(password),
+            salt,
+            100000,
+            HashAlgorithmName.SHA256,
+            32);
+
+        return CryptographicOperations.FixedTimeEquals(storedHash, hashToCompare);
+      }
     }
 
     // Obtener usuario por Id
@@ -31,14 +71,9 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     // Registrar un nuevo usuario
     public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario)
     {
-
-      //var usuarioExistente = await _usuarioRepository
-      //      .ObtenerTodos()
-      //      .AnyAsync(u => u.Correo == nuevoUsuario.Correo);
-
-      var usuarios = await  _usuarioRepository.ObtenerTodos();
-
-      var usuarioExistente = usuarios.Any(u => u.Correo == nuevoUsuario.Correo);
+      // Validar si ya existe un usuario con el mismo email
+      var usuarios = await _usuarioRepository.ObtenerTodos();
+      var usuarioExistente = usuarios.Any(u => u.Tercero.Email == nuevoUsuario.Tercero.Email);
 
       if (usuarioExistente)
       {
@@ -49,7 +84,14 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
         };
       }
 
+      // ✅ Hashear la contraseña antes de guardarla
+      nuevoUsuario.Contrasena = PasswordHasher.HashPassword(nuevoUsuario.Contrasena);
 
+      // Datos adicionales
+      nuevoUsuario.FechaCreacion = DateTime.Now;
+      nuevoUsuario.IdEstado = nuevoUsuario.IdEstado; // Ejemplo: activo por defecto
+
+      // Guardar usuario
       await _usuarioRepository.Crear(nuevoUsuario);
 
       return new ResponseMessages
@@ -59,6 +101,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       };
     }
 
+
     // Actualizar un usuario existente
     public async Task<bool> ActualizarUsuario(Usuario usuarioActualizado)
     {
@@ -67,17 +110,20 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       if (usuarioExistente == null)
         return false;
 
-      // Actualiza los campos del usuario existente con los del actualizado
-      usuarioExistente.Nombre1 = usuarioActualizado.Nombre1;
-      usuarioExistente.Nombre2 = usuarioActualizado.Nombre2;
-      usuarioExistente.Apellido1 = usuarioActualizado.Apellido1;
-      usuarioExistente.Apellido2 = usuarioActualizado.Apellido2;
-      usuarioExistente.Correo = usuarioActualizado.Correo;
-      usuarioExistente.Telefono = usuarioActualizado.Telefono;
+      // Actualizar datos de Usuario
       usuarioExistente.IdEstado = usuarioActualizado.IdEstado;
-      //usuarioExistente.Sexo = usuarioActualizado.Sexo;
-      usuarioExistente.Contrasena = usuarioActualizado.Contrasena;
+      usuarioExistente.IdRol = usuarioActualizado.IdRol;
+      usuarioExistente.CodUsuario = usuarioActualizado.CodUsuario;
+      usuarioExistente.FechaModificacion = DateTime.Now;
+      usuarioExistente.IdUsuarioModificacion = usuarioActualizado.IdUsuarioModificacion;
 
+      // ✅ Verificar si la contraseña cambió
+      if (!string.IsNullOrWhiteSpace(usuarioActualizado.Contrasena) &&
+          !PasswordHasher.VerifyPassword(usuarioActualizado.Contrasena, usuarioExistente.Contrasena))
+      {
+        // Hashear nueva contraseña
+        usuarioExistente.Contrasena = PasswordHasher.HashPassword(usuarioActualizado.Contrasena);
+      }
 
       await _usuarioRepository.Actualizar(usuarioExistente);
       return true;
@@ -137,26 +183,39 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       }
     }
 
-    //public async Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario)
-    //{
-    //  try
-    //  {
+    public async Task<List<UsuarioResponse>> ObtenerUsuariosResponse()
+    {
+      try
+      {
 
-    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloproducto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
+        var obtenerUsuarios = await _usuarioRepository.EjecutarProcedimientoAlmacenado<UsuarioResponse>("generales.cargar_data_usuarios_terceros");
 
+        // Si se obtuvieron resultados, los devolvemos
+        return obtenerUsuarios.ToList();
+      }
+      catch (Exception ex)
+      {
+        // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
+        throw new Exception("Error al obtener roles por usuario", ex);
+      }
+    }
 
-       
-    //    return permisos.ToList();
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
-    //    throw new Exception("Error al obtener roles por usuario", ex);
-    //  }
-    //}
+    public async Task<UsuarioResponse> ObtenerUsuarioPorIdTercero(int idTercero)
+    {
+      try
+      {
 
+        var usuario = await _usuarioRepository.EjecutarProcedimientoAlmacenado<UsuarioResponse>("generales.cargar_data_usuarios_terceros_por_id", idTercero);
 
-
+        // Si se obtuvieron resultados, los devolvemos
+        return usuario.FirstOrDefault();
+      }
+      catch (Exception ex)
+      {
+        // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
+        throw new Exception("Error al obtener roles por usuario", ex);
+      }
+    }
   }
 }
 

@@ -1,0 +1,738 @@
+[
+  {
+    "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
+    "Method": "PutBodega",
+    "RelativePath": "api/Bodegas/ActualizaunaBodegaporid",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "bodega",
+        "Type": "JKC.Backend.Dominio.Entidades.Bodegas.Bodega",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
+    "Method": "GetBodega",
+    "RelativePath": "api/Bodegas/BuscarBodegaporId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "JKC.Backend.Dominio.Entidades.Bodegas.Bodega",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
+    "Method": "PostBodega",
+    "RelativePath": "api/Bodegas/CrearBodega",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bodega",
+        "Type": "JKC.Backend.Dominio.Entidades.Bodegas.Bodega",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "JKC.Backend.Dominio.Entidades.Bodegas.Bodega",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
+    "Method": "DeleteBodega",
+    "RelativePath": "api/Bodegas/EliminarbodegaporId",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
+    "Method": "ObtenerListadoBodegas",
+    "RelativePath": "api/Bodegas/listarbodegas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
+    "Method": "EliminarCategoriaAsync",
+    "RelativePath": "api/Categorias/eliminarcategoriasporids",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCategoria",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
+    "Method": "ObtenerListadoCategorias",
+    "RelativePath": "api/Categorias/listarcategorias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
+    "Method": "ObtenerRolesPorUsuarioId",
+    "RelativePath": "api/Categorias/obtenercategoriaporid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCategoria",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
+    "Method": "RegistrarCategoria",
+    "RelativePath": "api/Categorias/registrarcategoria",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registroCategoria",
+        "Type": "JKC.Backend.Dominio.Entidades.Categorias.Categoria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboCiudades",
+    "RelativePath": "api/Generales/combo-ciudades/{idDepartamento}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDepartamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboDepartamentos",
+    "RelativePath": "api/Generales/combo-departamentos/{idPais}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idPais",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboPaises",
+    "RelativePath": "api/Generales/combo-paises",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboTiposDocumento",
+    "RelativePath": "api/Generales/combo-tipos-documento",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboTiposPersona",
+    "RelativePath": "api/Generales/combo-tipos-persona",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
+    "Method": "ObtenerComboTiposTercero",
+    "RelativePath": "api/Generales/combo-tipos-terceros",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.ModulosController",
+    "Method": "ActualizarModulo",
+    "RelativePath": "api/Modulos/actualizarmodulo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulo",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.Modulo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.ModulosController",
+    "Method": "CrearModulo",
+    "RelativePath": "api/Modulos/crearmodulo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modulo",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.Modulo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.ModulosController",
+    "Method": "EliminarModulo",
+    "RelativePath": "api/Modulos/eliminarmodulo/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.ModulosController",
+    "Method": "ListarModulos",
+    "RelativePath": "api/Modulos/listarmodulos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.ModulosController",
+    "Method": "ObtenerModuloPorId",
+    "RelativePath": "api/Modulos/obtenermoduloporid/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.ProductosController.ProductosController",
+    "Method": "ActualizarProducto",
+    "RelativePath": "api/Productos/actualizarproducto",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "producto",
+        "Type": "JKC.Backend.Dominio.Entidades.Productos.Producto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.ProductosController.ProductosController",
+    "Method": "EliminarProducto",
+    "RelativePath": "api/Productos/eliminarproductosporid/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.ProductosController.ProductosController",
+    "Method": "ObtenerListadoProductos",
+    "RelativePath": "api/Productos/listarproductos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.ProductosController.ProductosController",
+    "Method": "ObtenerProductoPorId",
+    "RelativePath": "api/Productos/obtenerproductoporid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idProducto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.ProductosController.ProductosController",
+    "Method": "RegistrarProducto",
+    "RelativePath": "api/Productos/registrarproducto",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registroProductos",
+        "Type": "JKC.Backend.Dominio.Entidades.Productos.Producto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "ActualizarRol",
+    "RelativePath": "api/Seguridad/Actualizarrolesporid/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "rolActualizado",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.Roles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "AsignarPermisosARol",
+    "RelativePath": "api/Seguridad/asignar-permisos-a-rol",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "System.Collections.Generic.List\u00601[[JKC.Backend.Dominio.Entidades.Seguridad.AsignarPermisos, JKC.Backend.Dominio.Entidades, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "ObtenerComboRoles",
+    "RelativePath": "api/Seguridad/combo-roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "ConsultarMenuRol",
+    "RelativePath": "api/Seguridad/consultar-menu-por-rol/{idRol}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRol",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "ObtenerPermisosPorRol",
+    "RelativePath": "api/Seguridad/consultar-permisos-accion-por-rol/{idRol}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRol",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "CrearRol",
+    "RelativePath": "api/Seguridad/crearrol",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rol",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.Roles",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "EliminarRol",
+    "RelativePath": "api/Seguridad/Eliminarrolesporid/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "Login",
+    "RelativePath": "api/Seguridad/InicioSesion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "credenciales",
+        "Type": "JKC.Backend.Aplicacion.Services.DTOS.Usuarios.Login",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SeguridadController",
+    "Method": "ListarRoles",
+    "RelativePath": "api/Seguridad/listaroles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SubModulosController",
+    "Method": "Actualizar",
+    "RelativePath": "api/SubModulos/actualizarsubmodulo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submodulo",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.SubModulo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SubModulosController",
+    "Method": "CrearSubmodulo",
+    "RelativePath": "api/SubModulos/crearsubmodulo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submodulo",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.SubModulo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SubModulosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/SubModulos/eliminarsubmodulo/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SubModulosController",
+    "Method": "Listar",
+    "RelativePath": "api/SubModulos/listarsubmodulos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.SubModulosController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/SubModulos/obtenersubmoduloporid/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.TercerosController",
+    "Method": "ActualizarUsuarioAsync",
+    "RelativePath": "api/Terceros/actualizartercero",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nuevotercero",
+        "Type": "JKC.Backend.Dominio.Entidades.Generales.Tercero",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.TercerosController",
+    "Method": "CreateUsers",
+    "RelativePath": "api/Terceros/creartercero",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nuevoTercero",
+        "Type": "JKC.Backend.Dominio.Entidades.Generales.Tercero",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.TercerosController",
+    "Method": "EliminarUsuariooAsync",
+    "RelativePath": "api/Terceros/eliminarterceroporid",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.TercerosController",
+    "Method": "ObtenerListadoProductos",
+    "RelativePath": "api/Terceros/listarterceros",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.TercerosController",
+    "Method": "ObtenerUsuarioPorId",
+    "RelativePath": "api/Terceros/obtenerterceroporid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ActualizarUsuarioAsync",
+    "RelativePath": "api/User/actualizarusuario",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nuevousuario",
+        "Type": "JKC.Backend.Dominio.Entidades.Usuario.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "CreateUsers",
+    "RelativePath": "api/User/crearusuario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nuevoUsuario",
+        "Type": "JKC.Backend.Dominio.Entidades.Usuario.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "EliminarUsuariooAsync",
+    "RelativePath": "api/User/eliminarusuarioporid",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ObtenerListadoProductos",
+    "RelativePath": "api/User/listarusuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ObtenerUsuarioPorId",
+    "RelativePath": "api/User/obtenerusuarioporid",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

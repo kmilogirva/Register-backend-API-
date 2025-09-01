@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <UserSecretsId>0f09638c-6237-4442-b4fc-395e76ecc07d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

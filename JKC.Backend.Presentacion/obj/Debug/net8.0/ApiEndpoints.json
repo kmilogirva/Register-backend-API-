@@ -679,6 +679,32 @@
   },
   {
     "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ObtenerUsuariosResponse",
+    "RelativePath": "api/User/consultarusuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ObtenerUsuariosPorIdTercero",
+    "RelativePath": "api/User/consultarusuariosporidtercero/{idTercero}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idTercero",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
     "Method": "CreateUsers",
     "RelativePath": "api/User/crearusuario",
     "HttpMethod": "POST",

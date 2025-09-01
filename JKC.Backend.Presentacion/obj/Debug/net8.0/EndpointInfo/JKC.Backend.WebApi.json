@@ -1201,6 +1201,41 @@
           }
         }
       }
+    },
+    "/api/User/consultarusuarios": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/consultarusuariosporidtercero/{idTercero}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "idTercero",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1346,6 +1381,10 @@
         "type": "object",
         "properties": {
           "correo": {
+            "type": "string",
+            "nullable": true
+          },
+          "codUsuario": {
             "type": "string",
             "nullable": true
           },
@@ -1760,32 +1799,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "nombre1": {
-            "type": "string",
-            "nullable": true
+          "idTercero": {
+            "type": "integer",
+            "format": "int32"
           },
-          "nombre2": {
-            "type": "string",
-            "nullable": true
-          },
-          "apellido1": {
-            "type": "string",
-            "nullable": true
-          },
-          "apellido2": {
-            "type": "string",
-            "nullable": true
-          },
-          "nombreCompleto": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "correo": {
-            "type": "string",
-            "nullable": true
-          },
-          "telefono": {
+          "codUsuario": {
             "type": "string",
             "nullable": true
           },
@@ -1813,12 +1831,16 @@
           },
           "idUsuarioCreacion": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "idUsuarioModificacion": {
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "tercero": {
+            "$ref": "#/components/schemas/Tercero"
           }
         },
         "additionalProperties": false

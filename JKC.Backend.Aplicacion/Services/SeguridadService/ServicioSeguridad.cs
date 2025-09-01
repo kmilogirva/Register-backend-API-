@@ -4,6 +4,7 @@ using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
+using static JKC.Backend.Aplicacion.Services.UsuarioServices.ServicioUsuario;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
@@ -71,7 +72,59 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return rolExistente;
     }
 
-    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
+    //public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
+    //{
+    //  if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+    //  {
+    //    return new ResponseMessagesData<UsuarioDto>
+    //    {
+    //      Exitoso = false,
+    //      Mensaje = "El correo o la contraseña no pueden estar vacíos.",
+    //      Data = null
+    //    };
+    //  }
+
+    //  var usuario = await _usuarioRepository.ObtenerTodos();
+
+    //  //var usuarioAutorizado = usuario.FirstOrDefault(u =>
+    //  //  u.Correo == email &&
+    //  //  u.Contrasena == password &&
+    //  //  u.IdEstado == 1);
+
+    //  var usuarioAutorizado = usuario
+    //    .FirstOrDefault(u =>
+    //    u.Contrasena == password &&
+    //    u.IdEstado == 1 &&
+    //    u.Tercero.Email == email);
+
+    //  if (usuarioAutorizado == null)
+
+    //  {
+    //    return new ResponseMessagesData<UsuarioDto>
+    //    {
+    //      Exitoso = false,
+    //      Mensaje = "Credenciales inválidas",
+    //      Data = null
+    //    };
+    //  }
+
+    //  var usuarioproducto = new UsuarioDto
+    //  {
+    //    IdUsuario = usuarioAutorizado.IdUsuario,
+    //    Nombre = usuarioAutorizado.Tercero.NombreCompleto,
+    //    Correo = usuarioAutorizado.Tercero.Email,
+    //    IdRol = usuarioAutorizado.IdRol
+    //  };
+
+    //  return new ResponseMessagesData<UsuarioDto>
+    //  {
+    //    Exitoso = true,
+    //    Mensaje = "Inicio de sesión exitoso",
+    //    Data = usuarioproducto
+    //  };
+    //}
+
+    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string? email,string? codUsuario, string password)
     {
       if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
       {
@@ -83,15 +136,20 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      var usuario = await _usuarioRepository.ObtenerTodos();
+      // Traer usuarios con terceros relacionados
+      var usuarios = await _usuarioRepository.ObtenerTodosInclude(u => u.Tercero);
 
-      var usuarioAutorizado = usuario.FirstOrDefault(u =>
-        u.Correo == email &&
-        u.Contrasena == password &&
-        u.IdEstado == 1);
+
+      // Buscar usuario por email y estado
+      var usuarioAutorizado = usuarios.FirstOrDefault(u =>
+          u.IdEstado == 1 &&
+          (
+              (!string.IsNullOrEmpty(email) && u.Tercero.Email == email) ||
+              (!string.IsNullOrEmpty(codUsuario) && u.CodUsuario == codUsuario)
+          )
+      );
 
       if (usuarioAutorizado == null)
-
       {
         return new ResponseMessagesData<UsuarioDto>
         {
@@ -101,11 +159,27 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
+
+      // ✅ Verificar la contraseña usando PBKDF2
+      bool passwordValida = PasswordHasher.VerifyPassword(password, usuarioAutorizado.Contrasena);
+
+      if (!passwordValida)
+      {
+        return new ResponseMessagesData<UsuarioDto>
+        {
+          Exitoso = false,
+          Mensaje = "Credenciales inválidas",
+          Data = null
+        };
+      }
+
+      // Construir DTO para respuesta
       var usuarioproducto = new UsuarioDto
       {
         IdUsuario = usuarioAutorizado.IdUsuario,
-        Nombre = usuarioAutorizado.NombreCompleto,
-        Correo = usuarioAutorizado.Correo,
+        CodUsuario = usuarioAutorizado.CodUsuario,
+        Nombre = usuarioAutorizado.Tercero.NombreCompleto,
+        Correo = usuarioAutorizado.Tercero.Email,
         IdRol = usuarioAutorizado.IdRol
       };
 
@@ -116,6 +190,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         Data = usuarioproducto
       };
     }
+
 
     public async Task<List<Roles>> ObtenerListadoRoles()
     {
@@ -188,8 +263,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       await _rolesRepository.Eliminar(rol);
       return true;
     }
-
-    
 
     public async Task<string> ObtenerMenuJsonDesdeBaseDeDatos(int idRol)
     {

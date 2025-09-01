@@ -1,5 +1,6 @@
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
+using JKC.Backend.Dominio.Entidades.Response.Seguridad;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 
@@ -9,6 +10,8 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
   {
     Task<Usuario> ObtenerUsuarioPorId(int id);
     Task<List<Usuario>> ObtenerListadoUsuarios();
+    Task<List<UsuarioResponse>> ObtenerUsuariosResponse();
+    Task<UsuarioResponse> ObtenerUsuarioPorIdTercero(int idTercero);
     Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario);
     Task<bool> ActualizarUsuario(Usuario usuarioActualizado);
     Task<bool> EliminarUsuarioPorId(int id);

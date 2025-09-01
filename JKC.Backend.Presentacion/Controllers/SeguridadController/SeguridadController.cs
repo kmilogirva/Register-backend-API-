@@ -33,7 +33,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var resultado = await _seguridadServicio.LoginAsync(credenciales.Correo, credenciales.Contrasena);
+      var resultado = await _seguridadServicio.LoginAsync(credenciales.Correo,credenciales.CodUsuario, credenciales.Contrasena);
 
       if (!resultado.Exitoso)
       {

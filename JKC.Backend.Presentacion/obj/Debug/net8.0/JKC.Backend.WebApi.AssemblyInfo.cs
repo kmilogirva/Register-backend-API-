@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JKC.Backend.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f18b134eb86054ff0b219700546281d6faddb0f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a91931b0f3e52e3cc5f4e264ecc4a7a5a01df970")]
 [assembly: System.Reflection.AssemblyProductAttribute("JKC.Backend.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JKC.Backend.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

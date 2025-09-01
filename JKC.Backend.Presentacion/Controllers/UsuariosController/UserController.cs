@@ -31,7 +31,7 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
         return BadRequest("Datos inválidos");
       }
 
-      nuevoUsuario.FechaCreacion = DateTime.Now;
+      //nuevoUsuario.FechaCreacion = DateTime.Now;
 
       var resultado = await _usuarioServicio.RegistrarUsuarioAsync(nuevoUsuario);
 
@@ -73,12 +73,12 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     [HttpPut("actualizarusuario")]
     public async Task<IActionResult> ActualizarUsuarioAsync(Usuario nuevousuario)
     {
-      var usuarioexistente = await _usuarioServicio.ObtenerUsuarioPorId(nuevousuario.IdUsuario);
+      //var usuarioexistente = await _usuarioServicio.ObtenerUsuarioPorId(nuevousuario.IdUsuario);
 
-      if (usuarioexistente == null)
-      {
-        return NotFound(new { mensaje = "El usuario no existe" });
-      }
+      //if (usuarioexistente == null)
+      //{
+      //  return NotFound(new { mensaje = "El usuario no existe" });
+      //}
 
       await _usuarioServicio.ActualizarUsuario(nuevousuario);
       return Ok(new { mensaje = "El usuario ha sido actualizado con éxito.", nuevousuario.IdUsuario });
@@ -133,7 +133,43 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
     //  }
     //}
 
-    
+
+    [HttpGet("consultarusuarios")]
+    public async Task<IActionResult> ObtenerUsuariosResponse()
+    {
+      try
+      {
+        var usuarios = await _usuarioServicio.ObtenerUsuariosResponse();
+
+        if (usuarios == null || usuarios.Count == 0)
+        {
+          return NotFound(new { mensaje = "No se encontraron roles para el usuario especificado." });
+        }
+
+        return Ok(usuarios);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
+      }
+    }
+
+    [HttpGet("consultarusuariosporidtercero/{idTercero}")]
+    public async Task<IActionResult> ObtenerUsuariosPorIdTercero(int idTercero)
+    {
+      try
+      {
+        var usuario = await _usuarioServicio.ObtenerUsuarioPorIdTercero(idTercero);
+
+        return Ok(usuario);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
+      }
+    }
+
+
 
   }
 }

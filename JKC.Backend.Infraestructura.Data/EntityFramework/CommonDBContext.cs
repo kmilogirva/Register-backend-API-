@@ -25,7 +25,7 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       // Esquema Seguridad
-      modelBuilder.Entity<Usuario>().ToTable("usuarios1", "seguridad");
+      modelBuilder.Entity<Usuario>().ToTable("usuarios", "seguridad");
       modelBuilder.Entity<Roles>().ToTable("roles", "seguridad");
       //modelBuilder.Entity<RolPermiso>().ToTable("rolpermiso", "seguridad");
       modelBuilder.Entity<RolesUsuario>().ToTable("roles_usuarios", "seguridad");

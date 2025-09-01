@@ -3593,11 +3593,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
       "projectName": "JKC.Backend.WebApi",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Presentacion\\obj\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3619,20 +3619,20 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj"
+            "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj"
             },
-            "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+            "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
             },
-            "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
+            "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
             },
-            "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
+            "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
             },
-            "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Backend Docker\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
+            "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+              "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
             }
           }
         }

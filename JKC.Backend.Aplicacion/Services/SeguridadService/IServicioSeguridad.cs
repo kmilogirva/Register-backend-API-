@@ -16,7 +16,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
 
   public interface IServicioSeguridad
   {
-    Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password);
+    Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email,string? codUsuario, string password);
     //Task<List<PermisoModuloDto>> ObtenerPermisosPorIdUsuario(int idUsuario);
     Task<Roles> CrearRol(Roles nuevoRol);
     Task<List<Roles>> ObtenerTodosRoles();

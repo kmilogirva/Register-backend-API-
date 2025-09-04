@@ -1,18 +1,30 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using JKC.Backend.Infraestructura.Data.Repositorios;
-using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-using JKC.Backend.Infraestructura.Data.EntityFramework;
-using JKC.Backend.Aplicacion.Services.UsuarioServices;
-using JKC.Backend.Aplicacion.Services.SeguridadService;
-using JKC.Backend.Aplicacion.Services.ProductoServices;
+using Jkc.Backend.Aplicacion.Services.EmailService;
+using JKC.Backend.Aplicacion.Services.BodegaServices;
 using JKC.Backend.Aplicacion.Services.CategoriasServices;
 using JKC.Backend.Aplicacion.Services.GeneralesServices;
-using JKC.Backend.Aplicacion.Services.BodegaServices;
+using JKC.Backend.Aplicacion.Services.ProductoServices;
+using JKC.Backend.Aplicacion.Services.SeguridadService;
+using JKC.Backend.Aplicacion.Services.UsuarioServices;
+using JKC.Backend.Dominio.Entidades.Generales;
+using JKC.Backend.Dominio.Services;
+using JKC.Backend.Infraestructura.Data.EntityFramework;
+using JKC.Backend.Infraestructura.Data.Repositorios;
+using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// 1. Configurar Serilog para leer del appsettings.json
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
@@ -32,6 +44,8 @@ builder.Services.AddScoped<IServicioBodega, ServicioBodega>();
 builder.Services.AddScoped<IServicioModulo, ServicioModulo>();
 builder.Services.AddScoped<IServicioSubModulo, ServicioSubModulo>();
 builder.Services.AddScoped<IServicioTercero, ServicioTercero>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 // Registro de Repositorios
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -134,3 +148,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+Log.CloseAndFlush();

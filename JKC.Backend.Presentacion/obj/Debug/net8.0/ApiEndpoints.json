@@ -760,5 +760,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.UsuariosController.UserController",
+    "Method": "ProbarEnvio",
+    "RelativePath": "api/User/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

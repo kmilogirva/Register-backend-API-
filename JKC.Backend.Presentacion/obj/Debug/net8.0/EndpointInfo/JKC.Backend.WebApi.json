@@ -1084,6 +1084,18 @@
         }
       }
     },
+    "/api/User/test": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/User/crearusuario": {
       "post": {
         "tags": [

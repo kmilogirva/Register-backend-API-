@@ -68,12 +68,12 @@ namespace JKC.Backend.WebApi.Controllers.GeneralesController
     [HttpPut("actualizartercero")]
     public async Task<IActionResult> ActualizarUsuarioAsync(Tercero nuevotercero)
     {
-      var usuarioexistente = await _terceroServicio.ObtenerTerceroPorId(nuevotercero.IdTercero);
+      //var usuarioexistente = await _terceroServicio.ObtenerTerceroPorId(nuevotercero.IdTercero);
 
-      if (usuarioexistente == null)
-      {
-        return NotFound(new { mensaje = "El usuario no existe" });
-      }
+      //if (usuarioexistente == null)
+      //{
+      //  return NotFound(new { mensaje = "El usuario no existe" });
+      //}
 
       await _terceroServicio.ActualizarTercero(nuevotercero);
       return Ok(new { mensaje = "El usuario ha sido actualizado con éxito.", nuevotercero.IdTercero });

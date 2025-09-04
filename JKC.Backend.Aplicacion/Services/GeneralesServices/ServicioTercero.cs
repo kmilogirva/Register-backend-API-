@@ -80,9 +80,18 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
       terceroExistente.Nombre2 = terceroActualizado.Nombre2;
       terceroExistente.Apellido1 = terceroActualizado.Apellido1;
       terceroExistente.Apellido2 = terceroActualizado.Apellido2;
+      terceroExistente.codDocumento = terceroActualizado.codDocumento;
+      terceroExistente.IdPais = terceroActualizado.IdPais;
+      terceroExistente.IdDepartamento = terceroActualizado.IdDepartamento;
+      terceroExistente.IdCiudad = terceroActualizado.IdCiudad;
       terceroExistente.Email = terceroActualizado.Email;
       terceroExistente.Telefono = terceroActualizado.Telefono;
       terceroExistente.IdEstado = terceroActualizado.IdEstado;
+      terceroExistente.IdTipoTercero = terceroActualizado.IdTipoTercero;
+      terceroExistente.IdTipoPersona = terceroActualizado.IdTipoPersona;
+      terceroExistente.IdTipoIdentificacion = terceroActualizado.IdTipoIdentificacion;
+      terceroExistente.FechaModificacion = DateTime.Now;
+      terceroExistente.IdUsuarioModificacion = terceroActualizado.IdUsuarioModificacion;
 
 
 

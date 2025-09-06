@@ -17,95 +17,56 @@ namespace JKC.Backend.WebApi.Controllers.CategoriasController
       _servicioCategoria = servicioCategoria;
     }
 
-    [HttpPost("registrarcategoria")]
-    public async Task<IActionResult> RegistrarCategoria([FromBody] Categoria registroCategoria)
+    [HttpGet("listarcategorias")]
+    public async Task<ActionResult<List<Categoria>>> ObtenerListadoCategorias()
     {
-      if (registroCategoria == null)
-      {
-        return BadRequest(new { mensaje = "Los datos de la categoria no pueden estar vacíos." });
-      }
+      var resultado = await _servicioCategoria.ObtenerListadoCategorias();
+      return Ok(resultado);
+    }
 
+    [HttpGet("obtenercategoriaporid/{id}")]
+    public async Task<ActionResult<Categoria>> ObtenerCategoriaPorId(int id)
+    {
+      var categoria = await _servicioCategoria.ObtenerCategoriaPorId(id);
+      if (categoria == null)
+      {
+        return NotFound(new { mensaje = $"No se encontró la categoría con ID {id}." });
+      }
+      return Ok(categoria);
+    }
+
+    [HttpPost("registrarcategoria")]
+    public async Task<ActionResult<Categoria>> RegistrarCategoria([FromBody] Categoria registroCategoria)
+    {
       if (!ModelState.IsValid)
       {
-        return BadRequest(new { mensaje = "Datos de la categoria no son válidos.", errores = ModelState.Values.SelectMany(v => v.Errors) });
+        return BadRequest(ModelState);
       }
-
-      try
-      {
-        var resultado = await _servicioCategoria.RegistrarCategoria(registroCategoria);
-        return Ok(new { mensaje = "Categoria registrada con éxito.", producto = resultado });
-      }
-      catch (Exception ex)
-      {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al registrar la categoria", error = ex.Message });
-      }
+      var resultado = await _servicioCategoria.RegistrarCategoria(registroCategoria);
+      return CreatedAtAction(nameof(ObtenerCategoriaPorId), new { id = resultado.IdCategoria }, resultado);
     }
 
-    [HttpPost("listarcategorias")]
-    public async Task<IActionResult> ObtenerListadoCategorias()
+    [HttpPut("actualizarcategoria/{id}")]
+    public async Task<IActionResult> ActualizarCategoria(int id, [FromBody] Categoria categoriaActualizada)
     {
-      try
+      if (id != categoriaActualizada.IdCategoria)
       {
-        var resultado = await _servicioCategoria.ObtenerListadoCategorias();
-        return Ok(new { mensaje = "Listado de categorias obtenido con éxito.", productos = resultado });
+        return BadRequest();
       }
-      catch (Exception ex)
-      {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener el listado de productos.", error = ex.Message });
-      }
+      await _servicioCategoria.ActualizarCategoria(categoriaActualizada);
+      return NoContent();
     }
 
-    [HttpGet("obtenercategoriaporid")]
-    public async Task<IActionResult> ObtenerRolesPorUsuarioId(int idCategoria)
+    [HttpDelete("eliminarcategoriasporids/{id}")]
+    public async Task<IActionResult> EliminarCategoria(int id)
     {
-      try
+      var categoriaExistente = await _servicioCategoria.ObtenerCategoriaPorId(id);
+      if (categoriaExistente == null)
       {
-        var categoria = await _servicioCategoria.ObtenerCategoriaPorId(idCategoria);
-        return Ok(categoria);
+        return NotFound();
       }
-      catch (Exception ex)
-      {
-        return StatusCode(500, new { mensaje = "Ocurrió un error al obtener los roles del usuario.", detalle = ex.Message });
-      }
-    }
-
-    [HttpPost("eliminarcategoriasporids")]
-    public async Task<IActionResult> EliminarCategoriaAsync(List<int> idCategoria)
-    {
-      if (idCategoria == null || !idCategoria.Any())
-        return BadRequest(new { mensaje = "No se enviaron productos para eliminar." });
-
-      var categoriasEncontradas = new List<int>();
-      var categoriasNoEncontradas = new List<int>();
-
-      foreach (int id in idCategoria)
-      {
-        var categoria = await _servicioCategoria.ObtenerCategoriaPorId(id);
-
-        if (categoria != null)
-        {
-          await _servicioCategoria.EliminarCategoriasPorIds(id);
-          categoriasEncontradas.Add(id);
-        }
-        else
-        {
-          categoriasNoEncontradas.Add(id);
-        }
-      }
-
-      if (categoriasEncontradas.Any())
-      {
-        return Ok(new
-        {
-          mensaje = "Productos procesados.",
-          categoriasEliminadas = categoriasEncontradas,
-          categoriasNoEncontradas = categoriasNoEncontradas
-        });
-      }
-      else
-      {
-        return NotFound(new { mensaje = "Ningún producto encontrado para eliminar.", categoriasNoEncontradas });
-      }
+      await _servicioCategoria.EliminarCategoriasPorIds(id);
+      return NoContent();
     }
   }
 }

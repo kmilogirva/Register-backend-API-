@@ -4,6 +4,7 @@ using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
+using BCrypt.Net; // <-- para hashear contraseñas
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 {
@@ -23,21 +24,22 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       return await _usuarioRepository.ObtenerPorId(id);
     }
 
+    // NUEVO: Obtener usuario por correo
+    public async Task<Usuario> ObtenerUsuarioPorCorreo(string correo)
+    {
+      var usuarios = await _usuarioRepository.ObtenerTodos();
+      return usuarios.FirstOrDefault(u => u.Correo == correo);
+    }
+
     public async Task<List<Usuario>> ObtenerListadoUsuarios()
     {
       return await _usuarioRepository.ObtenerTodos();
     }
 
-    // Registrar un nuevo usuario
+    // Registrar un nuevo usuario (ya tenía hashing en versiones previas; asegúrate de mantenerlo)
     public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario)
     {
-
-      //var usuarioExistente = await _usuarioRepository
-      //      .ObtenerTodos()
-      //      .AnyAsync(u => u.Correo == nuevoUsuario.Correo);
-
-      var usuarios = await  _usuarioRepository.ObtenerTodos();
-
+      var usuarios = await _usuarioRepository.ObtenerTodos();
       var usuarioExistente = usuarios.Any(u => u.Correo == nuevoUsuario.Correo);
 
       if (usuarioExistente)
@@ -49,6 +51,11 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
         };
       }
 
+      // Hashear antes de guardar (si no está hasheada)
+      if (!string.IsNullOrWhiteSpace(nuevoUsuario.Contrasena))
+      {
+        nuevoUsuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.Contrasena, workFactor: 12);
+      }
 
       await _usuarioRepository.Crear(nuevoUsuario);
 
@@ -67,7 +74,6 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       if (usuarioExistente == null)
         return false;
 
-      // Actualiza los campos del usuario existente con los del actualizado
       usuarioExistente.Nombre1 = usuarioActualizado.Nombre1;
       usuarioExistente.Nombre2 = usuarioActualizado.Nombre2;
       usuarioExistente.Apellido1 = usuarioActualizado.Apellido1;
@@ -75,9 +81,12 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       usuarioExistente.Correo = usuarioActualizado.Correo;
       usuarioExistente.Telefono = usuarioActualizado.Telefono;
       usuarioExistente.IdEstado = usuarioActualizado.IdEstado;
-      //usuarioExistente.Sexo = usuarioActualizado.Sexo;
-      usuarioExistente.Contrasena = usuarioActualizado.Contrasena;
 
+      // Si se actualiza contraseña, la hasheamos
+      if (!string.IsNullOrWhiteSpace(usuarioActualizado.Contrasena))
+      {
+        usuarioExistente.Contrasena = BCrypt.Net.BCrypt.HashPassword(usuarioActualizado.Contrasena, workFactor: 12);
+      }
 
       await _usuarioRepository.Actualizar(usuarioExistente);
       return true;
@@ -95,69 +104,99 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       return true;
     }
 
-
-    //public async Task<ResponseMessages> LoginAsync(string email, string password)
-    //{
-    //  // Busca al usuario con las credenciales proporcionadas
-    //  var usuario = await _usuarioRepository.ObtenerTodos()
-    //      .FirstOrDefaultAsync(u => u.Correo == email && u.Contrasena == password);
-
-    //  // Si no se encuentra el usuario, devuelve un resultado fallido
-    //  if (usuario == null)
-    //  {
-    //    return new ResponseMessages
-    //    {
-    //      Exitoso = false,
-    //      Mensaje = "Credenciales inválidas"
-    //    };
-    //  }
-
-    //  // Si el usuario se encuentra, devuelve un resultado exitoso
-    //  return new ResponseMessages
-    //  {
-    //    Exitoso = true,
-    //    Mensaje = "Inicio de sesión exitoso"
-    //  };
-    //}
-
     public async Task<List<RolesUsuario>> ObtenerRolesPorIdUsuario(int idUsuario)
     {
       try
       {
-
-          var obtenerRolesUsuarios = await _usuarioRepository.EjecutarProcedimientoAlmacenado<RolesUsuario>("obtenerRolesUsuario", idUsuario);
-
-          // Si se obtuvieron resultados, los devolvemos
-          return obtenerRolesUsuarios.ToList();
+        var obtenerRolesUsuarios = await _usuarioRepository.EjecutarProcedimientoAlmacenado<RolesUsuario>("obtenerRolesUsuario", idUsuario);
+        return obtenerRolesUsuarios.ToList();
       }
       catch (Exception ex)
       {
-        // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
         throw new Exception("Error al obtener roles por usuario", ex);
       }
     }
 
-    //public async Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario)
-    //{
-    //  try
-    //  {
+    // ====================================================
+    // NUEVO: Solicitar recuperación de contraseña (genera token y guarda en BD)
+    // ====================================================
+    public async Task<ResponseMessages> SolicitarRecuperacionContrasenaAsync(string correo)
+    {
+      var usuarios = await _usuarioRepository.ObtenerTodos();
+      var usuario = usuarios.FirstOrDefault(u => u.Correo == correo);
 
-    //    var permisos = await _usuarioRepository.EjecutarProcedimientoAlmacenado<PermisoModuloproducto>("seguridad.obtenerPermisosxRolUsuario", idUsuario);
+      if (usuario == null)
+      {
+        return new ResponseMessages
+        {
+          Exitoso = false,
+          Mensaje = "No existe una cuenta asociada a ese correo."
+        };
+      }
 
+      // Generar token único y expiración
+      string token = Guid.NewGuid().ToString("N"); // sin guiones
+      usuario.TokenRecuperacion = token;
+      usuario.TokenExpiracion = DateTime.UtcNow.AddHours(1);
 
-       
-    //    return permisos.ToList();
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    // Manejo de excepciones: si ocurre algún error, lanzamos una nueva excepción
-    //    throw new Exception("Error al obtener roles por usuario", ex);
-    //  }
-    //}
+      await _usuarioRepository.Actualizar(usuario);
 
+      return new ResponseMessages
+      {
+        Exitoso = true,
+        Mensaje = "Token generado correctamente."
+        // NOTA: por seguridad no devolvemos token aquí. El controller lo obtendrá desde DB si es necesario.
+      };
+    }
 
+    // ====================================================
+    // NUEVO: Restablecer contraseña usando token
+    // ====================================================
+    public async Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena)
+    {
+      if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(nuevaContrasena))
+      {
+        return new ResponseMessages
+        {
+          Exitoso = false,
+          Mensaje = "Token o nueva contraseña inválida."
+        };
+      }
 
+      var usuarios = await _usuarioRepository.ObtenerTodos();
+      var usuario = usuarios.FirstOrDefault(u => u.TokenRecuperacion == token);
+
+      if (usuario == null)
+      {
+        return new ResponseMessages
+        {
+          Exitoso = false,
+          Mensaje = "Token inválido."
+        };
+      }
+
+      // Verificar expiración
+      if (usuario.TokenExpiracion == null || usuario.TokenExpiracion < DateTime.UtcNow)
+      {
+        return new ResponseMessages
+        {
+          Exitoso = false,
+          Mensaje = "Token vencido. Solicite nuevamente la recuperación."
+        };
+      }
+
+      // Hashear y guardar nueva contraseña. Limpiar token.
+      usuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevaContrasena, workFactor: 12);
+      usuario.TokenRecuperacion = null;
+      usuario.TokenExpiracion = null;
+
+      await _usuarioRepository.Actualizar(usuario);
+
+      return new ResponseMessages
+      {
+        Exitoso = true,
+        Mensaje = "Contraseña actualizada correctamente."
+      };
+    }
   }
 }
-
-

@@ -4,9 +4,7 @@ using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-
-// 🔹 NUEVO: usando la librería BCrypt.Net que instalaste por NuGet
-using BCrypt.Net;
+using static JKC.Backend.Aplicacion.Services.UsuarioServices.ServicioUsuario;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
@@ -22,7 +20,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       _rolesRepository = rolesRepository;
       _asignarPermisos = asignarPermisos;
     }
-
     public async Task<Roles> CrearRol(Roles nuevoRol)
     {
       try
@@ -64,6 +61,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       if (rolExistente == null)
         return null;
 
+      // Actualizamos los datos
       rolExistente.NombreRol = rolActualizado.NombreRol;
       rolExistente.IdEstado = rolActualizado.IdEstado;
       rolExistente.FechaModificacion = DateTime.UtcNow;
@@ -74,8 +72,59 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return rolExistente;
     }
 
-    // 🔹 MODIFICADO: Login con soporte para contraseñas hasheadas y migración automática
-    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
+    //public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
+    //{
+    //  if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+    //  {
+    //    return new ResponseMessagesData<UsuarioDto>
+    //    {
+    //      Exitoso = false,
+    //      Mensaje = "El correo o la contraseña no pueden estar vacíos.",
+    //      Data = null
+    //    };
+    //  }
+
+    //  var usuario = await _usuarioRepository.ObtenerTodos();
+
+    //  //var usuarioAutorizado = usuario.FirstOrDefault(u =>
+    //  //  u.Correo == email &&
+    //  //  u.Contrasena == password &&
+    //  //  u.IdEstado == 1);
+
+    //  var usuarioAutorizado = usuario
+    //    .FirstOrDefault(u =>
+    //    u.Contrasena == password &&
+    //    u.IdEstado == 1 &&
+    //    u.Tercero.Email == email);
+
+    //  if (usuarioAutorizado == null)
+
+    //  {
+    //    return new ResponseMessagesData<UsuarioDto>
+    //    {
+    //      Exitoso = false,
+    //      Mensaje = "Credenciales inválidas",
+    //      Data = null
+    //    };
+    //  }
+
+    //  var usuarioproducto = new UsuarioDto
+    //  {
+    //    IdUsuario = usuarioAutorizado.IdUsuario,
+    //    Nombre = usuarioAutorizado.Tercero.NombreCompleto,
+    //    Correo = usuarioAutorizado.Tercero.Email,
+    //    IdRol = usuarioAutorizado.IdRol
+    //  };
+
+    //  return new ResponseMessagesData<UsuarioDto>
+    //  {
+    //    Exitoso = true,
+    //    Mensaje = "Inicio de sesión exitoso",
+    //    Data = usuarioproducto
+    //  };
+    //}
+
+    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string? email,string? codUsuario, string password)
     {
       if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
       {
@@ -87,11 +136,18 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      var usuarios = await _usuarioRepository.ObtenerTodos();
+      // Traer usuarios con terceros relacionados
+      var usuarios = await _usuarioRepository.ObtenerTodosInclude(u => u.Tercero);
 
+
+      // Buscar usuario por email y estado
       var usuarioAutorizado = usuarios.FirstOrDefault(u =>
-        u.Correo == email &&
-        u.IdEstado == 1);
+          u.IdEstado == 1 &&
+          (
+              (!string.IsNullOrEmpty(email) && u.Tercero.Email == email) ||
+              (!string.IsNullOrEmpty(codUsuario) && u.CodUsuario == codUsuario)
+          )
+      );
 
       if (usuarioAutorizado == null)
       {
@@ -103,35 +159,11 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      bool passwordMatches = false;
-      var storedPassword = usuarioAutorizado.Contrasena ?? string.Empty;
 
-      // 🔹 Si la contraseña en BD parece estar en formato BCrypt
-      if (!string.IsNullOrEmpty(storedPassword) && storedPassword.StartsWith("$2"))
-      {
-        passwordMatches = BCrypt.Net.BCrypt.Verify(password, storedPassword);
-      }
-      else
-      {
-        // 🔹 Contraseña antigua en texto plano
-        passwordMatches = storedPassword == password;
+      // ✅ Verificar la contraseña usando PBKDF2
+      bool passwordValida = PasswordHasher.VerifyPassword(password, usuarioAutorizado.Contrasena);
 
-        if (passwordMatches)
-        {
-          try
-          {
-            // 🔹 Migración automática a hash
-            usuarioAutorizado.Contrasena = BCrypt.Net.BCrypt.HashPassword(password, workFactor: 12);
-            await _usuarioRepository.Actualizar(usuarioAutorizado);
-          }
-          catch
-          {
-            // Si no se puede guardar el hash, no bloqueamos el login
-          }
-        }
-      }
-
-      if (!passwordMatches)
+      if (!passwordValida)
       {
         return new ResponseMessagesData<UsuarioDto>
         {
@@ -141,11 +173,13 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
+      // Construir DTO para respuesta
       var usuarioproducto = new UsuarioDto
       {
         IdUsuario = usuarioAutorizado.IdUsuario,
-        Nombre = usuarioAutorizado.NombreCompleto,
-        Correo = usuarioAutorizado.Correo,
+        CodUsuario = usuarioAutorizado.CodUsuario,
+        Nombre = usuarioAutorizado.Tercero.NombreCompleto,
+        Correo = usuarioAutorizado.Tercero.Email,
         IdRol = usuarioAutorizado.IdRol
       };
 
@@ -156,6 +190,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         Data = usuarioproducto
       };
     }
+
 
     public async Task<List<Roles>> ObtenerListadoRoles()
     {
@@ -171,9 +206,9 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         );
         return resultado.ToList();
       }
-      catch
+      catch (Exception ex)
       {
-        throw;
+        throw; // o lanza un mensaje más útil si lo necesitas
       }
     }
 
@@ -181,6 +216,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     {
       if (asignarPermisosLista == null || !asignarPermisosLista.Any())
         throw new ArgumentException("La lista de permisos está vacía.");
+
 
       var idRol = asignarPermisosLista.FirstOrDefault()?.IdRol ?? 0;
 
@@ -192,6 +228,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       {
         await EliminarPermisosPorId(permiso.Id);
       }
+
 
       foreach (var permiso in asignarPermisosLista)
       {
@@ -207,12 +244,14 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       try
       {
         await _asignarPermisos.EliminarPorId(Id);
-        return true;
+
+        return true; // Si llega aquí, todo salió bien
       }
       catch (Exception ex)
       {
         throw new Exception("Error al eliminar los permisos del rol", ex);
       }
+
     }
 
     public async Task<bool> EliminarRol(int id)

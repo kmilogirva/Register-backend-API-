@@ -14,7 +14,15 @@ namespace JKC.Backend.Infraestructura.Framework.RepositoryPattern
   public interface IRepository<T> where T : class
   {
     Task<T> ObtenerPorId(int? id);
+    Task<T> ObtenerPorIdInclude(int id, params Expression<Func<T, object>>[] includes);
     Task<List<T>> ObtenerTodos();
+    Task<List<T>> ObtenerAsync(
+        Expression<Func<T, bool>> filtro = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Func<IQueryable<T>, IQueryable<T>> incluir = null,
+        bool asNoTracking = true
+    );
+
     Task Crear(T entidad);
     Task Actualizar(T entidad);
     Task Eliminar(T entidad);

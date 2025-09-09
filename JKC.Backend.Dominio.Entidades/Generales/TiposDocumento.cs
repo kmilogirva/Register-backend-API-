@@ -10,7 +10,6 @@ namespace JKC.Backend.Dominio.Entidades.Generales
   public class TiposDocumento
   {
     [Key]
-    public int Id { get; set; }
     public int IdTipoDocumento { get; set; }
     public string NombreDocumento { get; set; }
     public DateTime FechaCreacion { get; set; }

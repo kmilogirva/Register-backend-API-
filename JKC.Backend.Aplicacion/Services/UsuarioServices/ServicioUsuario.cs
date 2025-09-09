@@ -1,10 +1,13 @@
-using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-using Microsoft.EntityFrameworkCore;
-using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Aplicacion.Services.DTOS;
+using JKC.Backend.Dominio.Entidades.Response.Seguridad;
+using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
-using BCrypt.Net; // <-- para hashear contraseñas
+using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 {
@@ -12,10 +15,49 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
   {
 
     private readonly IRepository<Usuario> _usuarioRepository;
+    private readonly ILogger<ServicioUsuario> _logger;
 
-    public ServicioUsuario(IRepository<Usuario> usuarioRepository)
+    public ServicioUsuario(IRepository<Usuario> usuarioRepository, ILogger<ServicioUsuario> logger)
     {
       _usuarioRepository = usuarioRepository;
+      _logger = logger;
+    }
+
+    public static class PasswordHasher
+    {
+      public static string HashPassword(string password)
+      {
+        byte[] salt = RandomNumberGenerator.GetBytes(16);
+
+        byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
+            Encoding.UTF8.GetBytes(password),
+            salt,
+            100000,
+            HashAlgorithmName.SHA256,
+            32);
+
+        return $"{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
+      }
+
+      // Verificar la contraseña ingresada contra el hash almacenado
+      public static bool VerifyPassword(string password, string hashedPassword)
+      {
+        var parts = hashedPassword.Split(':');
+        if (parts.Length != 2)
+          return false;
+
+        var salt = Convert.FromBase64String(parts[0]);
+        var storedHash = Convert.FromBase64String(parts[1]);
+
+        var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(
+            Encoding.UTF8.GetBytes(password),
+            salt,
+            100000,
+            HashAlgorithmName.SHA256,
+            32);
+
+        return CryptographicOperations.FixedTimeEquals(storedHash, hashToCompare);
+      }
     }
 
     // Obtener usuario por Id
@@ -39,17 +81,45 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     // Registrar un nuevo usuario (ya tenía hashing en versiones previas; asegúrate de mantenerlo)
     public async Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario)
     {
-      var usuarios = await _usuarioRepository.ObtenerTodos();
-      var usuarioExistente = usuarios.Any(u => u.Correo == nuevoUsuario.Correo);
-
-      if (usuarioExistente)
+      try
       {
+        var usuarioExistente = await _usuarioRepository
+          .AnyAsync(u => u.IdTercero == nuevoUsuario.IdTercero);
+
+        if (usuarioExistente)
+        {
+          _logger.LogWarning("Intento de registro fallido. El usuario con email {Email} ya existe.", nuevoUsuario.Tercero.Email);
+
+          return new ResponseMessages
+          {
+            Exitoso = false,
+            Mensaje = "Usuario ya existe en la Base de Datos."
+          };
+        }
+
+        // Hash de contraseña
+        nuevoUsuario.Contrasena = PasswordHasher.HashPassword(nuevoUsuario.Contrasena);
+        nuevoUsuario.FechaCreacion = DateTime.Now;
+
+        await _usuarioRepository.Crear(nuevoUsuario);
+
+
+        return new ResponseMessages
+        {
+          Exitoso = true,
+          Mensaje = "Usuario registrado exitosamente."
+        };
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error al registrar usuario con email {Email}", nuevoUsuario.Tercero.Email);
         return new ResponseMessages
         {
           Exitoso = false,
-          Mensaje = "Usuario ya existe en la Base de Datos."
+          Mensaje = "Ocurrió un error al registrar el usuario."
         };
       }
+
 
       // Hashear antes de guardar (si no está hasheada)
       if (!string.IsNullOrWhiteSpace(nuevoUsuario.Contrasena))
@@ -66,13 +136,13 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       };
     }
 
+
     // Actualizar un usuario existente
     public async Task<bool> ActualizarUsuario(Usuario usuarioActualizado)
     {
-      var usuarioExistente = await _usuarioRepository.ObtenerPorId(usuarioActualizado.IdUsuario);
-
-      if (usuarioExistente == null)
-        return false;
+      try
+      {
+        var usuarioExistente = await _usuarioRepository.ObtenerPorId(usuarioActualizado.IdUsuario);
 
       usuarioExistente.Nombre1 = usuarioActualizado.Nombre1;
       usuarioExistente.Nombre2 = usuarioActualizado.Nombre2;
@@ -87,9 +157,34 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
       {
         usuarioExistente.Contrasena = BCrypt.Net.BCrypt.HashPassword(usuarioActualizado.Contrasena, workFactor: 12);
       }
+        if (usuarioExistente == null)
+        {
+          _logger.LogWarning("No se encontró el usuario con ID {Id} para actualizar.", usuarioActualizado.IdUsuario);
+          return false;
+        }
 
-      await _usuarioRepository.Actualizar(usuarioExistente);
-      return true;
+        usuarioExistente.IdEstado = usuarioActualizado.IdEstado;
+        usuarioExistente.IdRol = usuarioActualizado.IdRol;
+        usuarioExistente.CodUsuario = usuarioActualizado.CodUsuario;
+        usuarioExistente.FechaModificacion = DateTime.Now;
+        usuarioExistente.IdUsuarioModificacion = usuarioActualizado.IdUsuarioModificacion;
+
+        // Verificar si la contraseña cambió
+        if (!string.IsNullOrWhiteSpace(usuarioActualizado.Contrasena) &&
+            !PasswordHasher.VerifyPassword(usuarioActualizado.Contrasena, usuarioExistente.Contrasena))
+        {
+          usuarioExistente.Contrasena = PasswordHasher.HashPassword(usuarioActualizado.Contrasena);
+        }
+
+        await _usuarioRepository.Actualizar(usuarioExistente);
+
+        return true;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error al actualizar usuario con ID {Id}", usuarioActualizado.IdUsuario);
+        return false;
+      }
     }
 
     // Eliminar un usuario por Id
@@ -165,38 +260,101 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
 
       var usuarios = await _usuarioRepository.ObtenerTodos();
       var usuario = usuarios.FirstOrDefault(u => u.TokenRecuperacion == token);
+        var roles = await _usuarioRepository.EjecutarProcedimientoAlmacenado<RolesUsuario>("obtenerRolesUsuario", idUsuario);
 
-      if (usuario == null)
-      {
-        return new ResponseMessages
-        {
-          Exitoso = false,
-          Mensaje = "Token inválido."
-        };
+        return roles.ToList();
       }
-
-      // Verificar expiración
-      if (usuario.TokenExpiracion == null || usuario.TokenExpiracion < DateTime.UtcNow)
+      catch (Exception ex)
       {
-        return new ResponseMessages
-        {
-          Exitoso = false,
-          Mensaje = "Token vencido. Solicite nuevamente la recuperación."
-        };
+        _logger.LogError(ex, "Error al obtener roles para el usuario con ID {Id}", idUsuario);
+        return new List<RolesUsuario>();
       }
+    }
 
-      // Hashear y guardar nueva contraseña. Limpiar token.
-      usuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevaContrasena, workFactor: 12);
-      usuario.TokenRecuperacion = null;
-      usuario.TokenExpiracion = null;
-
-      await _usuarioRepository.Actualizar(usuario);
-
-      return new ResponseMessages
+    public async Task<List<UsuarioResponse>> ObtenerUsuariosResponse()
+    {
+      try
       {
-        Exitoso = true,
-        Mensaje = "Contraseña actualizada correctamente."
-      };
+        var usuarios = await _usuarioRepository.EjecutarProcedimientoAlmacenado<UsuarioResponse>("generales.cargar_data_usuarios_terceros");
+
+        return usuarios.ToList();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error al cargar usuarios desde SP.");
+        return new List<UsuarioResponse>();
+      }
+    }
+
+    public async Task<UsuarioResponse> ObtenerUsuarioPorIdTercero(int idTercero)
+    {
+      try
+      {
+        var usuario = await _usuarioRepository.EjecutarProcedimientoAlmacenado<UsuarioResponse>(
+            "generales.cargar_data_usuarios_terceros_por_id", idTercero);
+
+        if (!usuario.Any())
+        {
+          _logger.LogWarning("No se encontró usuario asociado al tercero con ID {IdTercero}", idTercero);
+          return null;
+        }
+
+        return usuario.FirstOrDefault();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Error al obtener usuario por IdTercero {IdTercero}", idTercero);
+        return null;
+      }
     }
   }
+}
+
+       public async Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena)
+  {
+    if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(nuevaContrasena))
+    {
+      return new ResponseMessages
+      {
+        Exitoso = false,
+        Mensaje = "Token o nueva contraseña inválida."
+      };
+    }
+
+    var usuarios = await _usuarioRepository.ObtenerTodos();
+    var usuario = usuarios.FirstOrDefault(u => u.TokenRecuperacion == token);
+
+    if (usuario == null)
+    {
+      return new ResponseMessages
+      {
+        Exitoso = false,
+        Mensaje = "Token inválido."
+      };
+    }
+
+    // Verificar expiración
+    if (usuario.TokenExpiracion == null || usuario.TokenExpiracion < DateTime.UtcNow)
+    {
+      return new ResponseMessages
+      {
+        Exitoso = false,
+        Mensaje = "Token vencido. Solicite nuevamente la recuperación."
+      };
+    }
+
+    // Hashear y guardar nueva contraseña. Limpiar token.
+    usuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevaContrasena, workFactor: 12);
+    usuario.TokenRecuperacion = null;
+    usuario.TokenExpiracion = null;
+
+    await _usuarioRepository.Actualizar(usuario);
+
+    return new ResponseMessages
+    {
+      Exitoso = true,
+      Mensaje = "Contraseña actualizada correctamente."
+    };
+  }
+}
 }

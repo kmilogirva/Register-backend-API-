@@ -9,15 +9,16 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
   public interface IServicioUsuario
   {
     Task<Usuario> ObtenerUsuarioPorId(int id);
-    Task<Usuario> ObtenerUsuarioPorCorreo(string correo); // <- NUEVO
+    //Task<Usuario> ObtenerUsuarioPorCorreo(string correo); // <- NUEVO
     Task<List<Usuario>> ObtenerListadoUsuarios();
     Task<List<UsuarioResponse>> ObtenerUsuariosResponse();
     Task<UsuarioResponse> ObtenerUsuarioPorIdTercero(int idTercero);
     Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario);
     Task<bool> ActualizarUsuario(Usuario usuarioActualizado);
     Task<bool> EliminarUsuarioPorId(int id);
+    Task<(ResponseMessages Respuesta, string Token)> SolicitarRecuperacionContrasenaAsync(string correo);
 
-    Task<ResponseMessages> SolicitarRecuperacionContrasenaAsync(string correo); // <- NUEVO
+
     Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena); // <- NUEVO
 
     Task<List<RolesUsuario>> ObtenerRolesPorIdUsuario(int idUsuario);

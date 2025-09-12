@@ -23,6 +23,13 @@ namespace JKC.Backend.Dominio.Entidades.Usuario
     public int? IdUsuarioCreacion { get; set; }
     public int? IdUsuarioModificacion { get; set; }
 
+
+    // 🔹 Campo nuevo para almacenar el token de recuperación
+    //    Se guarda cuando el usuario solicita restablecer contraseña.
+    public string? TokenRecuperacion { get; set; }
+
+    // 🔹 Campo nuevo para indicar la fecha/hora en que expira el token
+    public DateTime? TokenExpiracion { get; set; }
     [ForeignKey("IdTercero")]
     public Tercero? Tercero { get; set; }
   }

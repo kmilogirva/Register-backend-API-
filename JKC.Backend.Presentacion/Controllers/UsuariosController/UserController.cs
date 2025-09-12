@@ -37,7 +37,8 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
         //"pablcz0220@gmail.com",
         //"crhistandro@gmail.com"
     };
-
+      //quiero guardar este archibo dentro de nuestra arquitectura y crear este metodo para traero de donde se crea
+      // tabien quiero dos vistas una para olvidates contraseña y otra para el cambiodel contraseña el  link que envia al correo
       string mensajeHtml = @"
 <!DOCTYPE html>
 <html>

@@ -237,36 +237,32 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
       return await Entities.AnyAsync(predicado).ConfigureAwait(false);
     }
 
-    public async Task<List<T>> ObtenerTodosInclude(params Expression<Func<T, object>>[] includes)
+   public async Task<List<T>> ObtenerTodosInclude(params Expression<Func<T, object>>[] includes)
+{
+    try
     {
-      try
-      {
         IQueryable<T> query = Entities;
 
         if (includes != null && includes.Length > 0)
         {
-          foreach (var include in includes)
-          {
-            query = query.Include(include);
-          }
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
         }
 
         return await query.ToListAsync().ConfigureAwait(false);
-      }
-      catch (Exception ex)
-      {
-        // Aquí puedes loguear el error
+    }
+    catch (Exception ex)
+    {
+        // Aquí puedes loguear el error si tienes un logger
         // _logger.LogError(ex, "Error al obtener entidades de {Entidad}", typeof(T).Name);
 
-        // O relanzarlo para que lo maneje el nivel superior
+        // Relanzamos la excepción con contexto adicional
         throw new Exception($"Error al obtener entidades de tipo {typeof(T).Name}", ex);
-      }
     }
+}
 
-    //public async Task<List<RolPermiso>> ObtenerPermisosRol(int idRol)
-    //{
-
-    //}
   }
 }
 

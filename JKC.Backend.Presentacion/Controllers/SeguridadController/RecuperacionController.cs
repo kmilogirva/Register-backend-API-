@@ -40,7 +40,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return BadRequest(new { mensaje = respuesta.Mensaje });
 
       var frontendUrl = _config["Frontend:Url"] ?? "http://localhost:4200";
-      var link = $"{frontendUrl.TrimEnd('/')}/resetear-contrasena?token={token}";
+      var link = $"{frontendUrl.TrimEnd('/')}/resetear-contrasena/{token}";
       //COMO MANDAR ESTO AL FRONT
       // Plantilla HTML similar a la de "test"
       string mensajeHtml = $@"
@@ -121,7 +121,16 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 
       return Ok(new { mensaje = resultado.Mensaje });
     }
-  }
 
+
+
+    [HttpGet("validar-token/{token}")]
+    public async Task<IActionResult> ValidarToken(string token)
+    {
+      bool esValido = await _servicioUsuario.ValidarTokenAsync(token);
+      return Ok(new { valido = esValido });
+    }
+
+  }
 }
 

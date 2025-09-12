@@ -238,7 +238,8 @@ namespace JKC.Backend.Infraestructura.Data.Repositorios
     }
 
     public async Task<List<T>> ObtenerTodosInclude(params Expression<Func<T, object>>[] includes)
-    {
+    
+        {
       IQueryable<T> query = Entities;
       if (includes != null)
       {

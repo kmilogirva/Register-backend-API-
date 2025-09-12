@@ -22,6 +22,8 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena); // <- NUEVO
 
     Task<List<RolesUsuario>> ObtenerRolesPorIdUsuario(int idUsuario);
+    Task<bool> ValidarTokenAsync(string token);
+    
   }
 }
 

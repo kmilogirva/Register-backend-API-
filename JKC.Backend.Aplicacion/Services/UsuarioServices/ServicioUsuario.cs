@@ -259,6 +259,14 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     // ====================================================
     // NUEVO: Restablecer contraseña usando token
     // ====================================================
+
+
+    public async Task<bool> ValidarTokenAsync(string token)
+    {
+      return await _usuarioRepository.AnyAsync(t =>
+          t.TokenRecuperacion == token && t.TokenExpiracion > DateTime.UtcNow);
+    }
+
     public async Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena)
     {
       if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(nuevaContrasena))
@@ -305,6 +313,7 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
         Mensaje = "Contraseña actualizada correctamente."
       };
     }
+   
   }
 }
 

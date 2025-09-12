@@ -7,7 +7,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
 {
 
   [ApiController]
-  [Route("api/recuperacion")]
+  [Route("api/[controller]")]
   public class RecuperacionController : ControllerBase
   {
 
@@ -28,8 +28,8 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       _emailService = emailService;
     }
 
-    [HttpPost("solicitar")]
-    public async Task<IActionResult> Solicitar([FromBody] string correo)
+    [HttpPost("solicitar-recuperacion/{correo}")]
+    public async Task<IActionResult> Solicitar(string correo)
     {
       if (string.IsNullOrWhiteSpace(correo))
         return BadRequest(new { mensaje = "Correo requerido." });
@@ -40,7 +40,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
         return BadRequest(new { mensaje = respuesta.Mensaje });
 
       var frontendUrl = _config["Frontend:Url"] ?? "http://localhost:4200";
-      var link = $"{frontendUrl.TrimEnd('/')}/restablecer?token={token}";
+      var link = $"{frontendUrl.TrimEnd('/')}/resetear-contrasena?token={token}";
       //COMO MANDAR ESTO AL FRONT
       // Plantilla HTML similar a la de "test"
       string mensajeHtml = $@"
@@ -109,7 +109,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
     /// <summary>
     /// Restablecer contraseña usando token.
     /// </summary>
-    [HttpPost("restablecer")]
+    [HttpPost("restablecer-contrasena")]
     public async Task<IActionResult> Restablecer([FromBody] RestablecerContrasenaDto dto)
     {
       if (dto == null || string.IsNullOrWhiteSpace(dto.Token) || string.IsNullOrWhiteSpace(dto.NuevaContrasena))

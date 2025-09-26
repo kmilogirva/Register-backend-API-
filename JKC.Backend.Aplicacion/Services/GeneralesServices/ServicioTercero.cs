@@ -28,13 +28,9 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
         t => t.TipoPersona,
         t => t.TipoTercero
    );
-    }
+  }
 
-    //public async Task<List<Tercero>> ObtenerListadoTerceros()
-    //{
-    //  return await _terceroRepository.ObtenerTodos();
-    //}
-
+  
     public async Task<List<Tercero>> ObtenerListadoTerceros()
     {
       return await _terceroRepository.ObtenerTodosInclude(
@@ -48,7 +44,7 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
     {
       var terceros = await _terceroRepository.ObtenerTodos();
 
-      var tercerosExistente = terceros.Any(u => u.codDocumento == nuevoTercero.codDocumento);
+      var tercerosExistente = terceros.Any(u => u.codDocumento == nuevoTercero.codDocumento || u.Email == nuevoTercero.Email);
 
       if (tercerosExistente)
       {

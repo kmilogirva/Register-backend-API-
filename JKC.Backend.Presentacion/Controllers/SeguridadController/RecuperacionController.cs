@@ -39,7 +39,7 @@ namespace JKC.Backend.WebApi.Controllers.SeguridadController
       if (!respuesta.Exitoso)
         return BadRequest(new { mensaje = respuesta.Mensaje });
 
-      var frontendUrl = _config["Frontend:Url"] ?? "http://localhost:4200";
+      var frontendUrl = _config["Frontend:Url"] ?? "https://jkcfrontend-h3a8fxhufregc5ay.canadacentral-01.azurewebsites.net/";
       var link = $"{frontendUrl.TrimEnd('/')}/resetear-contrasena/{token}";
       //COMO MANDAR ESTO AL FRONT
       // Plantilla HTML similar a la de "test"

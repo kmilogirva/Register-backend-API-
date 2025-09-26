@@ -9,7 +9,6 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
   public interface IServicioUsuario
   {
     Task<Usuario> ObtenerUsuarioPorId(int id);
-    //Task<Usuario> ObtenerUsuarioPorCorreo(string correo); // <- NUEVO
     Task<List<Usuario>> ObtenerListadoUsuarios();
     Task<List<UsuarioResponse>> ObtenerUsuariosResponse();
     Task<UsuarioResponse> ObtenerUsuarioPorIdTercero(int idTercero);

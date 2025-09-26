@@ -94,17 +94,17 @@ namespace JKC.Backend.WebApi.Controllers.GeneralesController
     }
 
     [HttpDelete("eliminarterceroporid")]
-    public async Task<IActionResult> EliminarUsuariooAsync(int idUsuario)
+    public async Task<IActionResult> EliminarUsuarioAsync(int idTercero)
     {
-      var usuario = await _terceroServicio.ObtenerTerceroPorId(idUsuario);
+      var usuario = await _terceroServicio.ObtenerTerceroPorId(idTercero);
 
       if (usuario == null)
       {
         return NotFound(new { mensaje = "El usuario no existe o ya ha sido eliminado." });
       }
 
-      await _terceroServicio.EliminarTerceroPorId(idUsuario);
-      return Ok(new { mensaje = "El usuario ha sido eliminado con éxito.", idUsuario });
+      await _terceroServicio.EliminarTerceroPorId(idTercero);
+      return Ok(new { mensaje = "El usuario ha sido eliminado con éxito.", idTercero });
     }
   }
 }

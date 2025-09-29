@@ -4,7 +4,10 @@ using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.producto;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using JKC.Backend.Infraestructura.Framework.RepositoryPattern;
-using static JKC.Backend.Aplicacion.Services.UsuarioServices.ServicioUsuario;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace JKC.Backend.Aplicacion.Services.SeguridadService
 {
@@ -20,6 +23,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       _rolesRepository = rolesRepository;
       _asignarPermisos = asignarPermisos;
     }
+
     public async Task<Roles> CrearRol(Roles nuevoRol)
     {
       try
@@ -32,7 +36,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
           throw new ArgumentException("El nombre del rol no puede estar vacío.");
 
         bool existeRol = await _rolesRepository.AnyAsync(
-          r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
+            r => r.NombreRol.ToLower() == nuevoRol.NombreRol.ToLower());
 
         if (existeRol)
           return null;
@@ -61,7 +65,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       if (rolExistente == null)
         return null;
 
-      // Actualizamos los datos
       rolExistente.NombreRol = rolActualizado.NombreRol;
       rolExistente.IdEstado = rolActualizado.IdEstado;
       rolExistente.FechaModificacion = DateTime.UtcNow;
@@ -72,24 +75,20 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return rolExistente;
     }
 
-    
-    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string? email,string? codUsuario, string password)
+    public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string? email, string? codUsuario, string password)
     {
-      if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+      if ((string.IsNullOrEmpty(email) && string.IsNullOrEmpty(codUsuario)) || string.IsNullOrEmpty(password))
       {
         return new ResponseMessagesData<UsuarioDto>
         {
           Exitoso = false,
-          Mensaje = "El correo o la contraseña no pueden estar vacíos.",
+          Mensaje = "El correo/código de usuario o la contraseña no pueden estar vacíos.",
           Data = null
         };
       }
 
-      // Traer usuarios con terceros relacionados
       var usuarios = await _usuarioRepository.ObtenerTodosInclude(u => u.Tercero);
 
-
-      // Buscar usuario por email y estado
       var usuarioAutorizado = usuarios.FirstOrDefault(u =>
           u.IdEstado == 1 &&
           (
@@ -108,9 +107,15 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
+      // ==================================================================
+      // CAMBIO 1: Simplificación del Login para la Exposición
+      // ==================================================================
+      // Se comenta la verificación por Hash y se reemplaza por una comparación de texto simple.
+      // bool passwordValida = PasswordHasher.VerifyPassword(password, usuarioAutorizado.Contrasena);
 
-      // ✅ Verificar la contraseña usando PBKDF2
-      bool passwordValida = PasswordHasher.VerifyPassword(password, usuarioAutorizado.Contrasena);
+      // ADVERTENCIA: Solo para fines académicos. No usar en un proyecto real.
+      bool passwordValida = (password == usuarioAutorizado.Contrasena);
+      // ==================================================================
 
       if (!passwordValida)
       {
@@ -122,7 +127,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
         };
       }
 
-      // Construir DTO para respuesta
       var usuarioproducto = new UsuarioDto
       {
         IdUsuario = usuarioAutorizado.IdUsuario,
@@ -140,7 +144,6 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       };
     }
 
-
     public async Task<List<Roles>> ObtenerListadoRoles()
     {
       return await _rolesRepository.ObtenerTodos();
@@ -150,14 +153,18 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
     {
       try
       {
+        // ==================================================================
+        // CAMBIO 2: Llamada al Procedimiento Almacenado Corregido
+        // ==================================================================
         var resultado = await _rolesRepository.EjecutarProcedimientoAlmacenado<RolPermisosAccionproducto>(
-            "seguridad.ObtenerPermisosPorRol", idRol
+            "seguridad.ObtenerPermisosPorRol_Corregido", idRol
         );
+        // ==================================================================
         return resultado.ToList();
       }
       catch (Exception ex)
       {
-        throw; // o lanza un mensaje más útil si lo necesitas
+        throw;
       }
     }
 
@@ -166,18 +173,18 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       if (asignarPermisosLista == null || !asignarPermisosLista.Any())
         throw new ArgumentException("La lista de permisos está vacía.");
 
-
       var idRol = asignarPermisosLista.FirstOrDefault()?.IdRol ?? 0;
+      if (idRol == 0)
+        throw new ArgumentException("El IdRol no es válido en la lista de permisos.");
 
       var permisosexistentes = (await _asignarPermisos.ObtenerTodos())
-          .Where(p => p.IdRol == idRol)
-          .ToList();
+                                .Where(p => p.IdRol == idRol)
+                                .ToList();
 
       foreach (var permiso in permisosexistentes)
       {
         await EliminarPermisosPorId(permiso.Id);
       }
-
 
       foreach (var permiso in asignarPermisosLista)
       {
@@ -193,14 +200,12 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       try
       {
         await _asignarPermisos.EliminarPorId(Id);
-
-        return true; // Si llega aquí, todo salió bien
+        return true;
       }
       catch (Exception ex)
       {
         throw new Exception("Error al eliminar los permisos del rol", ex);
       }
-
     }
 
     public async Task<bool> EliminarRol(int id)

@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Program\u002B\u003C\u003Ec",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_5",
+    "RelativePath": "",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "JKC.Backend.Aplicacion.Controllers.BodegasController",
     "Method": "PutBodega",
     "RelativePath": "api/Bodegas/ActualizaunaBodegaporid",
@@ -100,15 +116,36 @@
   },
   {
     "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
-    "Method": "EliminarCategoriaAsync",
-    "RelativePath": "api/Categorias/eliminarcategoriasporids",
-    "HttpMethod": "POST",
+    "Method": "ActualizarCategoria",
+    "RelativePath": "api/Categorias/actualizarcategoria/{id}",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idCategoria",
-        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "categoriaActualizada",
+        "Type": "JKC.Backend.Dominio.Entidades.Categorias.Categoria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
+    "Method": "EliminarCategoria",
+    "RelativePath": "api/Categorias/eliminarcategoriasporids/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -118,27 +155,47 @@
     "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
     "Method": "ObtenerListadoCategorias",
     "RelativePath": "api/Categorias/listarcategorias",
-    "HttpMethod": "POST",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[JKC.Backend.Dominio.Entidades.Categorias.Categoria, JKC.Backend.Dominio.Entidades, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
-    "Method": "ObtenerRolesPorUsuarioId",
-    "RelativePath": "api/Categorias/obtenercategoriaporid",
+    "Method": "ObtenerCategoriaPorId",
+    "RelativePath": "api/Categorias/obtenercategoriaporid/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idCategoria",
+        "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "JKC.Backend.Dominio.Entidades.Categorias.Categoria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "JKC.Backend.WebApi.Controllers.CategoriasController.CategoriasController",
@@ -154,7 +211,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "JKC.Backend.Dominio.Entidades.Categorias.Categoria",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "JKC.Backend.WebApi.Controllers.GeneralesController.GeneralesController",
@@ -371,6 +438,54 @@
       {
         "Name": "registroProductos",
         "Type": "JKC.Backend.Dominio.Entidades.Productos.Producto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.RecuperacionController",
+    "Method": "Restablecer",
+    "RelativePath": "api/Recuperacion/restablecer-contrasena",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "JKC.Backend.Dominio.Entidades.Seguridad.RecuperacionClave.RestablecerContrasenaDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.RecuperacionController",
+    "Method": "Solicitar",
+    "RelativePath": "api/Recuperacion/solicitar-recuperacion/{correo}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JKC.Backend.WebApi.Controllers.SeguridadController.RecuperacionController",
+    "Method": "ValidarToken",
+    "RelativePath": "api/Recuperacion/validar-token/{token}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

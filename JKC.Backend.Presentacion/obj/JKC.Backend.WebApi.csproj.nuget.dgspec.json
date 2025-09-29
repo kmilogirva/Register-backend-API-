@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj": {}
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj",
         "projectName": "JKC.Backend.Aplicacion",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -33,17 +33,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
               }
             }
           }
@@ -67,6 +67,18 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -89,20 +101,20 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj",
         "projectName": "JKC.Backend.Dominio.Entidades",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -139,6 +151,18 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -161,20 +185,20 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj",
         "projectName": "JKC.Backend.Dominio",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -190,11 +214,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
               }
             }
           }
@@ -218,6 +242,18 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -240,20 +276,20 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj",
         "projectName": "JKC.Backend.Infraestructura.Data",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -269,14 +305,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
               }
             }
           }
@@ -308,6 +344,18 @@
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -330,20 +378,20 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj",
         "projectName": "JKC.Backend.Infraestructura.Framework",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -359,8 +407,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
               }
             }
           }
@@ -384,6 +432,18 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -406,20 +466,20 @@
         }
       }
     },
-    "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj": {
+    "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
         "projectName": "JKC.Backend.WebApi",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Presentacion\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Presentacion\\JKC.Backend.WebApi.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Presentacion\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -435,20 +495,20 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Aplicacion\\JKC.Backend.Aplicacion.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio.Entidades\\JKC.Backend.Dominio.Entidades.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Dominio\\JKC.Backend.Dominio.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Data\\JKC.Backend.Infraestructura.Data.csproj"
               },
-              "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
-                "projectPath": "C:\\Users\\Usuario\\Desktop\\BackendConflictos\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
+              "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj": {
+                "projectPath": "C:\\Users\\user\\Desktop\\Back\\JKC.Backend.Infraestructura.Framework\\JKC.Backend.Infraestructura.Framework.csproj"
               }
             }
           }
@@ -476,6 +536,18 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

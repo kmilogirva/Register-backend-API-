@@ -239,9 +239,3 @@ namespace JKC.Backend.WebApi.Controllers.UsuariosController
 
   }
 }
-
-
-
-
-
-

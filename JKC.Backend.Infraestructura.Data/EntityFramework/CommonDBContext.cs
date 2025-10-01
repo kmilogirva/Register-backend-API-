@@ -7,6 +7,7 @@ using JKC.Backend.Dominio.Entidades.Seguridad;
 using JKC.Backend.Dominio.Entidades.Seguridad.Usuarios;
 using JKC.Backend.Dominio.Entidades.Usuario;
 using Microsoft.EntityFrameworkCore;
+using JKC.Backend.Dominio.Entidades.Movimientos;
 
 namespace JKC.Backend.Infraestructura.Data.EntityFramework
 {
@@ -49,6 +50,8 @@ namespace JKC.Backend.Infraestructura.Data.EntityFramework
       modelBuilder.Entity<Departamento>().ToTable("departamento", "generales");
       modelBuilder.Entity<Ciudad>().ToTable("ciudad", "generales");
       modelBuilder.Entity<Tercero>().ToTable("tercero", "generales");
+      modelBuilder.Entity<TiposMovimiento>().ToTable("tiposmovimiento", "dbo");
+      modelBuilder.Entity<Movimiento>().ToTable("Movimientos", "dbo");
 
       modelBuilder.Entity<Modulo>()
       .ToTable("modulos", "seguridad") // Tabla modulos en esquema seguridad

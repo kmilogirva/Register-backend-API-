@@ -102,5 +102,19 @@ namespace JKC.Backend.WebApi.Controllers.GeneralesController
         return StatusCode(500, new { mensaje = "Error al obtener los roles.", error = ex.Message });
       }
     }
+
+    [HttpGet("combotiposmovimiento")]
+    public async Task<IActionResult> ObtenercomboTiposMovimeinto()
+    {
+      try
+      {
+        var TipoMovimiento = await _generalesServicio.ObtenerComboTiposMovimiento();
+        return Ok(TipoMovimiento);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { mensaje = "Error al obtener el movimiento.", error = ex.Message });
+      }
+    }
   }
 }

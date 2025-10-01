@@ -1,7 +1,9 @@
+using System.Text;
 using Jkc.Backend.Aplicacion.Services.EmailService;
 using JKC.Backend.Aplicacion.Services.BodegaServices;
 using JKC.Backend.Aplicacion.Services.CategoriasServices;
 using JKC.Backend.Aplicacion.Services.GeneralesServices;
+using JKC.Backend.Aplicacion.Services.MovimientoServices;
 using JKC.Backend.Aplicacion.Services.ProductoServices;
 using JKC.Backend.Aplicacion.Services.SeguridadService;
 using JKC.Backend.Aplicacion.Services.UsuarioServices;
@@ -14,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +47,7 @@ builder.Services.AddScoped<IServicioSubModulo, ServicioSubModulo>();
 builder.Services.AddScoped<IServicioTercero, ServicioTercero>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddTransient<IEmailService, EmailService>();
-
+builder.Services.AddScoped<IServicioMovimiento, ServicioMovimiento>();
 // Registro de Repositorios
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 

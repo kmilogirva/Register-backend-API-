@@ -72,58 +72,7 @@ namespace JKC.Backend.Aplicacion.Services.SeguridadService
       return rolExistente;
     }
 
-    //public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string email, string password)
-    //{
-    //  if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-    //  {
-    //    return new ResponseMessagesData<UsuarioDto>
-    //    {
-    //      Exitoso = false,
-    //      Mensaje = "El correo o la contraseña no pueden estar vacíos.",
-    //      Data = null
-    //    };
-    //  }
-
-    //  var usuario = await _usuarioRepository.ObtenerTodos();
-
-    //  //var usuarioAutorizado = usuario.FirstOrDefault(u =>
-    //  //  u.Correo == email &&
-    //  //  u.Contrasena == password &&
-    //  //  u.IdEstado == 1);
-
-    //  var usuarioAutorizado = usuario
-    //    .FirstOrDefault(u =>
-    //    u.Contrasena == password &&
-    //    u.IdEstado == 1 &&
-    //    u.Tercero.Email == email);
-
-    //  if (usuarioAutorizado == null)
-
-    //  {
-    //    return new ResponseMessagesData<UsuarioDto>
-    //    {
-    //      Exitoso = false,
-    //      Mensaje = "Credenciales inválidas",
-    //      Data = null
-    //    };
-    //  }
-
-    //  var usuarioproducto = new UsuarioDto
-    //  {
-    //    IdUsuario = usuarioAutorizado.IdUsuario,
-    //    Nombre = usuarioAutorizado.Tercero.NombreCompleto,
-    //    Correo = usuarioAutorizado.Tercero.Email,
-    //    IdRol = usuarioAutorizado.IdRol
-    //  };
-
-    //  return new ResponseMessagesData<UsuarioDto>
-    //  {
-    //    Exitoso = true,
-    //    Mensaje = "Inicio de sesión exitoso",
-    //    Data = usuarioproducto
-    //  };
-    //}
-
+    
     public async Task<ResponseMessagesData<UsuarioDto>> LoginAsync(string? email,string? codUsuario, string password)
     {
       if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))

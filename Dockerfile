@@ -31,11 +31,12 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
 WORKDIR /app
 
+
+
 COPY --from=build /app/publish .
 
 # Puerto que expondrá la API
-EXPOSE 5000
-EXPOSE 5001
+EXPOSE 8080
 
 # Comando para correr la aplicación
 ENTRYPOINT ["dotnet", "JKC.Backend.WebApi.dll"]

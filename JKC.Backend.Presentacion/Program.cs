@@ -19,7 +19,7 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configurar Serilog para leer del appsettings.json
+// 🔹 Configurar Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -29,13 +29,13 @@ builder.Host.UseSerilog();
 
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
-// Configurar DbContext con la conexión a SQL Server
+// 🔹 Configurar DbContext
 builder.Services.AddDbContext<CommonDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
            .EnableSensitiveDataLogging()
            .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information));
 
-// Servicios y repositorios
+// 🔹 Servicios y repositorios
 builder.Services.AddScoped<IServicioSeguridad, ServicioSeguridad>();
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 builder.Services.AddScoped<IServicioProducto, ServicioProducto>();
@@ -49,11 +49,14 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddScoped<IServicioMovimiento, ServicioMovimiento>();
 // Registro de Repositorios
+
+
+
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddControllers();
 
-// CORS
+// 🔹 CORS
 builder.Services.AddCors(options =>
 {
   options.AddPolicy("AllowAllOrigins", policy =>
@@ -64,7 +67,7 @@ builder.Services.AddCors(options =>
   });
 });
 
-// Autenticación JWT
+// 🔹 Autenticación JWT
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -82,7 +85,7 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
-// Swagger
+// 🔹 Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -104,24 +107,30 @@ builder.Services.AddSwaggerGen(c =>
   });
 
   c.AddSecurityRequirement(new OpenApiSecurityRequirement
-  {
     {
-      new OpenApiSecurityScheme
-      {
-        Reference = new OpenApiReference
         {
-          Type = ReferenceType.SecurityScheme,
-          Id = "Bearer"
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
         }
-      },
-      Array.Empty<string>()
-    }
-  });
+    });
 });
+
+// 🔹 IMPORTANTE: Configurar puerto dinámico para Azure
+var port = Environment.GetEnvironmentVariable("PORT")
+           ?? Environment.GetEnvironmentVariable("WEBSITES_PORT")
+           ?? "8080"; // fallback
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 var app = builder.Build();
 
-// Middleware
+// 🔹 Middleware
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
   app.UseDeveloperExceptionPage();
@@ -147,6 +156,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// 🔹 Endpoint raíz /health o /
+app.MapGet("/", () => Results.Ok("API Running 🚀"));
 
 app.Run();
 

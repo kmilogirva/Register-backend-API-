@@ -15,16 +15,22 @@ namespace JKC.Backend.Aplicacion.Services.UsuarioServices
     Task<ResponseMessages> RegistrarUsuarioAsync(Usuario nuevoUsuario);
     Task<bool> ActualizarUsuario(Usuario usuarioActualizado);
     Task<bool> EliminarUsuarioPorId(int id);
-    //Task<ResponseMessages> LoginAsync(string email, string password);
+    Task<(ResponseMessages Respuesta, string Token)> SolicitarRecuperacionContrasenaAsync(string correo);
+
+
+    Task<ResponseMessages> RestablecerContrasenaAsync(string token, string nuevaContrasena); // <- NUEVO
 
     Task<List<RolesUsuario>> ObtenerRolesPorIdUsuario(int idUsuario);
-
-    //Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario);
-
-    // Yo obtendré permisos por Roles.
-    //Task<List<RolesPermisos>> ObtenerPermisosPorUsuarioId(int idUsuario);
-    //Task<List<RolesPermisos>> ObtenerPermisosPorRolId(int idRol);
-
-
+    Task<bool> ValidarTokenAsync(string token);
+    
   }
 }
+
+//Task<List<PermisoModuloproducto>> ObtenerPermisosPorIdUsuario(int idUsuario);
+
+// Yo obtendré permisos por Roles.
+//Task<List<RolesPermisos>> ObtenerPermisosPorUsuarioId(int idUsuario);
+//Task<List<RolesPermisos>> ObtenerPermisosPorRolId(int idRol);
+
+
+

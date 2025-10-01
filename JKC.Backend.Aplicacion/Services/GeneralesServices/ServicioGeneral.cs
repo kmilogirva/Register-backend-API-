@@ -20,8 +20,9 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
     private readonly IRepository<Departamento> _repositoryDepartamento;
     private readonly IRepository<Ciudad> _repositoryCiudad;
     private readonly IRepository<Tercero> _repositoryTercero;
+    private readonly IRepository<TiposMovimiento> _repositoryTiposMovimiento;
 
-    public ServicioGeneral(IRepository<TiposDocumento> repositoryTiposDocumento, IRepository<TiposTercero> repositoryTiposTercero, IRepository<TiposPersona> repositoryTiposPersona, IRepository<Pais> repositoryPais, IRepository<Departamento> repositoryDepartamento, IRepository<Ciudad> repositoryCiudad, IRepository<Tercero> repositoryTercero)
+    public ServicioGeneral(IRepository<TiposDocumento> repositoryTiposDocumento, IRepository<TiposTercero> repositoryTiposTercero, IRepository<TiposPersona> repositoryTiposPersona, IRepository<Pais> repositoryPais, IRepository<Departamento> repositoryDepartamento, IRepository<Ciudad> repositoryCiudad, IRepository<Tercero> repositoryTercero,  IRepository<TiposMovimiento> repositoryTiposMovimiento)
     {
       _repositoryTiposDocumento = repositoryTiposDocumento;
       _repositoryTiposTercero = repositoryTiposTercero;
@@ -30,6 +31,7 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
       _repositoryDepartamento = repositoryDepartamento;
       _repositoryCiudad = repositoryCiudad;
       _repositoryTercero = repositoryTercero;
+      _repositoryTiposMovimiento = repositoryTiposMovimiento;
     }
 
     public async Task<List<ComboResponse>> ObtenerComboTiposDocumento()
@@ -118,6 +120,18 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
       {
         Codigo = t.IdCiudad,
         Valor = t.NombreCiudad,
+      }).ToList();
+
+      return combo;
+    }
+    public async Task<List<ComboResponse>> ObtenerComboTiposMovimiento()
+    {
+      var tiposMovimiento = await _repositoryTiposMovimiento.ObtenerTodos();
+
+      var combo = tiposMovimiento.Select(t => new ComboResponse
+      {
+        Codigo = t.IdTipoMovimiento,
+        Valor = t.NombreTipoMovimiento,
       }).ToList();
 
       return combo;

@@ -17,5 +17,6 @@ namespace JKC.Backend.Aplicacion.Services.GeneralesServices
     Task<List<ComboResponse>> ObtenerComboPaises();
     Task<List<ComboResponse>> ObtenerComboDepartamentos(int idPais);
     Task<List<ComboResponse>> ObtenerComboCiudades(int idPais);
+    Task<List<ComboResponse>> ObtenerComboTiposMovimiento();
   }
 }
